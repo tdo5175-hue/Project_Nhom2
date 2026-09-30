@@ -1,0 +1,337 @@
+/* ==========================================================================
+   BÀI TẬP 5: TRANG CHI TIẾT SẢN PHẨM (E-COMMERCE PRODUCT DETAIL LAYOUT)
+   - Bố cục lớn: CSS Grid chia 2 cột: Ảnh bên trái (60%) - Thông tin bên phải (40%)
+   - Bên trong thông tin: Dùng Flexbox dàn hàng Size, Màu sắc, Bộ tăng giảm số lượng
+   ========================================================================== */
+
+:root {
+    --font-base: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    --color-bg-page: #0b0f19;
+    --color-card-bg: #151d30;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-primary: #38bdf8;
+    --color-accent: #6366f1;
+    --color-text-main: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --transition: all 0.25s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: var(--color-bg-page);
+    color: var(--color-text-main);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
+
+.product-container {
+    max-width: 1200px;
+    width: 100%;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: CSS GRID BỐ CỤC LỚN (ẢNH 60% - THÔNG TIN 40%)
+   ========================================================================== */
+.product-grid {
+    display: grid;
+    /* Cột ảnh sản phẩm 60% và Cột thông tin 40% (trừ gap 40px) */
+    grid-template-columns: calc(60% - 20px) calc(40% - 20px);
+    gap: 40px;
+    align-items: start;
+}
+
+/* --- CỘT TRÁI (60%): GALLERY ẢNH SẢN PHẨM --- */
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.main-image {
+    width: 100%;
+    height: 480px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000000;
+    border: 1px solid var(--color-border);
+}
+
+.main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.main-image:hover img {
+    transform: scale(1.05);
+}
+
+.thumbnail-row {
+    display: flex;
+    gap: 12px;
+}
+
+.thumb-item {
+    width: 90px;
+    height: 75px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.thumb-item.active,
+.thumb-item:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- CỘT PHẢI (40%): THÔNG TIN MUA HÀNG --- */
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.brand-tag {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.product-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.stars {
+    color: #f59e0b;
+}
+
+.price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.current-price {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.old-price {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
+.discount-badge {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.product-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 20px;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: DÙNG FLEXBOX DÀN HÀNG CÁC LỰA CHỌN BÊN TRONG THÔNG TIN
+   ========================================================================== */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+/* 1. LỰA CHỌN SIZE (FLEXBOX HÀNG NGANG) */
+.size-selector {
+    display: flex;
+    gap: 10px;
+}
+
+.size-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-main);
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.size-btn:hover {
+    border-color: var(--color-primary);
+}
+
+.size-btn.active {
+    background: var(--color-primary);
+    color: #0b0f19;
+    border-color: var(--color-primary);
+}
+
+/* 2. LỰA CHỌN MÀU SẮC (FLEXBOX HÀNG NGANG Ô TRÒN MÀU) */
+.color-selector {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.color-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    box-shadow: 0 0 0 1px var(--color-border);
+    transition: var(--transition);
+}
+
+.color-dot:hover {
+    transform: scale(1.15);
+}
+
+.color-dot.active {
+    box-shadow: 0 0 0 2px var(--color-primary);
+    transform: scale(1.1);
+}
+
+.dot-black { background-color: #1e293b; }
+.dot-blue  { background-color: #2563eb; }
+.dot-white { background-color: #f8fafc; }
+.dot-rose  { background-color: #f43f5e; }
+
+/* 3. BỘ NÚT TĂNG GIẢM SỐ LƯỢNG (FLEXBOX HÀNG NGANG) */
+.quantity-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.qty-btn {
+    width: 42px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    color: var(--color-text-main);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.qty-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-primary);
+}
+
+.qty-input {
+    width: 46px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    text-align: center;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+/* Nút Mua hàng Flexbox */
+.btn-buy-now {
+    flex: 1;
+    height: 44px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    transition: var(--transition);
+}
+
+.btn-buy-now:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.45);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-image {
+        height: 360px;
+    }
+}

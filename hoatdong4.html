@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoạt Động 4 - Tối Ưu Hóa Mã CSS Do AI Sinh Ra</title>
+    <!-- Nhúng CSS định dạng External -->
+    <link rel="stylesheet" href="css/hoatdong4.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- 1. Header Giới Thiệu -->
+        <header class="header-box">
+            <span class="badge">CSS Optimization & Refactoring</span>
+            <h1>Tối Ưu Hóa Mã CSS Do AI Sinh Ra</h1>
+            <p>Áp dụng 3 kỹ thuật: Loại bỏ thuộc tính mặc định &bull; Gộp Selectors &bull; Sử dụng Shorthand Properties.</p>
+        </header>
+
+        <!-- 2. Khối So Sánh Trước & Sau Khi Tối Ưu -->
+        <section class="comparison-grid">
+            <!-- Box Before -->
+            <article class="code-box before">
+                <h2>❌ Trước Khi Tối Ưu (Rườm rà & Thừa)</h2>
+                <pre><code>/* Mã AI sinh ra chưa tối ưu (38 dòng) */
+.container {
+    display: block;             /* Mặc định của div */
+    width: 100%;                /* Block mặc định 100% */
+    position: static;           /* Giá trị mặc định */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-primary {
+    background-color: #f8fafc;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e2e8f0;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.card-secondary {
+    background-color: #f8fafc;  /* Trùng lặp */
+    border-width: 1px;          /* Trùng lặp */
+    border-style: solid;        /* Trùng lặp */
+    border-color: #e2e8f0;      /* Trùng lặp */
+    border-radius: 10px;        /* Trùng lặp */
+    padding-top: 20px;          /* Trùng lặp */
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.flex-box {
+    display: flex;
+    flex-direction: row;        /* Mặc định là row */
+    flex-wrap: nowrap;          /* Mặc định là nowrap */
+    justify-content: flex-start;/* Mặc định flex-start */
+}</code></pre>
+            </article>
+
+            <!-- Box After -->
+            <article class="code-box after">
+                <h2>✅ Sau Khi Tối Ưu (Tinh Gọn & Chuẩn DRY)</h2>
+                <pre><code>/* Mã tối ưu hóa chuyên nghiệp (16 dòng) */
+.container {
+    /* Shorthand margin & padding, bỏ block/static */
+    margin: var(--spacing-unit) 0;
+    padding: 15px var(--spacing-unit);
+}
+
+/* Gộp chung selector có thuộc tính giống nhau */
+.card-primary,
+.card-secondary {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border); /* Shorthand */
+    border-radius: var(--radius-md);
+    padding: var(--spacing-unit);          /* Shorthand */
+    color: var(--color-text-dark);
+}
+
+.card-primary {
+    border-left: 4px solid var(--color-primary);
+}
+
+.card-secondary {
+    border-left: 4px solid #8b5cf6;
+}
+
+/* Loại bỏ hoàn toàn các thuộc tính Flex mặc định */
+.flex-box {
+    display: flex;
+    gap: var(--spacing-unit);
+}</code></pre>
+            </article>
+        </section>
+
+        <!-- 3. Giao Diện Minh Họa Áp Dụng Mã Tối Ưu -->
+        <main class="container">
+            <div class="flex-box">
+                <div class="card-primary">
+                    <h3>⚡ Card Primary</h3>
+                    <p>Được xây dựng từ selector gộp <code>.card-primary, .card-secondary</code> kết hợp shorthand border và padding giúp tiết kiệm 60% dòng mã.</p>
+                    <button type="button" class="btn-action" style="margin-top: 15px;">Hành Động</button>
+                </div>
+
+                <div class="card-secondary">
+                    <h3>🎯 Card Secondary</h3>
+                    <p>Chia sẻ chung toàn bộ thuộc tính nền, viền và bo góc từ selector gộp, chỉ ghi đè duy nhất màu viền trái <code>border-left</code>.</p>
+                    <button type="button" class="btn-action" style="margin-top: 15px; background: #8b5cf6;">Khám Phá</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 4. Tóm Tắt 3 Quy Tắc Tối Ưu Hóa -->
+        <section class="summary-panel">
+            <h2>📌 3 Nguyên Tắc Tối Ưu Hóa CSS Trọng Tâm</h2>
+            <ul class="rules-list">
+                <li class="rule-item">
+                    <h3>1. Loại Bỏ Thuộc Tính Mặc Định</h3>
+                    <p>Tránh khai báo <code>display: block</code> cho thẻ div/p, <code>position: static</code>, hoặc <code>flex-direction: row</code> vì trình duyệt đã mặc định gán sẵn.</p>
+                </li>
+                <li class="rule-item">
+                    <h3>2. Gộp Class Trùng Thuộc Tính</h3>
+                    <p>Sử dụng <code>.class-a, .class-b { ... }</code> để tập trung các thuộc tính chung, chỉ viết riêng rẽ các thuộc tính biến thể (variant styles).</p>
+                </li>
+                <li class="rule-item">
+                    <h3>3. Sử Dụng Shorthand Properties</h3>
+                    <p>Thay vì viết 4 dòng <code>margin-top/right/bottom/left</code> hay 3 dòng <code>border-*</code>, gộp thành 1 dòng duy nhất giúp mã ngắn gọn và tải nhanh hơn.</p>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+</body>
+</html>

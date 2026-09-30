@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập 2: Bảng Giá Dịch Vụ (Flexbox Cards) - Project Nhóm 2</title>
+    <!-- Nhúng CSS External -->
+    <link rel="stylesheet" href="css/baitap2.css">
+</head>
+<body>
+
+    <!-- Header phần bảng giá -->
+    <header class="pricing-header">
+        <span class="badge">Pricing Plans</span>
+        <h1>Bảng Giá Dịch Vụ Linh Hoạt</h1>
+        <p>Chọn gói giải pháp phù hợp nhất với nhu cầu dự án của bạn. Hủy bất kỳ lúc nào mà không phát sinh chi phí ẩn.</p>
+    </header>
+
+    <!-- 
+      CONTAINER FLEXBOX CHỨA 3 BẢNG GIÁ NẰM NGANG HÀNG NHAU:
+      1. Basic (Cơ bản)
+      2. Pro (Chuyên nghiệp - Nổi bật)
+      3. Enterprise (Doanh nghiệp)
+    -->
+    <main class="pricing-container">
+
+        <!-- GÓI 1: BASIC -->
+        <article class="pricing-card">
+            <h2 class="plan-name">Gói Basic</h2>
+            <p class="plan-desc">Phù hợp cho cá nhân mới bắt đầu tìm hiểu và thử nghiệm thiết kế web.</p>
+            
+            <div class="price-box">
+                <span class="price-currency">$</span>
+                <span class="price-number">9</span>
+                <span class="price-period">/tháng</span>
+            </div>
+
+            <ul class="feature-list">
+                <li class="included"><span class="check">✔</span> 5 Dự án giao diện</li>
+                <li class="included"><span class="check">✔</span> Template Flexbox chuẩn</li>
+                <li class="included"><span class="check">✔</span> Hỗ trợ qua cộng đồng</li>
+                <li><span class="cross">✖</span> Tùy biến Design Tokens</li>
+                <li><span class="cross">✖</span> Hỗ trợ kỹ thuật 24/7</li>
+            </ul>
+
+            <!-- Nút Mua ngay luôn nằm sát đáy dù nội dung ngắn -->
+            <button type="button" class="btn-buy">Mua Ngay</button>
+        </article>
+
+        <!-- GÓI 2: PRO (POPULAR) -->
+        <article class="pricing-card popular">
+            <span class="popular-tag">Phổ biến nhất</span>
+            <h2 class="plan-name">Gói Pro</h2>
+            <p class="plan-desc">Giải pháp hoàn hảo cho lập trình viên Frontend và các nhóm đồ án chuyên sâu.</p>
+            
+            <div class="price-box">
+                <span class="price-currency">$</span>
+                <span class="price-number">29</span>
+                <span class="price-period">/tháng</span>
+            </div>
+
+            <ul class="feature-list">
+                <li class="included"><span class="check">✔</span> Không giới hạn dự án</li>
+                <li class="included"><span class="check">✔</span> Toàn bộ thư viện CSS Grid & Flexbox</li>
+                <li class="included"><span class="check">✔</span> Design Tokens & Biến CSS cao cấp</li>
+                <li class="included"><span class="check">✔</span> Tối ưu hóa chuẩn Core Web Vitals</li>
+                <li><span class="cross">✖</span> Máy chủ Dedicated riêng biệt</li>
+            </ul>
+
+            <!-- Nút Mua ngay luôn nằm sát đáy -->
+            <button type="button" class="btn-buy">Mua Ngay</button>
+        </article>
+
+        <!-- GÓI 3: ENTERPRISE -->
+        <article class="pricing-card">
+            <h2 class="plan-name">Gói Enterprise</h2>
+            <p class="plan-desc">Dành cho doanh nghiệp quy mô lớn đòi hỏi bảo mật và khả năng mở rộng tối đa.</p>
+            
+            <div class="price-box">
+                <span class="price-currency">$</span>
+                <span class="price-number">99</span>
+                <span class="price-period">/tháng</span>
+            </div>
+
+            <ul class="feature-list">
+                <li class="included"><span class="check">✔</span> Toàn bộ quyền lợi gói Pro</li>
+                <li class="included"><span class="check">✔</span> Kiến trúc Micro-frontends tùy chỉnh</li>
+                <li class="included"><span class="check">✔</span> Quản trị viên hỗ trợ riêng 1-on-1</li>
+                <li class="included"><span class="check">✔</span> Cam kết SLA 99.99% Uptime</li>
+                <li class="included"><span class="check">✔</span> Đào tạo nội bộ cho doanh nghiệp</li>
+            </ul>
+
+            <!-- Nút Mua ngay luôn nằm sát đáy dù danh sách dài -->
+            <button type="button" class="btn-buy">Mua Ngay</button>
+        </article>
+
+    </main>
+
+</body>
+</html>

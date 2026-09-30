@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: blue;
+    background-color: lightgray;
+    padding: 20px;
+}
+
+h2 {
+    color: darkgreen;
+    background-color: lightyellow;
+    padding: 15px;
+}
+
+.container h1 {
+    color: purple;
+    background-color: lightcyan;
+    padding: 25px;
+}
+
+.container {
+    color: red;
+    background-color: lightblue;
+    padding: 10px;
+}
+
+.item {
+    color: purple;
+    background-color: lightpink;
+    padding: 15px;
+    margin: 5px;
+}
+
+button {
+    color: white;
+    /* padding-top: 10px; */
+    margin-top: 10px;
+    width: 100px;
+    background-color: rgb(126, 126, 245);
+    padding: 10px 20px;
+    border: 1px solid rgb(126, 126, 227);
+    border-radius: 5px;
+    cursor: pointer;
+}

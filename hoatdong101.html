@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoạt Động 2 - Bố Cục Lưới CSS Grid (3 Cột Bằng Nhau)</title>
+    <!-- Nhúng CSS định dạng External -->
+    <link rel="stylesheet" href="css/hoatdong101.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header tiêu đề khu vực -->
+        <header class="section-header">
+            <span class="badge">CSS Grid Layout</span>
+            <h1>Bố Cục 3 Cột Hiện Đại</h1>
+            <p>Sử dụng <code>display: grid</code>, <code>grid-template-columns: repeat(3, 1fr)</code> và <code>gap: 20px</code> để phân bổ nội dung cân đối hoàn hảo.</p>
+        </header>
+
+        <!-- 
+          Bố cục lưới CSS Grid:
+          - 3 cột bằng nhau
+          - Khoảng cách giữa các cột: 20px
+          - Mỗi thẻ có nền xám nhạt và bo góc 10px
+        -->
+        <main class="grid-container">
+
+            <!-- Thẻ cột 1 -->
+            <article class="grid-item item-1">
+                <div class="item-icon">⚡</div>
+                <h2>Tốc Độ Tải Tối Ưu</h2>
+                <p>Cấu trúc HTML/CSS gọn gàng giúp tối đa hóa điểm số Core Web Vitals, mang lại trải nghiệm tải trang gần như tức thì cho người dùng.</p>
+                <div class="card-footer">
+                    <span class="card-tag">Performance</span>
+                    <a href="#" class="card-link">Tìm hiểu thêm &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Thẻ cột 2 -->
+            <article class="grid-item item-2">
+                <div class="item-icon">🎨</div>
+                <h2>Thiết Kế Trực Quan</h2>
+                <p>Phối màu tương phản cao, phân cấp thị giác rõ ràng và bo góc 10px mềm mại giúp giữ chân người dùng tương tác lâu hơn.</p>
+                <div class="card-footer">
+                    <span class="card-tag">UI/UX Design</span>
+                    <a href="#" class="card-link">Tìm hiểu thêm &rarr;</a>
+                </div>
+            </article>
+
+            <!-- Thẻ cột 3 -->
+            <article class="grid-item item-3">
+                <div class="item-icon">📱</div>
+                <h2>Thích Ứng Đa Thiết Bị</h2>
+                <p>Bố cục CSS Grid tự động co giãn linh hoạt trên mọi kích thước màn hình từ Desktop, Tablet cho đến điện thoại di động.</p>
+                <div class="card-footer">
+                    <span class="card-tag">Responsive</span>
+                    <a href="#" class="card-link">Tìm hiểu thêm &rarr;</a>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+</body>
+</html>
