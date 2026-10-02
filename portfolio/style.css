@@ -261,7 +261,7 @@ p {
     margin: 0;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 768px) {
     .page-layout {
         grid-template-columns: minmax(0, 1fr);
         grid-template-rows: auto auto 1fr auto;
