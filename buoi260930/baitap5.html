@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập 5: Trang Chi Tiết Sản Phẩm (Product Layout) - Project Nhóm 2</title>
+    <!-- Nhúng CSS External -->
+    <link rel="stylesheet" href="css/baitap5.css">
+</head>
+<body>
+
+    <div class="product-container">
+
+        <!-- 
+          BỐ CỤC LỚN BẰNG CSS GRID:
+          - Ảnh sản phẩm bên trái: 60%
+          - Thông tin mua hàng bên phải: 40%
+        -->
+        <main class="product-grid">
+
+            <!-- 1. CỘT TRÁI (60%): ẢNH SẢN PHẨM -->
+            <section class="product-gallery">
+                <div class="main-image">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=1000&q=80" alt="Đồng hồ thông minh Pro">
+                </div>
+                <div class="thumbnail-row">
+                    <div class="thumb-item active">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=200&q=80" alt="Thumb 1">
+                    </div>
+                    <div class="thumb-item">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80" alt="Thumb 2">
+                    </div>
+                    <div class="thumb-item">
+                        <img src="https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=200&q=80" alt="Thumb 3">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. CỘT PHẢI (40%): THÔNG TIN MUA HÀNG (SỬ DỤNG FLEXBOX CHO CÁC LỰA CHỌN) -->
+            <section class="product-info">
+                <span class="brand-tag">Tech Gear • Flagship 2026</span>
+                <h1 class="product-title">Titan Chrono Smartwatch Ultra</h1>
+
+                <div class="rating-row">
+                    <span class="stars">★★★★★</span>
+                    <span>4.9 (1.280 đánh giá)</span>
+                    <span>• 3.420 đã bán</span>
+                </div>
+
+                <div class="price-row">
+                    <span class="current-price">$399</span>
+                    <span class="old-price">$499</span>
+                    <span class="discount-badge">TIẾT KIỆM 20%</span>
+                </div>
+
+                <p class="product-desc">
+                    Màn hình Retina AMOLED sắc nét, vỏ hợp kim Titan chuẩn hàng không vũ trụ cùng cảm biến đo nhịp tim thế hệ mới. Thời lượng pin lên đến 14 ngày liên tục.
+                </p>
+
+                <!-- LỰA CHỌN 1: SIZE (DÀN HÀNG BẰNG FLEXBOX) -->
+                <div class="option-group">
+                    <label class="option-label">Kích thước mặt kính:</label>
+                    <div class="size-selector">
+                        <button type="button" class="size-btn">S</button>
+                        <button type="button" class="size-btn active">M</button>
+                        <button type="button" class="size-btn">L</button>
+                        <button type="button" class="size-btn">XL</button>
+                    </div>
+                </div>
+
+                <!-- LỰA CHỌN 2: MÀU SẮC (DÀN HÀNG Ô TRÒN BẰNG FLEXBOX) -->
+                <div class="option-group">
+                    <label class="option-label">Phiên bản màu sắc:</label>
+                    <div class="color-selector">
+                        <span class="color-dot dot-black active" title="Midnight Black"></span>
+                        <span class="color-dot dot-blue" title="Ocean Blue"></span>
+                        <span class="color-dot dot-white" title="Pure Silver"></span>
+                        <span class="color-dot dot-rose" title="Rose Gold"></span>
+                    </div>
+                </div>
+
+                <!-- LỰA CHỌN 3: BỘ TĂNG GIẢM SỐ LƯỢNG & NÚT MUA (FLEXBOX) -->
+                <div class="quantity-actions-row">
+                    <div class="quantity-control">
+                        <button type="button" class="qty-btn">-</button>
+                        <input type="text" class="qty-input" value="1" readonly>
+                        <button type="button" class="qty-btn">+</button>
+                    </div>
+                    <button type="button" class="btn-buy-now">Thêm Vào Giỏ Hàng</button>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

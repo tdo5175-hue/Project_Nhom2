@@ -1,0 +1,285 @@
+/* ==========================================================================
+   BÀI TẬP 4: THANH ĐIỀU HƯỚNG PHỨC HỢP (COMPLEX NAV BAR WITH DROPDOWN)
+   - Header dùng Flexbox và justify-content: space-between (3 nhóm phần tử)
+   - Menu chính có Dropdown thả xuống mượt mà khi hover
+   - Các mục trong Dropdown được dàn trang bằng Flexbox
+   ========================================================================== */
+
+:root {
+    --font-base: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    --color-bg-page: #0b0f19;
+    --color-nav-bg: rgba(21, 29, 48, 0.9);
+    --color-dropdown-bg: #151d30;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-primary: #38bdf8;
+    --color-accent: #6366f1;
+    --color-text-main: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-full: 9999px;
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-dropdown: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: var(--color-bg-page);
+    color: var(--color-text-main);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: HEADER SỬ DỤNG FLEXBOX VÀ justify-content: space-between
+   Phân bổ 3 nhóm: Logo (trái) - Menu (giữa) - Actions (phải)
+   ========================================================================== */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 32px;
+    height: 72px;
+
+    /* Kích hoạt Flexbox và căn cách đều 3 nhóm phần tử */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- NHÓM 1: LOGO (BÊN TRÁI) --- */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--color-text-main);
+}
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.brand-name span {
+    color: var(--color-primary);
+}
+
+/* --- NHÓM 2: MENU CHÍNH (CHÍNH GIỮA) --- */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+}
+
+.nav-item {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.nav-link:hover,
+.nav-item:hover > .nav-link {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link .arrow {
+    font-size: 0.7rem;
+    transition: transform 0.25s ease;
+}
+
+.nav-item:hover .arrow {
+    transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: MENU THẢ XUỐNG (DROPDOWN) DÀN TRANG BẰNG FLEXBOX
+   ========================================================================== */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 280px;
+    background: var(--color-dropdown-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    box-shadow: var(--shadow-dropdown);
+
+    /* Trạng thái ẩn mặc định */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition);
+
+    /* Dàn trang danh sách Dropdown bằng Flexbox dọc */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+}
+
+/* Hiển thị dropdown khi hover */
+.nav-item.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Từng mục con trong Dropdown được dàn trang bằng Flexbox ngang */
+.dropdown-item a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.dropdown-item a:hover {
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.item-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-title {
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.item-desc {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+}
+
+/* --- NHÓM 3: NÚT ACTION (BÊN PHẢI) --- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-login {
+    padding: 8px 18px;
+    color: var(--color-text-main);
+    text-decoration: none;
+    font-size: 0.925rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.btn-login:hover {
+    color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-register {
+    padding: 8px 20px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.925rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    transition: var(--transition);
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
+}
+
+/* Khối nội dung Demo thân trang */
+.hero-showcase {
+    max-width: 900px;
+    margin: 80px auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-showcase h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-showcase p {
+    color: var(--color-text-muted);
+    font-size: 1.15rem;
+    margin-bottom: 32px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .site-header {
+        padding: 0 16px;
+    }
+
+    .nav-menu {
+        display: none; /* Trên thực tế mobile sẽ dùng Burger Menu */
+    }
+}

@@ -1,0 +1,265 @@
+/* ==========================================================================
+   BÀI TẬP 2: BẢNG GIÁ DỊCH VỤ (FLEXBOX PRICING CARDS)
+   - 3 bảng giá nằm ngang hàng nhau bằng Flexbox
+   - Nút "Mua ngay" luôn sát đáy nhờ kỹ thuật: margin-top: auto
+   - Hiệu ứng Hover phóng to nhẹ (transform: scale) và đổi màu nổi bật
+   ========================================================================== */
+
+:root {
+    --font-main: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    --color-bg: #0b0f19;
+    --color-card-bg: #151d30;
+    --color-card-border: rgba(255, 255, 255, 0.08);
+    --color-text-main: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-primary: #38bdf8;
+    --color-accent: #6366f1;
+    --radius-card: 18px;
+    --radius-btn: 10px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
+
+/* Header khu vực bảng giá */
+.pricing-header {
+    text-align: center;
+    max-width: 650px;
+    margin-bottom: 48px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.pricing-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.pricing-header p {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: CONTAINER FLEXBOX CHỨA 3 BẢNG GIÁ NẰM NGANG HÀNG
+   ========================================================================== */
+.pricing-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Đảm bảo cả 3 bảng giá luôn có chiều cao bằng nhau tuyệt đối */
+    gap: 28px;
+    max-width: 1160px;
+    width: 100%;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: THẺ BẢNG GIÁ (FLEXBOX DỌC, NÚT SÁT ĐÁY, HOVER SCALE)
+   ========================================================================== */
+.pricing-card {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-card);
+    padding: 36px 28px;
+    flex: 1; /* Cả 3 thẻ chia đều chiều rộng */
+    max-width: 360px;
+
+    /* Dùng Flexbox dọc để căn giữa và đẩy nút sát đáy */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    position: relative;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    transition: var(--transition);
+}
+
+/* Hiệu ứng HOVER: Phóng to nhẹ và đổi màu sắc nổi bật */
+.pricing-card:hover {
+    transform: scale(1.05) translateY(-8px);
+    border-color: var(--color-primary);
+    box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.7),
+                0 0 25px rgba(56, 189, 248, 0.25);
+}
+
+/* Thẻ nổi bật PRO (Recommended) */
+.pricing-card.popular {
+    border-color: rgba(99, 102, 241, 0.6);
+    background: linear-gradient(180deg, #1a223a 0%, #151d30 100%);
+    box-shadow: 0 15px 35px -10px rgba(99, 102, 241, 0.3);
+}
+
+.pricing-card.popular:hover {
+    border-color: #818cf8;
+    box-shadow: 0 25px 45px -10px rgba(99, 102, 241, 0.4),
+                0 0 30px rgba(129, 140, 248, 0.35);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -14px;
+    background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+}
+
+/* Nội dung bên trong bảng giá */
+.plan-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.plan-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 24px;
+    min-height: 42px; /* Đồng bộ chiều cao dòng mô tả */
+}
+
+.price-box {
+    margin-bottom: 28px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+}
+
+.price-currency {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.price-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.price-period {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+/* Danh sách tính năng */
+.feature-list {
+    list-style: none;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.feature-list li {
+    font-size: 0.925rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-list li.included {
+    color: var(--color-text-main);
+}
+
+.feature-list li .check {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.feature-list li .cross {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: NÚT "MUA NGAY" LUÔN NẰM SÁT ĐÁY (margin-top: auto)
+   ========================================================================== */
+.btn-buy {
+    margin-top: auto; /* Kỹ thuật Flexbox kinh điển: tự động đẩy nút xuống đáy thẻ */
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-btn);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-buy:hover {
+    background: var(--color-primary);
+    color: #0b0f19;
+    border-color: var(--color-primary);
+    box-shadow: 0 8px 16px rgba(56, 189, 248, 0.35);
+}
+
+.pricing-card.popular .btn-buy {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border: none;
+    box-shadow: 0 8px 16px rgba(99, 102, 241, 0.4);
+}
+
+.pricing-card.popular .btn-buy:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #38bdf8 100%);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.6);
+}
+
+/* Responsive trên mobile/tablet */
+@media (max-width: 960px) {
+    .pricing-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pricing-card {
+        max-width: 440px;
+        width: 100%;
+    }
+
+    .pricing-card:hover {
+        transform: scale(1.02) translateY(-4px);
+    }
+}

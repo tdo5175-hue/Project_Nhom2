@@ -1,0 +1,219 @@
+/* ==========================================================================
+   BÀI TẬP 3: LƯỚI ẢNH TỰ DO (CSS GRID MASONRY-LIKE / PINTEREST STYLE)
+   - Khoảng cách giữa các ảnh (gap) đồng nhất chính xác 15px
+   - Sử dụng grid-column: span và grid-row: span đan xen nghệ thuật
+   - grid-auto-flow: dense lấp đầy không gian trống
+   ========================================================================== */
+
+:root {
+    --font-base: 'Segoe UI', Roboto, -apple-system, sans-serif;
+    --color-bg: #090d16;
+    --color-card: #151d30;
+    --color-text-main: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-accent: #38bdf8;
+    --grid-gap: 15px; /* Yêu cầu đề bài: Gap luôn đồng nhất 15px */
+    --radius-img: 14px;
+    --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base);
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
+
+.gallery-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.gallery-header {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.gallery-header h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.gallery-header p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: CSS GRID MASONRY VỚI GAP ĐỒNG NHẤT 15PX
+   ========================================================================== */
+.photo-gallery {
+    display: grid;
+    /* Chia 4 cột bằng nhau */
+    grid-template-columns: repeat(4, 1fr);
+    /* Chiều cao cơ sở mỗi hàng là 170px */
+    grid-auto-rows: 170px;
+    /* Khoảng cách giữa các ô luôn đồng nhất 15px theo đúng yêu cầu đề bài */
+    gap: var(--grid-gap);
+    /* Tự động lấp kín các khoảng trống sinh ra khi các ô có kích thước khác nhau */
+    grid-auto-flow: dense;
+}
+
+/* ==========================================================================
+   CỐT LÕI YÊU CẦU: SỬ DỤNG grid-column: span VÀ grid-row: span ĐAN XEN
+   ========================================================================== */
+.gallery-item {
+    position: relative;
+    border-radius: var(--radius-img);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--color-card);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Ảnh 1: Ô lớn nổi bật (2 cột x 2 hàng) */
+.item-1 {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+/* Ảnh 2: Ô vuông chuẩn (1 cột x 1 hàng) */
+.item-2 {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+/* Ảnh 3: Ô dọc đứng (1 cột x 2 hàng) */
+.item-3 {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+/* Ảnh 4: Ô vuông chuẩn (1 cột x 1 hàng) */
+.item-4 {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+/* Ảnh 5: Ô chữ nhật ngang (2 cột x 1 hàng) */
+.item-5 {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+/* Ảnh 6: Ô dọc đứng (1 cột x 2 hàng) */
+.item-6 {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+/* Ảnh 7: Ô vuông chuẩn (1 cột x 1 hàng) */
+.item-7 {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+/* Ảnh 8: Ô lớn nổi bật (2 cột x 2 hàng) */
+.item-8 {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+/* Ảnh 9: Ô chữ nhật ngang (2 cột x 1 hàng) */
+.item-9 {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+/* Hình ảnh phủ kín khung (object-fit: cover) */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: var(--transition);
+}
+
+/* Hiệu ứng Hover Zoom ảnh */
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+/* Lớp phủ thông tin khi hover (Hover Caption Overlay) */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(9, 13, 22, 0.9) 100%);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    transition: var(--transition);
+}
+
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+
+.overlay h3 {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 4px;
+    transform: translateY(10px);
+    transition: var(--transition);
+}
+
+.overlay p {
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    transform: translateY(10px);
+    transition: var(--transition);
+}
+
+.gallery-item:hover .overlay h3,
+.gallery-item:hover .overlay p {
+    transform: translateY(0);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+    .photo-gallery {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .photo-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 150px;
+    }
+
+    .item-1, .item-8 {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+}
