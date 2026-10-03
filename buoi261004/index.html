@@ -1,11 +1,924 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="theme-color" content="#ffffff">
+    <title>MINI GT™ — Mô Hình Xe Tỉ Lệ 1:64 & Cổng Đặt Trước Pre-Order Chính Thức</title>
+    
+    <!-- Google Fonts: Inter & Montserrat for clean studio collector typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:ital,wght@0,500;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-    <h1>Đang chờ ngày 04/10/2026 để học</h1>
+<body class="light-theme">
+
+    <!-- 1. TOP UTILITY ANNOUNCEMENT BAR (LIGHT CLEAN THEME) -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-left">
+                <span class="live-dot"><i class="fa-solid fa-circle fa-beat-fade"></i></span>
+                <span class="top-announcement-text">Đợt mở đặt trước toàn cầu: <strong>F1 2024 Las Vegas GP & Sterrato All-Terrain Set</strong></span>
+                <span class="top-sep">|</span>
+                <span class="top-deadline"><i class="fa-regular fa-clock"></i> Hạn chót: <strong>28/09/2026</strong></span>
+            </div>
+            <div class="top-bar-right">
+                <button class="top-action-link" onclick="openOrderTrackerModal()"><i class="fa-solid fa-truck-ramp-box"></i> Tra cứu đơn hàng</button>
+                <span class="top-sep">|</span>
+                <span class="hotline-text"><i class="fa-solid fa-phone"></i> Hotline: <strong>0988.164.164</strong></span>
+                <span class="top-sep">|</span>
+                <div class="lang-switch">
+                    <span class="active">VN</span> / <span>EN</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SITE MAIN HEADER (WHITE BACKGROUND, CLEAN BORDER) -->
+    <header class="site-header" id="header">
+        <div class="container header-inner">
+            <!-- Official Brand Logo -->
+            <a href="#" class="brand-logo" aria-label="MINI GT Trang Chủ">
+                <div class="logo-text-group">
+                    <span class="brand-name">MINI</span>
+                    <span class="brand-gt">GT<span class="brand-tm">™</span></span>
+                </div>
+                <span class="brand-scale-badge">1:64 SCALE</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="main-nav" aria-label="Menu chính">
+                <a href="#hero-section" class="nav-item active">Trang chủ</a>
+                <a href="#catalog-section" class="nav-item">Pre-Order 2026 <span class="hot-badge">HOT</span></a>
+                <a href="#catalog-section" class="nav-item" onclick="filterCategoryDirect('f1')">F1® Racing</a>
+                <a href="#catalog-section" class="nav-item" onclick="filterCategoryDirect('sets')">Box Sets</a>
+                <a href="#catalog-section" class="nav-item" onclick="filterCategoryDirect('aoracing')">AO Racing</a>
+                <a href="#features-section" class="nav-item">Về 1:64 Die-cast</a>
+                <a href="#order-guide-section" class="nav-item">Quy trình đặt</a>
+            </nav>
+
+            <!-- Header Action Utilities -->
+            <div class="header-utilities">
+                <!-- Search Box -->
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-ico"></i>
+                    <input type="text" id="headerSearchInput" placeholder="Tìm theo tên, mã #MGT, F1..." autocomplete="off">
+                    <button class="search-clear-btn" id="searchClearBtn" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <!-- Wishlist Button -->
+                <button class="icon-utility-btn" id="wishlistHeaderBtn" title="Mô hình yêu thích" onclick="toggleWishlistDrawer()">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="counter-badge" id="wishlistCount">0</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button class="icon-utility-btn cart-btn-highlight" id="cartHeaderBtn" title="Giỏ hàng Pre-Order" onclick="openCartDrawer()">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="counter-badge" id="cartCount">0</span>
+                </button>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="Mở menu di động">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE NAVIGATION DRAWER -->
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop">
+        <div class="mobile-nav-panel">
+            <div class="mobile-nav-header">
+                <div class="logo-text-group">
+                    <span class="brand-name">MINI</span>
+                    <span class="brand-gt">GT<span class="brand-tm">™</span></span>
+                </div>
+                <button class="btn-close-mobile" id="closeMobileNav"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="mobile-nav-body">
+                <div class="mobile-search-box">
+                    <input type="text" id="mobileSearchInput" placeholder="Tìm mã #MGT hoặc tên xe...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <ul class="mobile-menu-list">
+                    <li><a href="#hero-section" class="mobile-link"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+                    <li><a href="#catalog-section" class="mobile-link" onclick="filterCategoryDirect('preorder')"><i class="fa-solid fa-fire"></i> Đợt Pre-Order Mới Nhất</a></li>
+                    <li><a href="#catalog-section" class="mobile-link" onclick="filterCategoryDirect('f1')"><i class="fa-solid fa-flag-checkered"></i> Formula 1 Series</a></li>
+                    <li><a href="#catalog-section" class="mobile-link" onclick="filterCategoryDirect('sets')"><i class="fa-solid fa-boxes-stacked"></i> Hộp Box Sets</a></li>
+                    <li><a href="#catalog-section" class="mobile-link" onclick="filterCategoryDirect('aoracing')"><i class="fa-solid fa-dragon"></i> AO Racing Collection</a></li>
+                    <li><a href="#features-section" class="mobile-link"><i class="fa-solid fa-certificate"></i> Chuẩn Tỉ Lệ 1:64</a></li>
+                    <li><a href="#order-guide-section" class="mobile-link"><i class="fa-solid fa-clipboard-list"></i> Hướng Dẫn Đặt Cọc</a></li>
+                    <li><a href="javascript:void(0)" class="mobile-link" onclick="openOrderTrackerModal()"><i class="fa-solid fa-truck-fast"></i> Tra Cứu Đơn Hàng</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <!-- 3. HERO SHOWCASE CAROUSEL (EXACT MATCH OF THE REFERENCE BANNER) -->
+        <section class="hero-showcase-section" id="hero-section">
+            <div class="container">
+                <div class="showcase-carousel-wrapper">
+                    
+                    <!-- Slide 1: Exact reference image showcase -->
+                    <div class="showcase-slide active" data-slide-index="0">
+                        <div class="banner-aspect-box">
+                            <img src="./image/hero-banner.png" alt="MINI GT Pre-Order Lineup - September 28th 2026" class="hero-banner-image">
+                            
+                            <!-- Slide interactive controls overlay -->
+                            <button class="slide-nav-btn prev" onclick="prevSlide()" aria-label="Xem trước">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button class="slide-nav-btn next" onclick="nextSlide()" aria-label="Xem tiếp">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+
+                            <!-- Subtle bottom callout actions -->
+                            <div class="banner-click-area" onclick="document.getElementById('catalog-section').scrollIntoView({behavior:'smooth'})" title="Bấm để xem các mẫu mở đặt trước bên dưới"></div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: AO Racing Special Edition -->
+                    <div class="showcase-slide" data-slide-index="1">
+                        <div class="custom-studio-slide aoracing-bg">
+                            <div class="custom-slide-text">
+                                <span class="studio-badge"><i class="fa-solid fa-trophy"></i> IMSA WEATHERTECH CHAMPIONSHIP</span>
+                                <h2>AO RACING DINOSAUR TRIO 1:64</h2>
+                                <p>Bộ ba huyền thoại trường đua: <strong>Rexy (#77 Green T-Rex)</strong>, <strong>Roxy (#77 Pink Dino)</strong> và <strong>Spike (Dragon)</strong>. Đúc kim loại nguyên khối, tem sơn chi tiết tỉ mỉ đến từng chiếc răng.</p>
+                                <div class="slide-cta-row">
+                                    <button class="btn-studio-primary" onclick="filterCategoryDirect('aoracing')">Xem bộ sưu tập Rexy & Roxy <i class="fa-solid fa-arrow-right"></i></button>
+                                    <button class="btn-studio-secondary" onclick="openQuickView('MGT00820')">Xem chi tiết Rexy</button>
+                                </div>
+                            </div>
+                            <div class="custom-slide-image">
+                                <img src="./image/rexy.jpg" alt="Porsche 911 GT3 R Rexy">
+                            </div>
+                            <button class="slide-nav-btn prev" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="slide-nav-btn next" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Formula 1 Las Vegas GP Special -->
+                    <div class="showcase-slide" data-slide-index="2">
+                        <div class="custom-studio-slide f1-bg">
+                            <div class="custom-slide-text">
+                                <span class="studio-badge f1"><i class="fa-solid fa-flag-checkered"></i> FORMULA 1® OFFICIAL LICENSED</span>
+                                <h2>ASTON MARTIN ARAMCO AMR24</h2>
+                                <p>Phiên bản đặc biệt chặng đêm <strong>Las Vegas GP 2024</strong> của tay đua huyền thoại <strong>Fernando Alonso (#14)</strong> và <strong>Lance Stroll (#18)</strong>. Độ hoàn thiện UHD đỉnh cao với cánh gió đa tầng và tem Pirelli.</p>
+                                <div class="slide-cta-row">
+                                    <button class="btn-studio-primary" onclick="filterCategoryDirect('f1')">Xem dòng xe F1 Series <i class="fa-solid fa-arrow-right"></i></button>
+                                    <button class="btn-studio-secondary" onclick="openQuickView('MGT01396')">Xem #14 Alonso</button>
+                                </div>
+                            </div>
+                            <div class="custom-slide-image">
+                                <img src="./image/aston-amr24-alonso.png" alt="Aston Martin AMR24 Alonso">
+                            </div>
+                            <button class="slide-nav-btn prev" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="slide-nav-btn next" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Bottom Dots -->
+                    <div class="carousel-dots-bar">
+                        <span class="dot active" onclick="setSlide(0)"></span>
+                        <span class="dot" onclick="setSlide(1)"></span>
+                        <span class="dot" onclick="setSlide(2)"></span>
+                    </div>
+                </div>
+
+                <!-- LIVE PRE-ORDER COUNTDOWN STRIP (CLEAN WHITE STUDIO CARD) -->
+                <div class="countdown-bar-card">
+                    <div class="countdown-col-left">
+                        <div class="clock-icon-box"><i class="fa-solid fa-stopwatch"></i></div>
+                        <div class="clock-info">
+                            <span class="clock-sub">HỆ THỐNG ĐẶT TRƯỚC TỰ ĐỘNG</span>
+                            <h3 class="clock-main">Đếm ngược đóng cổng Pre-Order (28/09/2026):</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="countdown-boxes-wrap">
+                        <div class="count-box">
+                            <span class="num" id="timerDays">24</span>
+                            <span class="lbl">NGÀY</span>
+                        </div>
+                        <span class="count-colon">:</span>
+                        <div class="count-box">
+                            <span class="num" id="timerHours">18</span>
+                            <span class="lbl">GIỜ</span>
+                        </div>
+                        <span class="count-colon">:</span>
+                        <div class="count-box">
+                            <span class="num" id="timerMins">45</span>
+                            <span class="lbl">PHÚT</span>
+                        </div>
+                        <span class="count-colon">:</span>
+                        <div class="count-box">
+                            <span class="num" id="timerSecs">20</span>
+                            <span class="lbl">GIÂY</span>
+                        </div>
+                    </div>
+
+                    <div class="countdown-col-right">
+                        <a href="#catalog-section" class="btn-fast-order"><i class="fa-solid fa-cart-plus"></i> Đặt cọc giữ mẫu ngay</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. OFFICIAL CATALOG SECTION (PRECISE CARD RECREATION AS IN SCREENSHOT) -->
+        <section class="catalog-section" id="catalog-section">
+            <div class="container">
+                
+                <!-- Category Filter Buttons Bar -->
+                <div class="filter-navigation-bar">
+                    <div class="filter-buttons-scroll">
+                        <button class="filter-pill active" data-category="all" onclick="filterCatalog('all', this)">
+                            <i class="fa-solid fa-grid-2"></i> Tất cả mô hình (<span id="countAll">6</span>)
+                        </button>
+                        <button class="filter-pill" data-category="preorder" onclick="filterCatalog('preorder', this)">
+                            <i class="fa-solid fa-fire"></i> Đang mở Pre-Order
+                        </button>
+                        <button class="filter-pill" data-category="f1" onclick="filterCatalog('f1', this)">
+                            <i class="fa-solid fa-flag-checkered"></i> Formula 1 Series
+                        </button>
+                        <button class="filter-pill" data-category="sets" onclick="filterCatalog('sets', this)">
+                            <i class="fa-solid fa-boxes-stacked"></i> Hộp Box Sets
+                        </button>
+                        <button class="filter-pill" data-category="aoracing" onclick="filterCatalog('aoracing', this)">
+                            <i class="fa-solid fa-dragon"></i> AO Racing GT3
+                        </button>
+                        <button class="filter-pill" data-category="instock" onclick="filterCatalog('instock', this)">
+                            <i class="fa-solid fa-check-circle"></i> Có sẵn giao ngay
+                        </button>
+                    </div>
+
+                    <!-- Sort dropdown -->
+                    <div class="sort-tool-box">
+                        <span class="sort-label"><i class="fa-solid fa-arrow-down-short-wide"></i> Sắp xếp:</span>
+                        <select id="sortSelect" onchange="handleSortChange()">
+                            <option value="featured">Mặc định theo catalogue</option>
+                            <option value="code-asc">Mã MGT (Thấp → Cao)</option>
+                            <option value="code-desc">Mã MGT (Cao → Thấp)</option>
+                            <option value="price-asc">Giá (Thấp → Cao)</option>
+                            <option value="price-desc">Giá (Cao → Thấp)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Live Search Status Banner (Shown when user searches) -->
+                <div class="search-status-bar" id="searchStatusBar" style="display: none;">
+                    <span>Kết quả tìm kiếm cho từ khóa: <strong id="searchKeywordLabel">""</strong> (<span id="searchResultCount">0</span> sản phẩm)</span>
+                    <button class="btn-clear-filter" onclick="resetSearchFilter()"><i class="fa-solid fa-rotate-left"></i> Xóa lọc</button>
+                </div>
+
+                <!-- 3 CARDS LAYOUT EXACTLY ALIGNED WITH REFERENCE IMAGE -->
+                <div class="product-cards-grid" id="productCardsGrid">
+                    
+                    <!-- CARD 1: Lamborghini Huracán Sterrato All-Terrain Set (#MGTS0026) -->
+                    <div class="catalog-card-item" data-code="MGTS0026" data-category="preorder sets" data-price="1850000">
+                        <div class="card-box">
+                            <!-- Image Frame with crisp white background -->
+                            <div class="card-visual-frame" onclick="openQuickView('MGTS0026')">
+                                <img src="./image/lambo-sterrato-set.png" alt="Lamborghini Huracán Sterrato All-Terrain Set" class="card-car-img" loading="lazy">
+                                
+                                <div class="card-hover-overlay">
+                                    <button class="hover-btn quick-view-btn" onclick="event.stopPropagation(); openQuickView('MGTS0026');">
+                                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="hover-btn add-cart-btn" onclick="event.stopPropagation(); addToCart('MGTS0026');">
+                                        <i class="fa-solid fa-cart-plus"></i> Đặt trước
+                                    </button>
+                                </div>
+                                <button class="card-fav-btn" onclick="event.stopPropagation(); toggleWishlist('MGTS0026');" title="Yêu thích">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <span class="card-badge-status preorder">PRE-ORDER</span>
+                            </div>
+
+                            <!-- Text Content Aligned Exactly As In Reference Image -->
+                            <div class="card-caption-block">
+                                <h3 class="card-title" onclick="openQuickView('MGTS0026')" title="Lamborghini Huracán Sterrato All-Terrain Set">
+                                    Lamborghini Huracán Sterrato All-Terrain Set
+                                </h3>
+                                <div class="card-code-line">#MGTS0026</div>
+                                <div class="card-interactive-row">
+                                    <div class="card-price-text">1.850.000₫</div>
+                                    <button class="btn-card-order" onclick="addToCart('MGTS0026')">
+                                        <i class="fa-solid fa-plus"></i> Đặt cọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2: Aston Martin AMR24 #18 Lance Stroll 2024 F1 2024 Las Vegas GP (#MGT01413) -->
+                    <div class="catalog-card-item" data-code="MGT01413" data-category="preorder f1" data-price="420000">
+                        <div class="card-box">
+                            <div class="card-visual-frame" onclick="openQuickView('MGT01413')">
+                                <img src="./image/aston-amr24-stroll.png" alt="Aston Martin AMR24 #18 Lance Stroll 2024 F1 2024 Las Vegas GP" class="card-car-img" loading="lazy">
+                                
+                                <div class="card-hover-overlay">
+                                    <button class="hover-btn quick-view-btn" onclick="event.stopPropagation(); openQuickView('MGT01413');">
+                                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="hover-btn add-cart-btn" onclick="event.stopPropagation(); addToCart('MGT01413');">
+                                        <i class="fa-solid fa-cart-plus"></i> Đặt trước
+                                    </button>
+                                </div>
+                                <button class="card-fav-btn" onclick="event.stopPropagation(); toggleWishlist('MGT01413');" title="Yêu thích">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <span class="card-badge-status preorder">PRE-ORDER</span>
+                            </div>
+
+                            <div class="card-caption-block">
+                                <h3 class="card-title" onclick="openQuickView('MGT01413')" title="Aston Martin AMR24 #18 Lance Stroll 2024 F1 2024 Las Vegas GP">
+                                    Aston Martin AMR24 #18 Lance Stroll 2024 F1 2024 Las Vegas GP
+                                </h3>
+                                <div class="card-code-line">#MGT01413</div>
+                                <div class="card-interactive-row">
+                                    <div class="card-price-text">420.000₫</div>
+                                    <button class="btn-card-order" onclick="addToCart('MGT01413')">
+                                        <i class="fa-solid fa-plus"></i> Đặt cọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3: Aston Martin AMR24 #14 Fernando Alonso 2024 F1 2024 Las Vegas GP (#MGT01396) -->
+                    <div class="catalog-card-item" data-code="MGT01396" data-category="preorder f1" data-price="450000">
+                        <div class="card-box">
+                            <div class="card-visual-frame" onclick="openQuickView('MGT01396')">
+                                <img src="./image/aston-amr24-alonso.png" alt="Aston Martin AMR24 #14 Fernando Alonso 2024 F1 2024 Las Vegas GP" class="card-car-img" loading="lazy">
+                                
+                                <div class="card-hover-overlay">
+                                    <button class="hover-btn quick-view-btn" onclick="event.stopPropagation(); openQuickView('MGT01396');">
+                                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="hover-btn add-cart-btn" onclick="event.stopPropagation(); addToCart('MGT01396');">
+                                        <i class="fa-solid fa-cart-plus"></i> Đặt trước
+                                    </button>
+                                </div>
+                                <button class="card-fav-btn" onclick="event.stopPropagation(); toggleWishlist('MGT01396');" title="Yêu thích">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <span class="card-badge-status preorder">PRE-ORDER</span>
+                            </div>
+
+                            <div class="card-caption-block">
+                                <h3 class="card-title" onclick="openQuickView('MGT01396')" title="Aston Martin AMR24 #14 Fernando Alonso 2024 F1 2024 Las Vegas GP">
+                                    Aston Martin AMR24 #14 Fernando Alonso 2024 F1 2024 Las Vegas GP
+                                </h3>
+                                <div class="card-code-line">#MGT01396</div>
+                                <div class="card-interactive-row">
+                                    <div class="card-price-text">450.000₫</div>
+                                    <button class="btn-card-order" onclick="addToCart('MGT01396')">
+                                        <i class="fa-solid fa-plus"></i> Đặt cọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 4: Porsche 911 GT3 R #77 Rexy (#MGT00820) -->
+                    <div class="catalog-card-item" data-code="MGT00820" data-category="instock aoracing" data-price="390000">
+                        <div class="card-box">
+                            <div class="card-visual-frame" onclick="openQuickView('MGT00820')">
+                                <img src="./image/rexy.jpg" alt="Porsche 911 GT3 R Rexy AO Racing" class="card-car-img" loading="lazy">
+                                
+                                <div class="card-hover-overlay">
+                                    <button class="hover-btn quick-view-btn" onclick="event.stopPropagation(); openQuickView('MGT00820');">
+                                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="hover-btn add-cart-btn buy" onclick="event.stopPropagation(); addToCart('MGT00820');">
+                                        <i class="fa-solid fa-bag-shopping"></i> Mua ngay
+                                    </button>
+                                </div>
+                                <button class="card-fav-btn" onclick="event.stopPropagation(); toggleWishlist('MGT00820');" title="Yêu thích">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <span class="card-badge-status instock">CÒN HÀNG</span>
+                            </div>
+
+                            <div class="card-caption-block">
+                                <h3 class="card-title" onclick="openQuickView('MGT00820')" title="Porsche 911 GT3 R #77 'Rexy' AO Racing 12H Sebring">
+                                    Porsche 911 GT3 R #77 "Rexy" AO Racing 12H Sebring
+                                </h3>
+                                <div class="card-code-line">#MGT00820</div>
+                                <div class="card-interactive-row">
+                                    <div class="card-price-text">390.000₫</div>
+                                    <button class="btn-card-order buy-stock" onclick="addToCart('MGT00820')">
+                                        <i class="fa-solid fa-bag-shopping"></i> Mua ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 5: Porsche 911 GT3 R #77 Roxy (#MGT00821) -->
+                    <div class="catalog-card-item" data-code="MGT00821" data-category="instock aoracing" data-price="390000">
+                        <div class="card-box">
+                            <div class="card-visual-frame" onclick="openQuickView('MGT00821')">
+                                <img src="./image/Roxy.webp" alt="Porsche 911 GT3 R Roxy Pink Dinosaur" class="card-car-img" loading="lazy">
+                                
+                                <div class="card-hover-overlay">
+                                    <button class="hover-btn quick-view-btn" onclick="event.stopPropagation(); openQuickView('MGT00821');">
+                                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="hover-btn add-cart-btn buy" onclick="event.stopPropagation(); addToCart('MGT00821');">
+                                        <i class="fa-solid fa-bag-shopping"></i> Mua ngay
+                                    </button>
+                                </div>
+                                <button class="card-fav-btn" onclick="event.stopPropagation(); toggleWishlist('MGT00821');" title="Yêu thích">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <span class="card-badge-status instock">CÒN HÀNG</span>
+                            </div>
+
+                            <div class="card-caption-block">
+                                <h3 class="card-title" onclick="openQuickView('MGT00821')" title="Porsche 911 GT3 R #77 'Roxy' Pink Dinosaur Edition">
+                                    Porsche 911 GT3 R #77 "Roxy" Pink Dinosaur Edition
+                                </h3>
+                                <div class="card-code-line">#MGT00821</div>
+                                <div class="card-interactive-row">
+                                    <div class="card-price-text">390.000₫</div>
+                                    <button class="btn-card-order buy-stock" onclick="addToCart('MGT00821')">
+                                        <i class="fa-solid fa-bag-shopping"></i> Mua ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARD 6: Porsche 911 GT3 R Spike Dragon (#MGT00822) -->
+                    <div class="catalog-card-item" data-code="MGT00822" data-category="instock aoracing" data-price="390000">
+                        <div class="card-box">
+                            <div class="card-visual-frame" onclick="openQuickView('MGT00822')">
+                                <img src="./image/ske.webp" alt="Porsche 911 GT3 R Spike Dragon SKE" class="card-car-img" loading="lazy">
+                                
+                                <div class="card-hover-overlay">
+                                    <button class="hover-btn quick-view-btn" onclick="event.stopPropagation(); openQuickView('MGT00822');">
+                                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                    </button>
+                                    <button class="hover-btn add-cart-btn buy" onclick="event.stopPropagation(); addToCart('MGT00822');">
+                                        <i class="fa-solid fa-bag-shopping"></i> Mua ngay
+                                    </button>
+                                </div>
+                                <button class="card-fav-btn" onclick="event.stopPropagation(); toggleWishlist('MGT00822');" title="Yêu thích">
+                                    <i class="fa-regular fa-heart"></i>
+                                </button>
+                                <span class="card-badge-status instock">CÒN HÀNG</span>
+                            </div>
+
+                            <div class="card-caption-block">
+                                <h3 class="card-title" onclick="openQuickView('MGT00822')" title="Porsche 911 GT3 R 'Spike' Dragon SKE Motorsport">
+                                    Porsche 911 GT3 R "Spike" Dragon SKE Motorsport
+                                </h3>
+                                <div class="card-code-line">#MGT00822</div>
+                                <div class="card-interactive-row">
+                                    <div class="card-price-text">390.000₫</div>
+                                    <button class="btn-card-order buy-stock" onclick="addToCart('MGT00822')">
+                                        <i class="fa-solid fa-bag-shopping"></i> Mua ngay
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Notice strip under grid -->
+                <div class="prototype-approval-notice">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>* Mọi hình ảnh xe prototype mở đặt trước đều thuộc bản quyền nhà sản xuất và cấp phép từ các hãng xe (Licensor Approval). Sản phẩm thực tế có seal niêm phong chuẩn nhà máy.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. FEATURES / DIECAST STANDARDS (CLEAN STUDIO LIGHT BOXES) -->
+        <section class="features-section" id="features-section">
+            <div class="container">
+                <div class="section-heading-center">
+                    <span class="sub-label">CHUẨN MỰC TỈ LỆ 1:64</span>
+                    <h2>TẠI SAO MINI GT ĐƯỢC GIỚI SƯU TẦM ĐÁNH GIÁ CAO?</h2>
+                    <p>Phát triển bởi tập đoàn TSM-Model, mỗi mẫu xe MINI GT là một kiệt tác cơ khí thu nhỏ đạt chuẩn quốc tế.</p>
+                </div>
+
+                <div class="features-row">
+                    <div class="feature-item-card">
+                        <div class="f-icon"><i class="fa-solid fa-award"></i></div>
+                        <span class="f-number">01</span>
+                        <h4>Bản Quyền Hãng Chính Thức</h4>
+                        <p>Hợp tác trực tiếp cùng Aston Martin F1, Lamborghini, Porsche, Bugatti, Nissan Nismo, Honda Mugen và Liberty Walk (LBWK).</p>
+                    </div>
+
+                    <div class="feature-item-card">
+                        <div class="f-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <span class="f-number">02</span>
+                        <h4>Thân Vỏ Kim Loại Die-Cast</h4>
+                        <p>Đúc hợp kim kẽm áp lực cao nguyên khối, đầm tay, phủ sơn bóng ô tô 3 lớp chống phai màu theo thời gian.</p>
+                    </div>
+
+                    <div class="feature-item-card">
+                        <div class="f-icon"><i class="fa-solid fa-circle-notch"></i></div>
+                        <span class="f-number">03</span>
+                        <h4>Lốp Cao Su Thật Xoay Mượt</h4>
+                        <p>Trang bị lốp cao su có vân rãnh gai thật, bánh xe xoay êm ái kết hợp mâm xe đúc đa chấu sắc nét.</p>
+                    </div>
+
+                    <div class="feature-item-card">
+                        <div class="f-icon"><i class="fa-solid fa-barcode"></i></div>
+                        <span class="f-number">04</span>
+                        <h4>Mã Số Serial Định Danh #MGT</h4>
+                        <p>Mỗi mẫu xe đều mang mã định danh riêng biệt (như #MGT01413, #MGTS0026) giúp theo dõi checklist và gia tăng giá trị sưu tầm.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. PRE-ORDER PROCESS & GUARANTEE TIMELINE -->
+        <section class="order-guide-section" id="order-guide-section">
+            <div class="container">
+                <div class="section-heading-center">
+                    <span class="sub-label">QUY TRÌNH MINH BẠCH</span>
+                    <h2>CÁC BƯỚC ĐẶT TRƯỚC (PRE-ORDER)</h2>
+                    <p>Đơn giản, tiện lợi, đảm bảo bạn nhận được mẫu xe giới hạn với mức giá gốc từ hãng.</p>
+                </div>
+
+                <div class="steps-flow-grid">
+                    <div class="flow-step-card">
+                        <div class="step-num-pill">1</div>
+                        <h4>Chọn Mẫu Xe</h4>
+                        <p>Chọn mẫu xe trong đợt mở bán (hạn chót 28/09/2026) và tiến hành đặt cọc giữ chỗ.</p>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num-pill">2</div>
+                        <h4>Nhận Mã Đơn & Xác Nhận</h4>
+                        <p>Hệ thống tự động cấp mã đơn hàng. Bạn có thể tra cứu tình trạng đơn bất kỳ lúc nào.</p>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num-pill">3</div>
+                        <h4>Sản Xuất & Kiểm Định Seal</h4>
+                        <p>Nhà máy TSM tiến hành đúc xe, dán tem phản quang chống giả và niêm phong hộp giấy/hộp mica.</p>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num-pill">4</div>
+                        <h4>Giao Hàng Bọc Góc Xốp</h4>
+                        <p>Đóng thùng 2 lớp kèm bảo vệ 8 góc hộp nguyên vẹn đến tận tay nhà sưu tầm.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. REVIEWS & COLLECTOR COMMUNITY SECTION -->
+        <section class="reviews-section" id="reviews-section">
+            <div class="container">
+                <div class="section-heading-center">
+                    <span class="sub-label">CỘNG ĐỒNG NHÀ SƯU TẦM</span>
+                    <h2>ĐÁNH GIÁ TỪ CÁC COLLECTOR</h2>
+                    <p>Hơn 5.000+ thành viên câu lạc bộ mô hình 1:64 tại Việt Nam tin tưởng.</p>
+                </div>
+
+                <div class="reviews-grid" id="reviewsGrid">
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="review-text">"Đợt F1 Las Vegas 2024 của Fernando Alonso sơn xanh ánh kim lên màu cực kỳ đỉnh. Đặt cọc đợt trước nhận đúng hạn, góc hộp vuông vắn không bị cấn móp!"</p>
+                        <div class="reviewer-meta">
+                            <div class="reviewer-avatar">HA</div>
+                            <div class="reviewer-info">
+                                <strong>Hoàng Anh</strong>
+                                <span>Collector 1:64 Diecast Sài Gòn</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="review-text">"Set 4 xe Lamborghini Sterrato camo này rất đáng tiền. Hộp box set làm cứng cáp, phối màu ngụy trang All-Terrain cực độc đáo trong tủ trưng bày."</p>
+                        <div class="reviewer-meta">
+                            <div class="reviewer-avatar">TM</div>
+                            <div class="reviewer-info">
+                                <strong>Trần Minh Tuấn</strong>
+                                <span>Hội Đam Mê Xe Mô Hình Hà Nội</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="review-text">"Bộ 3 Rexy, Roxy và Spike của AO Racing mua ở đây luôn chuẩn seal chính hãng MINI GT. Giao hàng nhanh và đóng gói kỹ càng số 1."</p>
+                        <div class="reviewer-meta">
+                            <div class="reviewer-avatar">QL</div>
+                            <div class="reviewer-info">
+                                <strong>Quốc Long</strong>
+                                <span>Sinh viên ĐH Lạc Hồng</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Add Review Form Trigger -->
+                <div class="add-review-box">
+                    <button class="btn-open-review" onclick="toggleReviewForm()"><i class="fa-solid fa-pen-to-square"></i> Viết đánh giá của bạn về sản phẩm</button>
+                    <form id="collectorReviewForm" class="review-form-dropdown" onsubmit="handleReviewSubmit(event)" style="display:none;">
+                        <div class="form-row">
+                            <input type="text" id="revName" placeholder="Họ và tên của bạn..." required>
+                            <select id="revCar">
+                                <option value="MGTS0026">Lamborghini Sterrato Set (#MGTS0026)</option>
+                                <option value="MGT01413">Aston Martin F1 Lance Stroll (#MGT01413)</option>
+                                <option value="MGT01396">Aston Martin F1 Fernando Alonso (#MGT01396)</option>
+                                <option value="MGT00820">Porsche 911 GT3 R Rexy (#MGT00820)</option>
+                            </select>
+                        </div>
+                        <textarea id="revComment" rows="3" placeholder="Nhận xét cảm nhận của bạn về độ hoàn thiện, màu sơn..." required></textarea>
+                        <div class="form-submit-row">
+                            <div class="star-rating-picker">
+                                <span>Đánh giá: </span>
+                                <i class="fa-solid fa-star active" onclick="setRating(1)"></i>
+                                <i class="fa-solid fa-star active" onclick="setRating(2)"></i>
+                                <i class="fa-solid fa-star active" onclick="setRating(3)"></i>
+                                <i class="fa-solid fa-star active" onclick="setRating(4)"></i>
+                                <i class="fa-solid fa-star active" onclick="setRating(5)"></i>
+                            </div>
+                            <button type="submit" class="btn-submit-review">Gửi đánh giá <i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. NEWSLETTER & VIP COLLECTOR SIGNUP -->
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-card-inner">
+                    <div class="newsletter-text">
+                        <span class="vip-tag"><i class="fa-solid fa-crown"></i> VIP COLLECTORS CLUB</span>
+                        <h3>Đăng Ký Nhận Thông Báo Mã #MGT Sớm Nhất</h3>
+                        <p>Nhận ngay thông báo khi mở đợt Pre-order mới, các phiên bản Chase Car (xe hiếm) và ưu đãi độc quyền dành cho thành viên.</p>
+                    </div>
+                    <form class="newsletter-form-inline" onsubmit="handleNewsletterSubmit(event)">
+                        <input type="email" id="nlEmail" placeholder="Nhập địa chỉ email của bạn..." required>
+                        <button type="submit" class="btn-nl-submit"><i class="fa-solid fa-paper-plane"></i> Đăng ký</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 9. CLEAN LIGHT STUDIO FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top-grid">
+                <div class="footer-brand-col">
+                    <div class="logo-text-group">
+                        <span class="brand-name">MINI</span>
+                        <span class="brand-gt">GT<span class="brand-tm">™</span></span>
+                    </div>
+                    <p class="footer-brand-desc">
+                        Cổng thông tin và đặt trước mô hình tĩnh tỉ lệ 1:64 chính hãng TSM-Model / MINI GT tại Việt Nam.
+                    </p>
+                    <div class="footer-socials">
+                        <a href="javascript:void(0)" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="javascript:void(0)" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="javascript:void(0)" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="javascript:void(0)" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links-col">
+                    <h5>Dòng Xe Sưu Tầm</h5>
+                    <ul>
+                        <li><a href="#catalog-section" onclick="filterCategoryDirect('f1')">Formula 1 Series</a></li>
+                        <li><a href="#catalog-section" onclick="filterCategoryDirect('sets')">Hộp Box Sets Đặc Biệt</a></li>
+                        <li><a href="#catalog-section" onclick="filterCategoryDirect('aoracing')">AO Racing Dinosaur Series</a></li>
+                        <li><a href="#catalog-section">Liberty Walk LBWK Series</a></li>
+                        <li><a href="#catalog-section">Kaido House Collab</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-col">
+                    <h5>Chính Sách & Hỗ Trợ</h5>
+                    <ul>
+                        <li><a href="#order-guide-section">Hướng dẫn cọc Pre-Order</a></li>
+                        <li><a href="javascript:void(0)" onclick="openOrderTrackerModal()">Kiểm tra tình trạng đơn</a></li>
+                        <li><a href="#features-section">Bảo hành góc hộp và tem seal</a></li>
+                        <li><a href="javascript:void(0)">Chính sách đổi trả hàng lỗi</a></li>
+                        <li><a href="javascript:void(0)">Hệ thống phân phối đại lý</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact-col">
+                    <h5>Thông Tin Liên Hệ</h5>
+                    <div class="contact-line"><i class="fa-solid fa-location-dot"></i> ĐH Lạc Hồng — Dự Án Nhóm 2 Thiết Kế Web</div>
+                    <div class="contact-line"><i class="fa-solid fa-phone"></i> Hotline: 0988.164.164 (8h00 - 21h00)</div>
+                    <div class="contact-line"><i class="fa-solid fa-envelope"></i> Email: minigt.vietnam@projectnhom2.vn</div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <p>&copy; 2026 MINI GT™ Vietnam Showcase — Dự Án Nhóm 2 Thiết Kế Web ĐH Lạc Hồng. Mọi nhãn hiệu xe thuộc bản quyền của nhà sản xuất tương ứng.</p>
+                <div class="footer-legal-links">
+                    <a href="javascript:void(0)">Điều khoản dịch vụ</a>
+                    <span>•</span>
+                    <a href="javascript:void(0)">Chính sách bảo mật</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 10. QUICK VIEW MODAL (DETAILED SPECS & INTERACTION) -->
+    <div class="modal-layer" id="quickViewModal">
+        <div class="modal-container-box">
+            <button class="modal-close-icon" onclick="closeQuickView()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-inner-grid" id="quickViewContent">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 11. CART & PRE-ORDER SLIDEOUT DRAWER -->
+    <div class="drawer-backdrop" id="cartDrawerBackdrop">
+        <div class="cart-slide-drawer">
+            <div class="drawer-header">
+                <div class="drawer-title">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Giỏ Hàng Pre-Order (<span id="drawerItemCount">0</span>)</span>
+                </div>
+                <button class="drawer-close-btn" onclick="closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="drawer-body" id="cartDrawerList">
+                <!-- Cart items or empty state -->
+            </div>
+
+            <div class="drawer-footer" id="cartDrawerFooter">
+                <!-- Voucher Code Box -->
+                <div class="voucher-box-row">
+                    <input type="text" id="voucherCodeInput" placeholder="Nhập mã giảm giá (VD: MINIGT10)...">
+                    <button type="button" onclick="applyVoucher()">Áp dụng</button>
+                </div>
+                <div id="voucherAppliedMsg" class="voucher-applied-text" style="display:none;"></div>
+
+                <div class="drawer-calc-row">
+                    <span>Tạm tính:</span>
+                    <span id="drawerSubtotalPrice">0₫</span>
+                </div>
+                <div class="drawer-calc-row discount-row" id="drawerDiscountRow" style="display:none;">
+                    <span>Giảm giá (Voucher):</span>
+                    <span id="drawerDiscountPrice">-0₫</span>
+                </div>
+                <div class="drawer-calc-row total-row">
+                    <span>Tổng thanh toán:</span>
+                    <strong id="drawerTotalPrice">0₫</strong>
+                </div>
+                <p class="drawer-note-msg"><i class="fa-solid fa-shield-check"></i> Đảm bảo giữ suất nhận xe đợt đầu và giá gốc nhà sản xuất.</p>
+                <button class="btn-checkout-now" onclick="openCheckoutModal()">
+                    <i class="fa-solid fa-credit-card"></i> Tiến Hành Đặt Cọc
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12. WISHLIST SLIDEOUT DRAWER -->
+    <div class="drawer-backdrop" id="wishlistDrawerBackdrop">
+        <div class="cart-slide-drawer">
+            <div class="drawer-header">
+                <div class="drawer-title">
+                    <i class="fa-solid fa-heart" style="color: #e11d48;"></i>
+                    <span>Mô Hình Yêu Thích (<span id="wishlistDrawerCount">0</span>)</span>
+                </div>
+                <button class="drawer-close-btn" onclick="toggleWishlistDrawer()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="drawer-body" id="wishlistDrawerList">
+                <!-- Wishlist items injected -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 13. CHECKOUT PRE-ORDER MODAL (REAL ORDER FORM) -->
+    <div class="modal-layer" id="checkoutModal">
+        <div class="modal-container-box checkout-modal-box">
+            <button class="modal-close-icon" onclick="closeCheckoutModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="checkout-modal-inner">
+                <div class="checkout-header">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <h3>Xác Nhận Đơn Đặt Trước (Pre-Order)</h3>
+                    <p>Vui lòng điền thông tin để nhận phiếu biên nhận và cập nhật thời gian giao hàng.</p>
+                </div>
+
+                <form class="checkout-form" id="orderCheckoutForm" onsubmit="handleOrderCheckout(event)">
+                    <div class="form-grid-2">
+                        <div class="form-field">
+                            <label>Họ và tên người nhận *</label>
+                            <input type="text" id="custName" placeholder="Nguyễn Văn A" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Số điện thoại nhận hàng *</label>
+                            <input type="tel" id="custPhone" placeholder="0988xxxxxx" required>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Địa chỉ nhận xe mô hình *</label>
+                        <input type="text" id="custAddress" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/TP..." required>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Phương thức cọc / thanh toán</label>
+                        <div class="payment-radios">
+                            <label class="radio-card">
+                                <input type="radio" name="payMethod" value="deposit30" checked>
+                                <div class="radio-info">
+                                    <strong><i class="fa-solid fa-percent"></i> Đặt cọc 30% (Chuyển khoản / QR Pay)</strong>
+                                    <span>Thanh toán 70% còn lại khi nhận xe và kiểm tra seal</span>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="payMethod" value="full100">
+                                <div class="radio-info">
+                                    <strong><i class="fa-solid fa-gift"></i> Thanh toán 100% (Tặng kèm hộp mica bảo vệ)</strong>
+                                    <span>Freeship toàn quốc + Tặng hộp mica trưng bày cao cấp</span>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="payMethod" value="cod">
+                                <div class="radio-info">
+                                    <strong><i class="fa-solid fa-truck-ramp-box"></i> COD Thanh toán khi nhận hàng</strong>
+                                    <span>Nhân viên sẽ gọi điện xác nhận cọc tối thiểu 100k trước khi đóng gói</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Ghi chú đơn hàng (nếu có)</label>
+                        <input type="text" id="custNotes" placeholder="VD: Giao giờ hành chính, bọc kỹ góc hộp...">
+                    </div>
+
+                    <div class="checkout-summary-bar">
+                        <div class="summary-final-total">
+                            <span>Tổng thanh toán:</span>
+                            <strong id="checkoutFinalTotal">0₫</strong>
+                        </div>
+                        <button type="submit" class="btn-confirm-order"><i class="fa-solid fa-check"></i> Hoàn Tất Đặt Đơn</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 14. ORDER TRACKER MODAL -->
+    <div class="modal-layer" id="orderTrackerModal">
+        <div class="modal-container-box" style="max-width: 540px;">
+            <button class="modal-close-icon" onclick="closeOrderTrackerModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="tracker-modal-content">
+                <div class="tracker-header">
+                    <i class="fa-solid fa-magnifying-glass-location"></i>
+                    <h3>Tra Cứu Tiến Độ Đơn Đặt Trước</h3>
+                    <p>Nhập số điện thoại đặt hàng hoặc mã đơn hàng của bạn</p>
+                </div>
+                <div class="tracker-search-form">
+                    <input type="text" id="trackInput" placeholder="Nhập SĐT (VD: 0988xxxxxx) hoặc mã MGT-ORD...">
+                    <button type="button" onclick="performOrderTrack()"><i class="fa-solid fa-search"></i> Kiểm tra</button>
+                </div>
+                <div class="tracker-result-box" id="trackerResultBox" style="display:none;">
+                    <!-- Result output -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 15. SUCCESS ORDER RECEIPT MODAL -->
+    <div class="modal-layer" id="orderSuccessModal">
+        <div class="modal-container-box" style="max-width: 580px;">
+            <button class="modal-close-icon" onclick="closeOrderSuccessModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="order-success-content" id="orderSuccessReceipt">
+                <!-- Injected via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-wrapper" id="toastWrapper"></div>
+
+    <!-- MAIN JAVASCRIPT -->
+    <script src="./script.js"></script>
 </body>
 </html>
