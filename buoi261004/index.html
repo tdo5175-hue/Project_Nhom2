@@ -19,6 +19,9 @@
 </head>
 <body class="light-theme">
 
+    <!-- TOP READING / SCROLL PROGRESS BAR -->
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
     <!-- 1. TOP UTILITY ANNOUNCEMENT BAR (LIGHT CLEAN THEME) -->
     <div class="top-bar">
         <div class="container top-bar-inner">
@@ -58,7 +61,7 @@
                 <a href="#catalog-section" class="nav-item">Pre-Order 2026 <span class="hot-badge">HOT</span></a>
                 <a href="#catalog-section" class="nav-item" onclick="filterCategoryDirect('f1')">F1® Racing</a>
                 <a href="#catalog-section" class="nav-item" onclick="filterCategoryDirect('sets')">Box Sets</a>
-                <a href="#catalog-section" class="nav-item" onclick="filterCategoryDirect('aoracing')">AO Racing</a>
+                <a href="#about-dev-section" class="nav-item"><i class="fa-solid fa-code" style="color:var(--brand-red);"></i> Developer Profile</a>
                 <a href="#features-section" class="nav-item">Về 1:64 Die-cast</a>
                 <a href="#order-guide-section" class="nav-item">Quy trình đặt</a>
             </nav>
@@ -72,6 +75,11 @@
                     <button class="search-clear-btn" id="searchClearBtn" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
                 </div>
 
+                <!-- Sound Effects Toggle -->
+                <button class="icon-utility-btn" id="soundToggleBtn" title="Bật / Tắt âm thanh click" onclick="toggleSound()">
+                    <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+                </button>
+
                 <!-- Wishlist Button -->
                 <button class="icon-utility-btn" id="wishlistHeaderBtn" title="Mô hình yêu thích" onclick="toggleWishlistDrawer()">
                     <i class="fa-regular fa-heart"></i>
@@ -84,9 +92,13 @@
                     <span class="counter-badge" id="cartCount">0</span>
                 </button>
 
-                <!-- Mobile Hamburger Toggle -->
-                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="Mở menu di động">
-                    <i class="fa-solid fa-bars"></i>
+                <!-- ==========================================================================
+                     BÀI 5: MODERN HAMBURGER MENU (BIẾN ĐỔI 3 GẠCH THÀNH DẤU X MƯỢT MÀ)
+                     ========================================================================== -->
+                <button class="modern-hamburger-btn" id="mobileMenuBtn" aria-label="Mở menu di động">
+                    <span class="ham-line line-1"></span>
+                    <span class="ham-line line-2"></span>
+                    <span class="ham-line line-3"></span>
                 </button>
             </div>
         </div>
@@ -127,11 +139,66 @@
             <div class="container">
                 <div class="showcase-carousel-wrapper">
                     
-                    <!-- Slide 1: Exact reference image showcase -->
+                    <!-- Slide 1: Exact reference image showcase with interactive car hotspots -->
                     <div class="showcase-slide active" data-slide-index="0">
                         <div class="banner-aspect-box">
                             <img src="./image/hero-banner.png" alt="MINI GT Pre-Order Lineup - September 28th 2026" class="hero-banner-image">
                             
+                            <!-- INTERACTIVE CAR HOTSPOTS (LUXURY FEATURE) -->
+                            <div class="banner-hotspot" style="top: 32%; left: 45%;" onclick="openHotspotModal('scania')" title="Scania 730S Heavy Transporter">
+                                <span class="hotspot-pin"><i class="fa-solid fa-plus"></i></span>
+                                <div class="hotspot-popover">
+                                    <div class="popover-tag">HEAVY TRANSPORTER</div>
+                                    <strong>Scania 730S 10x4 Crane Bed</strong>
+                                    <span>Mã: #MGT01290 | Tỉ lệ 1:64</span>
+                                </div>
+                            </div>
+
+                            <div class="banner-hotspot" style="top: 48%; left: 66%;" onclick="openQuickView('MGT01396')" title="Aston Martin AMR24 #14 Alonso">
+                                <span class="hotspot-pin"><i class="fa-solid fa-plus"></i></span>
+                                <div class="hotspot-popover">
+                                    <div class="popover-tag f1">F1® 2024 LAS VEGAS GP</div>
+                                    <strong>AMR24 #14 Fernando Alonso</strong>
+                                    <span>Mã: #MGT01396 | UHD Version</span>
+                                </div>
+                            </div>
+
+                            <div class="banner-hotspot" style="top: 43%; left: 57%;" onclick="openQuickView('MGT01413')" title="Aston Martin AMR24 #18 Stroll">
+                                <span class="hotspot-pin"><i class="fa-solid fa-plus"></i></span>
+                                <div class="hotspot-popover">
+                                    <div class="popover-tag f1">F1® 2024 LAS VEGAS GP</div>
+                                    <strong>AMR24 #18 Lance Stroll</strong>
+                                    <span>Mã: #MGT01413 | UHD Version</span>
+                                </div>
+                            </div>
+
+                            <div class="banner-hotspot" style="top: 50%; left: 38%;" onclick="openQuickView('MGTS0026')" title="Lamborghini Huracán Sterrato">
+                                <span class="hotspot-pin"><i class="fa-solid fa-plus"></i></span>
+                                <div class="hotspot-popover">
+                                    <div class="popover-tag lambo">ALL-TERRAIN SET</div>
+                                    <strong>Huracán Sterrato Camo Set</strong>
+                                    <span>Mã: #MGTS0026 | Box 4 Xe</span>
+                                </div>
+                            </div>
+
+                            <div class="banner-hotspot" style="top: 48%; left: 26%;" onclick="openHotspotModal('alphard')" title="Toyota Alphard Sakura Pink">
+                                <span class="hotspot-pin"><i class="fa-solid fa-plus"></i></span>
+                                <div class="hotspot-popover">
+                                    <div class="popover-tag custom">CUSTOM STANCE</div>
+                                    <strong>Toyota Alphard Sakura Edition</strong>
+                                    <span>Mã: #MGT01150 | Tỉ lệ 1:64</span>
+                                </div>
+                            </div>
+
+                            <div class="banner-hotspot" style="top: 49%; left: 48%;" onclick="openHotspotModal('bugatti')" title="Bugatti EB110 Super Sport">
+                                <span class="hotspot-pin"><i class="fa-solid fa-plus"></i></span>
+                                <div class="hotspot-popover">
+                                    <div class="popover-tag bugatti">HYPERCAR CLASSIC</div>
+                                    <strong>Bugatti EB110 Super Sport</strong>
+                                    <span>Mã: #MGT00984 | French Blue</span>
+                                </div>
+                            </div>
+
                             <!-- Slide interactive controls overlay -->
                             <button class="slide-nav-btn prev" onclick="prevSlide()" aria-label="Xem trước">
                                 <i class="fa-solid fa-chevron-left"></i>
@@ -503,6 +570,26 @@
             </div>
         </section>
 
+        <!-- ==========================================================================
+             BÀI 4: PARALLAX IMAGE BANNER (BACKGROUND-ATTACHMENT: FIXED)
+             HIỆU ỨNG ẢNH NỀN DI CHUYỂN CHẬM HƠN NỘI DUNG KHI CUỘN TRANG
+             ========================================================================== -->
+        <section class="parallax-showcase-section" id="parallax-section">
+            <div class="parallax-backdrop-overlay"></div>
+            <div class="container parallax-content-wrap">
+                <span class="parallax-tag-pill"><i class="fa-solid fa-gem"></i> CHUẨN MỰC TỈ LỆ 1:64 CAO CẤP</span>
+                <h2 class="parallax-headline">ĐAM MÊ TỐC ĐỘ TRONG TỪNG CHI TIẾT THU NHỎ</h2>
+                <p class="parallax-subhead">
+                    Chiêm ngưỡng bộ sưu tập MINI GT với công nghệ đúc Die-cast tĩnh chuẩn xác từng milimet. 
+                    Hiệu ứng Parallax tạo chiều sâu điện ảnh sống động khi cuộn trang.
+                </p>
+                <div class="parallax-btn-group">
+                    <a href="#catalog-section" class="btn-parallax-primary"><i class="fa-solid fa-cart-shopping"></i> Đặt trước ngay</a>
+                    <a href="#about-dev-section" class="btn-parallax-secondary"><i class="fa-solid fa-code"></i> Hồ sơ Web Developer</a>
+                </div>
+            </div>
+        </section>
+
         <!-- 5. FEATURES / DIECAST STANDARDS (CLEAN STUDIO LIGHT BOXES) -->
         <section class="features-section" id="features-section">
             <div class="container">
@@ -577,6 +664,196 @@
                         <h4>Giao Hàng Bọc Góc Xốp</h4>
                         <p>Đóng thùng 2 lớp kèm bảo vệ 8 góc hộp nguyên vẹn đến tận tay nhà sưu tầm.</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             BÀI 2, BÀI 3, BÀI 6: ĐỘI NGŨ PHÁT TRIỂN & PROFILE WEB DEVELOPER
+             ========================================================================== -->
+        <section class="developer-profile-section" id="about-dev-section">
+            <div class="container">
+                
+                <!-- BÀI 3: TYPING EFFECT (SỬ DỤNG CSS THUẦN, KHÔNG DÙNG JS) -->
+                <div class="typing-effect-wrapper">
+                    <span class="typing-badge"><i class="fa-solid fa-terminal"></i> PROFILE DEVELOPER & NHÓM DỰ ÁN</span>
+                    <div class="typing-console-box">
+                        <span class="prompt-symbol">&gt;_</span>
+                        <h2 class="typing-css-text">Tôi là một Web Developer...</h2>
+                    </div>
+                    <p class="typing-sub-caption">
+                        Dự án Thiết Kế Website Bán Hàng Mô Hình MINI GT™ Tỉ Lệ 1:64 — Nhóm 2, Khoa Kỹ Thuật Máy Tính &amp; Thiết Kế Web, Đại Học Lạc Hồng.
+                    </p>
+                </div>
+
+                <div class="dev-content-grid">
+                    
+                    <!-- BÀI 2: CARD FLIP EFFECT (THẺ NHÂN SỰ LẬT 180 ĐỘ KHI HOVER) -->
+                    <div class="personnel-column">
+                        <div class="personnel-header">
+                            <i class="fa-solid fa-id-card-clip"></i>
+                            <h3>THẺ NHÂN SỰ DỰ ÁN (CARD FLIP EFFECT)</h3>
+                            <p>Rê chuột vào thẻ để lật 180 độ xem thông tin liên hệ chi tiết ở mặt sau</p>
+                        </div>
+
+                        <div class="cards-flip-row">
+                            <!-- Thẻ nhân sự 1 -->
+                            <div class="flip-card-wrapper">
+                                <div class="flip-card-inner">
+                                    <!-- Mặt trước (Front) -->
+                                    <div class="flip-card-face flip-card-front">
+                                        <div class="dev-avatar-ring">
+                                            <div class="dev-avatar-img avatar-1">VM</div>
+                                            <span class="online-indicator" title="Đang trực tuyến"></span>
+                                        </div>
+                                        <h4 class="dev-name">Nguyễn Văn Minh</h4>
+                                        <span class="dev-role-pill">Lead Web Developer</span>
+                                        <p class="dev-bio">Chịu trách nhiệm kiến trúc mã nguồn HTML5/CSS3, tương tác JS và tối ưu hiệu năng 60FPS.</p>
+                                        <div class="flip-instruction-tag">
+                                            <i class="fa-solid fa-arrows-rotate fa-spin"></i> Rê chuột để lật thẻ
+                                        </div>
+                                    </div>
+                                    <!-- Mặt sau (Back) -->
+                                    <div class="flip-card-face flip-card-back">
+                                        <div class="back-card-header">
+                                            <i class="fa-solid fa-address-card"></i>
+                                            <h5>THÔNG TIN LIÊN HỆ</h5>
+                                        </div>
+                                        <ul class="back-contact-list">
+                                            <li><i class="fa-solid fa-envelope"></i> <span>minh.nv@lhu.edu.vn</span></li>
+                                            <li><i class="fa-solid fa-phone"></i> <span>0988.164.164</span></li>
+                                            <li><i class="fa-solid fa-location-dot"></i> <span>ĐH Lạc Hồng, Đồng Nai</span></li>
+                                            <li><i class="fa-solid fa-graduation-cap"></i> <span>Khoa CNTT - Thiết Kế Web</span></li>
+                                        </ul>
+                                        <div class="back-social-links">
+                                            <a href="javascript:void(0)" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                                            <a href="javascript:void(0)" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                                            <a href="javascript:void(0)" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                        </div>
+                                        <button class="btn-back-connect" onclick="showToast('Đang kết nối tới chuyên viên Nguyễn Văn Minh...')">
+                                            <i class="fa-solid fa-paper-plane"></i> Gửi tin nhắn
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thẻ nhân sự 2 -->
+                            <div class="flip-card-wrapper">
+                                <div class="flip-card-inner">
+                                    <!-- Mặt trước (Front) -->
+                                    <div class="flip-card-face flip-card-front">
+                                        <div class="dev-avatar-ring">
+                                            <div class="dev-avatar-img avatar-2">TQ</div>
+                                            <span class="online-indicator" title="Đang trực tuyến"></span>
+                                        </div>
+                                        <h4 class="dev-name">Trần Minh Quân</h4>
+                                        <span class="dev-role-pill ui">UI/UX &amp; 3D Designer</span>
+                                        <p class="dev-bio">Thiết kế phong cách Studio trắng sang trọng, dựng hiệu ứng 3D Tilt và tối ưu trải nghiệm người dùng.</p>
+                                        <div class="flip-instruction-tag">
+                                            <i class="fa-solid fa-arrows-rotate fa-spin"></i> Rê chuột để lật thẻ
+                                        </div>
+                                    </div>
+                                    <!-- Mặt sau (Back) -->
+                                    <div class="flip-card-face flip-card-back">
+                                        <div class="back-card-header">
+                                            <i class="fa-solid fa-address-card"></i>
+                                            <h5>THÔNG TIN LIÊN HỆ</h5>
+                                        </div>
+                                        <ul class="back-contact-list">
+                                            <li><i class="fa-solid fa-envelope"></i> <span>quan.design@lhu.edu.vn</span></li>
+                                            <li><i class="fa-solid fa-phone"></i> <span>0977.264.264</span></li>
+                                            <li><i class="fa-solid fa-location-dot"></i> <span>Biên Hòa, Đồng Nai</span></li>
+                                            <li><i class="fa-solid fa-palette"></i> <span>Figma &amp; Modern UI/UX</span></li>
+                                        </ul>
+                                        <div class="back-social-links">
+                                            <a href="javascript:void(0)" title="Behance"><i class="fa-brands fa-behance"></i></a>
+                                            <a href="javascript:void(0)" title="Dribbble"><i class="fa-brands fa-dribbble"></i></a>
+                                            <a href="javascript:void(0)" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                                        </div>
+                                        <button class="btn-back-connect" onclick="showToast('Đang kết nối tới chuyên viên Trần Minh Quân...')">
+                                            <i class="fa-solid fa-paper-plane"></i> Gửi tin nhắn
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BÀI 6: SKILL BAR ANIMATION (CHẠY TỪ 0% ĐẾN GIÁ TRỊ ĐÍCH KHI LOAD) -->
+                    <div class="skills-column">
+                        <div class="skills-box-card">
+                            <div class="skills-card-header">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <div>
+                                    <h3>KỸ NĂNG &amp; NĂNG LỰC DỰ ÁN (BÀI 6)</h3>
+                                    <span>Tự động animate chạy từ 0% đến giá trị đích khi trang tải xong</span>
+                                </div>
+                            </div>
+
+                            <div class="skill-bar-list" id="skillBarList">
+                                <!-- Skill 1 -->
+                                <div class="skill-item-row">
+                                    <div class="skill-label-wrap">
+                                        <span class="skill-title"><i class="fa-brands fa-html5" style="color: #e34f26;"></i> HTML5 Semantic &amp; Cấu Trúc Chuẩn SEO</span>
+                                        <span class="skill-target-val">90%</span>
+                                    </div>
+                                    <div class="skill-track-bar">
+                                        <div class="skill-fill-progress" data-progress="90%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 2 -->
+                                <div class="skill-item-row">
+                                    <div class="skill-label-wrap">
+                                        <span class="skill-title"><i class="fa-brands fa-css3-alt" style="color: #1572b6;"></i> CSS3 Flexbox, Grid &amp; Animation 3D</span>
+                                        <span class="skill-target-val">85%</span>
+                                    </div>
+                                    <div class="skill-track-bar">
+                                        <div class="skill-fill-progress" data-progress="85%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 3 -->
+                                <div class="skill-item-row">
+                                    <div class="skill-label-wrap">
+                                        <span class="skill-title"><i class="fa-brands fa-js" style="color: #f7df1e;"></i> JavaScript ES6+ &amp; Web Audio Synthesizer</span>
+                                        <span class="skill-target-val">80%</span>
+                                    </div>
+                                    <div class="skill-track-bar">
+                                        <div class="skill-fill-progress" data-progress="80%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 4 -->
+                                <div class="skill-item-row">
+                                    <div class="skill-label-wrap">
+                                        <span class="skill-title"><i class="fa-solid fa-mobile-screen" style="color: #10b981;"></i> Responsive Design Đa Thiết Bị</span>
+                                        <span class="skill-target-val">95%</span>
+                                    </div>
+                                    <div class="skill-track-bar">
+                                        <div class="skill-fill-progress" data-progress="95%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Skill 5 -->
+                                <div class="skill-item-row">
+                                    <div class="skill-label-wrap">
+                                        <span class="skill-title"><i class="fa-solid fa-gauge-high" style="color: #d90429;"></i> Tối Ưu Hiệu Năng 60FPS (Performance)</span>
+                                        <span class="skill-target-val">88%</span>
+                                    </div>
+                                    <div class="skill-track-bar">
+                                        <div class="skill-fill-progress" data-progress="88%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="skills-card-footer">
+                                <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>
+                                <span>Được kiểm định chất lượng sản phẩm chuẩn bài tập Thiết Kế Web Nhóm 2.</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -914,6 +1191,58 @@
             </div>
         </div>
     </div>
+
+    <!-- ==========================================================================
+         BÀI 1: FLOATING ACTION BUTTON (FAB)
+         NÚT TRÒN "LIÊN HỆ" LUÔN NẰM Ở GÓC MÀN HÌNH VỚI HIỆU ỨNG PHẬP PHỒNG (PULSE ANIMATION)
+         ========================================================================== -->
+    <div class="fab-contact-container" id="fabContactContainer">
+        <!-- Menu bung lên khi click vào FAB -->
+        <div class="fab-popup-menu" id="fabPopupMenu">
+            <a href="tel:0988164164" class="fab-popup-item phone" title="Gọi Hotline">
+                <div class="item-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="item-text">
+                    <strong>Hotline Tư Vấn</strong>
+                    <span>0988.164.164 (24/7)</span>
+                </div>
+            </a>
+            <a href="javascript:void(0)" onclick="openOrderTrackerModal(); toggleFabMenu();" class="fab-popup-item tracker" title="Kiểm tra đơn hàng">
+                <div class="item-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div class="item-text">
+                    <strong>Tra Cứu Đơn Pre-Order</strong>
+                    <span>Kiểm tra tiến độ giao</span>
+                </div>
+            </a>
+            <a href="javascript:void(0)" onclick="openCartDrawer(); toggleFabMenu();" class="fab-popup-item cart" title="Mở giỏ hàng">
+                <div class="item-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                <div class="item-text">
+                    <strong>Giỏ Hàng Của Bạn</strong>
+                    <span>Xem lại các mẫu đã chọn</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Nút tròn FAB chính phập phồng (Pulse) -->
+        <button class="fab-main-circle" id="fabMainBtn" onclick="toggleFabMenu()" aria-label="Nút liên hệ hỗ trợ">
+            <!-- 2 vòng sóng radar phập phồng pulse -->
+            <span class="fab-pulse-ring wave-1"></span>
+            <span class="fab-pulse-ring wave-2"></span>
+            
+            <div class="fab-circle-content">
+                <i class="fa-solid fa-headset icon-default"></i>
+                <i class="fa-solid fa-xmark icon-close"></i>
+            </div>
+            <span class="fab-tooltip-pill">Liên hệ</span>
+        </button>
+    </div>
+
+    <!-- FLOATING BACK TO TOP WITH CIRCULAR PROGRESS RING -->
+    <button class="back-to-top-btn" id="backToTopBtn" onclick="scrollToTopSmooth()" title="Lên đầu trang">
+        <svg class="progress-ring" width="46" height="46">
+            <circle class="progress-ring-circle" stroke="#d90429" stroke-width="3" fill="transparent" r="20" cx="23" cy="23"/>
+        </svg>
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div class="toast-wrapper" id="toastWrapper"></div>

@@ -1,10 +1,11 @@
 /**
  * MINI GT™ Official Showcase & Pre-Order Portal
- * JavaScript Interactive Core
+ * JavaScript Luxury Interactive Core
  * Nhóm 2 - Đại Học Lạc Hồng
+ * Features: 3D Tilt Parallax, Banner Hotspots, Web Audio FX, Scroll Progress Circle, Magnifying Loupe
  */
 
-// 1. CARS DATABASE
+// 1. CARS DATABASE (EXTENDED WITH HERO BANNER SPOTLIGHT MODELS)
 const CARS_DATABASE = {
   'MGTS0026': {
     code: 'MGTS0026',
@@ -137,6 +138,69 @@ const CARS_DATABASE = {
       'Livery': 'Spike The Dragon',
       'Tình trạng': 'Sẵn sàng giao hàng toàn quốc'
     }
+  },
+  'MGT01290': {
+    code: 'MGT01290',
+    subcode: 'Heavy Transporter Edition',
+    title: 'Scania 730S 10x4 Heavy Recovery Transporter - Orange',
+    brand: 'Scania Officially Licensed',
+    category: 'preorder sets',
+    price: 980000,
+    priceFormatted: '980.000₫',
+    image: './image/hero-banner.png',
+    status: 'Pre-Order (Hạn chót: 28/09/2026)',
+    scale: '1:64 Scale (~16.5 cm)',
+    material: 'Đầu kéo hợp kim Die-cast nặng tay, cần cẩu gấp gọn linh hoạt',
+    packaging: 'Hộp Deluxe Box chuyên dụng',
+    description: 'Xe đầu kéo siêu trường siêu trọng Scania 730S 10x4 màu cam rực rỡ xuất hiện tại trung tâm banner triển lãm MINI GT. Thùng xe có thể nghiêng, cẩu cứu hộ nâng hạ mô phỏng thực tế chở các mẫu siêu xe F1.',
+    specs: {
+      'Tỉ lệ': '1:64 True Die-Cast',
+      'Dài': '~16.5 cm',
+      'Khung gầm': '10 bánh xe cao su xoay độc lập',
+      'Cơ chế': 'Sàn chở xe nghiêng trượt, cẩu nâng xoay'
+    }
+  },
+  'MGT01150': {
+    code: 'MGT01150',
+    subcode: 'Sakura Stance Custom',
+    title: 'Toyota Alphard Custom Bodykit - Sakura Pink Edition',
+    brand: 'Toyota Motor Corporation Licensed',
+    category: 'preorder sets',
+    price: 460000,
+    priceFormatted: '460.000₫',
+    image: './image/hero-banner.png',
+    status: 'Pre-Order (Hạn chót: 28/09/2026)',
+    scale: '1:64 Scale (~7.8 cm)',
+    material: 'Thân đúc Die-cast sơn bóng 3 lớp hồng Sakura phấn, hạ gầm camber',
+    packaging: 'Hộp tiêu chuẩn seal niêm phong',
+    description: 'Mẫu xe minivan hạng sang Alphard độ thân rộng Stance cực kỳ cá tính với màu sơn hồng phấn Sakura, kính nóc kép trong suốt và mâm thể thao mạ chrome.',
+    specs: {
+      'Tỉ lệ': '1:64 Scale',
+      'Màu sơn': 'Sakura Pink Pearl',
+      'Nội thất': 'Ghế cơ trưởng bọc da kem chi tiết',
+      'Hạ gầm': 'Stance Camber phong cách Nhật Bản'
+    }
+  },
+  'MGT00984': {
+    code: 'MGT00984',
+    subcode: 'French Racing Blue Classic',
+    title: 'Bugatti EB110 Super Sport - French Racing Blue',
+    brand: 'Bugatti Automobiles S.A.S. Licensed',
+    category: 'preorder sets',
+    price: 440000,
+    priceFormatted: '440.000₫',
+    image: './image/hero-banner.png',
+    status: 'Pre-Order (Hạn chót: 28/09/2026)',
+    scale: '1:64 Scale (~7.0 cm)',
+    material: 'Thân đúc Die-cast kim loại, cánh gió khí động học sợi carbon',
+    packaging: 'Hộp tiêu chuẩn seal niêm phong',
+    description: 'Huyền thoại siêu xe thập niên 90 Bugatti EB110 Super Sport mang màu xanh đua nước Pháp danh tiếng. Động cơ V12 Quad-Turbo lộ diện qua nắp kính khoang máy.',
+    specs: {
+      'Tỉ lệ': '1:64 Scale',
+      'Động cơ': 'V12 Quad-Turbo thu nhỏ sắc nét',
+      'Mâm xe': 'Mâm BBS đa chấu màu bạc ánh kim',
+      'Bản quyền': 'Bugatti S.A.S.'
+    }
   }
 };
 
@@ -147,6 +211,83 @@ let currentSlide = 0;
 let slideInterval = null;
 let activeDiscount = 0; // percentage
 let userOrders = JSON.parse(localStorage.getItem('minigt_orders') || '[]');
+let isSoundEnabled = localStorage.getItem('minigt_sound') !== 'false'; // default true
+
+// WEB AUDIO API SYNTHESIZER (NO EXTERNAL AUDIO FILES NEEDED)
+let audioCtx = null;
+
+function initAudio() {
+  if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+  }
+}
+
+function playClickSound(type = 'click') {
+  if (!isSoundEnabled) return;
+  try {
+    initAudio();
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const now = audioCtx.currentTime;
+
+    if (type === 'click') {
+      // Soft mechanical click
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(300, now + 0.04);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.04);
+    } else if (type === 'favorite') {
+      // Heart pop chime
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } else if (type === 'success') {
+      // Harmonious success chime
+      [523.25, 659.25, 783.99].forEach((freq, i) => {
+        const subOsc = audioCtx.createOscillator();
+        const subGain = audioCtx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(freq, now + i * 0.06);
+        subGain.gain.setValueAtTime(0.1, now + i * 0.06);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.25);
+        subOsc.connect(subGain);
+        subGain.connect(audioCtx.destination);
+        subOsc.start(now + i * 0.06);
+        subOsc.stop(now + i * 0.06 + 0.25);
+      });
+    }
+  } catch (err) {
+    // Graceful fallback
+  }
+}
+
+function toggleSound() {
+  isSoundEnabled = !isSoundEnabled;
+  localStorage.setItem('minigt_sound', isSoundEnabled);
+  const icon = document.getElementById('soundIcon');
+  if (icon) {
+    icon.className = isSoundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+  }
+  showToast(isSoundEnabled ? 'Đã bật hiệu ứng âm thanh click' : 'Đã tắt hiệu ứng âm thanh');
+  if (isSoundEnabled) playClickSound('click');
+}
 
 // SAMPLE SEED ORDER IF EMPTY
 if (userOrders.length === 0) {
@@ -168,8 +309,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initCountdown();
   initHeaderSearch();
   initMobileNav();
+  init3DCardTilt();
+  initScrollProgressAndBackToTop();
+  initSkillBars(); // Bài 6: Chạy animation thanh kỹ năng
   updateCartUI();
   updateWishlistUI();
+
+  // Sync sound icon state
+  const icon = document.getElementById('soundIcon');
+  if (icon) {
+    icon.className = isSoundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+  }
 });
 
 /* ==========================================================================
@@ -196,6 +346,7 @@ function showSlide(index) {
 
   slides[currentSlide].classList.add('active');
   if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+  playClickSound('click');
 }
 
 function nextSlide() {
@@ -220,7 +371,108 @@ function stopCarouselAuto() {
 }
 
 /* ==========================================================================
-   2. COUNTDOWN TIMER
+   2. INTERACTIVE 3D TILT & SPECULAR GLARE (OPTIMIZED RAF)
+   ========================================================================== */
+function init3DCardTilt() {
+  const cards = document.querySelectorAll('.catalog-card-item');
+
+  cards.forEach(cardItem => {
+    const cardBox = cardItem.querySelector('.card-box');
+    if (!cardBox) return;
+
+    let isHovering = false;
+
+    cardItem.addEventListener('mouseenter', () => {
+      isHovering = true;
+    });
+
+    cardItem.addEventListener('mousemove', (e) => {
+      if (!isHovering) return;
+      const rect = cardItem.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -8; // max tilt 8 deg
+      const rotateY = ((x - centerX) / centerX) * 8;
+
+      requestAnimationFrame(() => {
+        cardBox.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+        cardBox.style.setProperty('--card-mouse-x', `${(x / rect.width) * 100}%`);
+        cardBox.style.setProperty('--card-mouse-y', `${(y / rect.height) * 100}%`);
+      });
+    });
+
+    cardItem.addEventListener('mouseleave', () => {
+      isHovering = false;
+      cardBox.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+    });
+  });
+}
+
+/* ==========================================================================
+   3. SCROLL PROGRESS BAR & FLOATING CIRCULAR BACK-TO-TOP
+   ========================================================================== */
+function initScrollProgressAndBackToTop() {
+  const progressBar = document.getElementById('scrollProgressBar');
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  const circle = document.querySelector('.progress-ring-circle');
+  const header = document.getElementById('header');
+
+  const circumference = 2 * Math.PI * 20; // r=20 => ~125.66
+  if (circle) {
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = `${circumference}`;
+  }
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+
+    // Progress bar
+    if (progressBar) {
+      progressBar.style.width = `${Math.min(scrollPercent * 100, 100)}%`;
+    }
+
+    // Circular ring
+    if (circle) {
+      const offset = circumference - (scrollPercent * circumference);
+      circle.style.strokeDashoffset = offset;
+    }
+
+    // Back to top visibility
+    if (backToTopBtn) {
+      if (scrollTop > 280) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }
+
+    // Header compact mode on scroll
+    if (header) {
+      if (scrollTop > 50) {
+        header.classList.add('scrolled-down');
+      } else {
+        header.classList.remove('scrolled-down');
+      }
+    }
+  }, { passive: true });
+}
+
+function scrollToTopSmooth() {
+  playClickSound('click');
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+/* ==========================================================================
+   4. COUNTDOWN TIMER
    ========================================================================== */
 function initCountdown() {
   const targetDate = new Date('2026-09-28T23:59:59').getTime();
@@ -258,9 +510,10 @@ function initCountdown() {
 }
 
 /* ==========================================================================
-   3. CATALOG FILTERING, LIVE SEARCH & SORT
+   5. CATALOG FILTERING, LIVE SEARCH & SORT
    ========================================================================== */
 function filterCatalog(category, btnElement) {
+  playClickSound('click');
   const pills = document.querySelectorAll('.filter-pill');
   pills.forEach(p => p.classList.remove('active'));
   if (btnElement) btnElement.classList.add('active');
@@ -332,6 +585,7 @@ function initHeaderSearch() {
 
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
+      playClickSound('click');
       if (searchInput) searchInput.value = '';
       doSearch('');
     });
@@ -347,6 +601,7 @@ function initHeaderSearch() {
 }
 
 function resetSearchFilter() {
+  playClickSound('click');
   const searchInput = document.getElementById('headerSearchInput');
   if (searchInput) searchInput.value = '';
   const clearBtn = document.getElementById('searchClearBtn');
@@ -357,6 +612,7 @@ function resetSearchFilter() {
 }
 
 function handleSortChange() {
+  playClickSound('click');
   const sortVal = document.getElementById('sortSelect').value;
   const grid = document.getElementById('productCardsGrid');
   const cards = Array.from(grid.querySelectorAll('.catalog-card-item'));
@@ -378,9 +634,17 @@ function handleSortChange() {
 }
 
 /* ==========================================================================
-   4. QUICK VIEW MODAL
+   6. QUICK VIEW MODAL & MAGNIFYING LENS ZOOM
    ========================================================================== */
+function openHotspotModal(type) {
+  playClickSound('click');
+  if (type === 'scania') openQuickView('MGT01290');
+  else if (type === 'alphard') openQuickView('MGT01150');
+  else if (type === 'bugatti') openQuickView('MGT00984');
+}
+
 function openQuickView(code) {
+  playClickSound('click');
   const item = CARS_DATABASE[code];
   if (!item) return;
 
@@ -391,8 +655,9 @@ function openQuickView(code) {
   }
 
   content.innerHTML = `
-    <div class="qv-media-frame">
-      <img src="${item.image}" alt="${item.title}">
+    <div class="qv-media-frame" id="qvMediaFrame">
+      <img src="${item.image}" alt="${item.title}" id="qvMainImg">
+      <div class="qv-loupe-indicator"><i class="fa-solid fa-magnifying-glass-plus"></i> Rê chuột để soi chi tiết 1:64</div>
     </div>
     <div class="qv-details-wrap">
       <span class="car-brand-tag">${item.brand}</span>
@@ -421,29 +686,50 @@ function openQuickView(code) {
     </div>
   `;
 
+  // Attach Magnifying Lens on image
+  const frame = document.getElementById('qvMediaFrame');
+  const img = document.getElementById('qvMainImg');
+  if (frame && img) {
+    frame.addEventListener('mousemove', (e) => {
+      const rect = frame.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      img.style.transformOrigin = `${x}% ${y}%`;
+      img.style.transform = 'scale(2.2)';
+    });
+
+    frame.addEventListener('mouseleave', () => {
+      img.style.transform = 'scale(1)';
+    });
+  }
+
   document.getElementById('quickViewModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
 function closeQuickView() {
+  playClickSound('click');
   document.getElementById('quickViewModal').classList.remove('active');
   document.body.style.overflow = 'auto';
 }
 
 /* ==========================================================================
-   5. CART DRAWER & MANAGEMENT
+   7. CART DRAWER & MANAGEMENT
    ========================================================================== */
 function openCartDrawer() {
+  playClickSound('click');
   document.getElementById('cartDrawerBackdrop').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
 function closeCartDrawer() {
+  playClickSound('click');
   document.getElementById('cartDrawerBackdrop').classList.remove('active');
   document.body.style.overflow = 'auto';
 }
 
 function addToCart(code) {
+  playClickSound('click');
   const car = CARS_DATABASE[code];
   if (!car) return;
 
@@ -467,6 +753,7 @@ function addToCart(code) {
 }
 
 function changeCartQty(code, delta) {
+  playClickSound('click');
   const item = cart.find(c => c.code === code);
   if (!item) return;
 
@@ -480,6 +767,7 @@ function changeCartQty(code, delta) {
 }
 
 function removeFromCart(code) {
+  playClickSound('click');
   cart = cart.filter(c => c.code !== code);
   saveCart();
   updateCartUI();
@@ -487,6 +775,7 @@ function removeFromCart(code) {
 }
 
 function applyVoucher() {
+  playClickSound('click');
   const input = document.getElementById('voucherCodeInput');
   const msgEl = document.getElementById('voucherAppliedMsg');
   const val = input ? input.value.trim().toUpperCase() : '';
@@ -521,7 +810,11 @@ function updateCartUI() {
   const cartCountEl = document.getElementById('cartCount');
   const drawerCountEl = document.getElementById('drawerItemCount');
   
-  if (cartCountEl) cartCountEl.innerText = totalCount;
+  if (cartCountEl) {
+    cartCountEl.innerText = totalCount;
+    cartCountEl.style.transform = 'scale(1.3)';
+    setTimeout(() => { cartCountEl.style.transform = 'scale(1)'; }, 200);
+  }
   if (drawerCountEl) drawerCountEl.innerText = totalCount;
 
   const listEl = document.getElementById('cartDrawerList');
@@ -590,9 +883,10 @@ function updateCartUI() {
 }
 
 /* ==========================================================================
-   6. WISHLIST MANAGEMENT
+   8. WISHLIST MANAGEMENT
    ========================================================================== */
 function toggleWishlist(code) {
+  playClickSound('favorite');
   const idx = wishlist.indexOf(code);
   const cardFavBtns = document.querySelectorAll(`.catalog-card-item[data-code="${code}"] .card-fav-btn`);
 
@@ -611,6 +905,7 @@ function toggleWishlist(code) {
 }
 
 function toggleWishlistDrawer() {
+  playClickSound('click');
   const drawer = document.getElementById('wishlistDrawerBackdrop');
   if (drawer) {
     drawer.classList.toggle('active');
@@ -671,9 +966,10 @@ function renderWishlistDrawer() {
 }
 
 /* ==========================================================================
-   7. CHECKOUT PRE-ORDER FLOW & RECEIPT
+   9. CHECKOUT PRE-ORDER FLOW & RECEIPT
    ========================================================================== */
 function openCheckoutModal() {
+  playClickSound('click');
   if (cart.length === 0) {
     alert('Giỏ hàng của bạn đang trống!');
     return;
@@ -691,18 +987,19 @@ function openCheckoutModal() {
 }
 
 function closeCheckoutModal() {
+  playClickSound('click');
   document.getElementById('checkoutModal').classList.remove('active');
   document.body.style.overflow = 'auto';
 }
 
 function handleOrderCheckout(e) {
   e.preventDefault();
+  playClickSound('success');
 
   const name = document.getElementById('custName').value;
   const phone = document.getElementById('custPhone').value;
   const address = document.getElementById('custAddress').value;
   const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
-  const notes = document.getElementById('custNotes').value;
 
   const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
   const finalTotal = (subtotal * (1 - activeDiscount)).toLocaleString('vi-VN') + '₫';
@@ -768,24 +1065,28 @@ function handleOrderCheckout(e) {
 }
 
 function closeOrderSuccessModal() {
+  playClickSound('click');
   document.getElementById('orderSuccessModal').classList.remove('active');
   document.body.style.overflow = 'auto';
 }
 
 /* ==========================================================================
-   8. ORDER TRACKER SYSTEM
+   10. ORDER TRACKER SYSTEM
    ========================================================================== */
 function openOrderTrackerModal() {
+  playClickSound('click');
   document.getElementById('orderTrackerModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
 function closeOrderTrackerModal() {
+  playClickSound('click');
   document.getElementById('orderTrackerModal').classList.remove('active');
   document.body.style.overflow = 'auto';
 }
 
 function performOrderTrack() {
+  playClickSound('click');
   const input = document.getElementById('trackInput');
   const resBox = document.getElementById('trackerResultBox');
   const val = input ? input.value.trim().toLowerCase() : '';
@@ -825,9 +1126,10 @@ function performOrderTrack() {
 }
 
 /* ==========================================================================
-   9. REVIEWS & NEWSLETTER
+   11. REVIEWS & NEWSLETTER
    ========================================================================== */
 function toggleReviewForm() {
+  playClickSound('click');
   const form = document.getElementById('collectorReviewForm');
   if (form) {
     form.style.display = form.style.display === 'none' ? 'block' : 'none';
@@ -836,6 +1138,7 @@ function toggleReviewForm() {
 
 let userRating = 5;
 function setRating(val) {
+  playClickSound('click');
   userRating = val;
   const stars = document.querySelectorAll('.star-rating-picker i');
   stars.forEach((s, idx) => {
@@ -846,8 +1149,8 @@ function setRating(val) {
 
 function handleReviewSubmit(e) {
   e.preventDefault();
+  playClickSound('success');
   const name = document.getElementById('revName').value;
-  const car = document.getElementById('revCar').value;
   const comment = document.getElementById('revComment').value;
 
   const reviewsGrid = document.getElementById('reviewsGrid');
@@ -878,21 +1181,32 @@ function handleReviewSubmit(e) {
 
 function handleNewsletterSubmit(e) {
   e.preventDefault();
+  playClickSound('success');
   const email = document.getElementById('nlEmail').value;
   showToast(`Đăng ký thành công! Email <strong>${email}</strong> đã vào danh sách VIP.`);
   document.getElementById('nlEmail').value = '';
 }
 
 /* ==========================================================================
-   10. MOBILE DRAWER & TOAST HELPER
+   BÀI 5: MODERN HAMBURGER MENU LOGIC
+   Biến đổi biểu tượng 3 gạch ngang thành dấu "X" một cách mượt mà khi mở Menu
    ========================================================================== */
 function initMobileNav() {
   const btn = document.getElementById('mobileMenuBtn');
   const close = document.getElementById('closeMobileNav');
   const drawer = document.getElementById('mobileNavBackdrop');
 
-  if (btn && drawer) btn.addEventListener('click', () => drawer.classList.add('active'));
-  if (close && drawer) close.addEventListener('click', closeMobileNav);
+  if (btn && drawer) {
+    btn.addEventListener('click', () => {
+      playClickSound('click');
+      btn.classList.toggle('active'); // Kích hoạt CSS transition 3 gạch -> dấu X
+      drawer.classList.toggle('active');
+    });
+  }
+
+  if (close && drawer) {
+    close.addEventListener('click', closeMobileNav);
+  }
 
   document.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', closeMobileNav);
@@ -900,10 +1214,82 @@ function initMobileNav() {
 }
 
 function closeMobileNav() {
+  playClickSound('click');
+  const btn = document.getElementById('mobileMenuBtn');
   const drawer = document.getElementById('mobileNavBackdrop');
+  if (btn) btn.classList.remove('active'); // Trở lại 3 gạch bình thường
   if (drawer) drawer.classList.remove('active');
 }
 
+/* ==========================================================================
+   BÀI 1: FLOATING ACTION BUTTON (FAB) LOGIC
+   Nút tròn "Liên hệ" luôn nằm ở góc màn hình có hiệu ứng phập phồng (pulse)
+   ========================================================================== */
+function toggleFabMenu() {
+  playClickSound('click');
+  const btn = document.getElementById('fabMainBtn');
+  const menu = document.getElementById('fabPopupMenu');
+  if (btn && menu) {
+    btn.classList.toggle('active');
+    menu.classList.toggle('active');
+  }
+}
+
+// Tự động đóng menu FAB khi click ra ngoài màn hình
+document.addEventListener('click', (e) => {
+  const container = document.getElementById('fabContactContainer');
+  const btn = document.getElementById('fabMainBtn');
+  const menu = document.getElementById('fabPopupMenu');
+  if (container && !container.contains(e.target)) {
+    if (btn) btn.classList.remove('active');
+    if (menu) menu.classList.remove('active');
+  }
+});
+
+/* ==========================================================================
+   BÀI 6: SKILL BAR ANIMATION LOGIC
+   Khi trang web tải xong, các thanh kỹ năng sẽ chạy từ 0% đến giá trị đích
+   ========================================================================== */
+function initSkillBars() {
+  const progressBars = document.querySelectorAll('.skill-fill-progress');
+  if (!progressBars.length) return;
+
+  function runSkillBarsAnimation() {
+    progressBars.forEach((bar, index) => {
+      const targetPercent = bar.getAttribute('data-progress') || '0%';
+      // Hiệu ứng chạy mượt mà nối tiếp nhau (staggered delay)
+      setTimeout(() => {
+        bar.style.width = targetPercent;
+      }, 250 + index * 120);
+    });
+  }
+
+  // 1. Chạy ngay khi trang web tải xong hoàn tất (window load)
+  if (document.readyState === 'complete') {
+    runSkillBarsAnimation();
+  } else {
+    window.addEventListener('load', runSkillBarsAnimation);
+  }
+
+  // 2. Kích hoạt bổ sung khi người dùng cuộn đến phần Hồ sơ Developer
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          runSkillBarsAnimation();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    const devSection = document.getElementById('about-dev-section');
+    if (devSection) observer.observe(devSection);
+  }
+}
+
+/* ==========================================================================
+   TOAST HELPER NOTIFICATION
+   ========================================================================== */
 function showToast(message) {
   const wrapper = document.getElementById('toastWrapper');
   if (!wrapper) return;
