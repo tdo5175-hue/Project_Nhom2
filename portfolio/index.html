@@ -3,83 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio cá nhân giới thiệu kỹ năng và các dự án đã thực hiện.">
-    <title>Portfolio cá nhân</title>
+    <meta name="description" content="Portfolio Nhóm 2 - Giới thiệu thành viên Đỗ Quốc Thịnh, Nguyễn Đình Nam cùng các kỹ năng và dự án Web.">
+    <title>Portfolio Nhóm 2 | Đỗ Quốc Thịnh & Nguyễn Đình Nam</title>
+    <!-- Nhúng Google Fonts (Inter & Poppins) để giao diện hiện đại, sắc nét -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- Tối ưu hiệu năng: nạp script bất đồng bộ bằng defer để không block render DOM -->
+    <script defer src="script.js"></script>
 </head>
 <body>
+    <!-- ========================================================
+         BÀI 1: FLOATING ACTION BUTTON (FAB)
+         Nút tròn "Liên hệ" cố định góc màn hình, hiệu ứng sóng xung kích (pulse animation)
+         tối ưu GPU rendering không gây giật lag
+         ======================================================== -->
+    <a href="#lien-he" class="fab" aria-label="Liên hệ với chúng tôi" title="Liên hệ ngay">
+        <span class="fab-icon">💬</span>
+        <span class="fab-text">Liên hệ</span>
+        <span class="fab-pulse-ring"></span>
+    </a>
+
     <div class="page-layout">
+        <!-- HEADER & THANH ĐIỀU HƯỚNG CHÍNH -->
         <header class="site-header">
-            <a class="brand" href="#trang-chu">MY PORTFOLIO</a>
-            <nav class="header-nav" aria-label="Điều hướng chính">
-                <a href="#gioi-thieu">Giới thiệu</a>
-                <a href="#ky-nang">Kỹ năng</a>
-                <a href="#du-an">Dự án</a>
+            <a class="brand" href="#trang-chu">
+                <span class="brand-badge">NHÓM 2</span>
+                <span class="brand-title">PORTFOLIO</span>
+            </a>
+            
+            <!-- ====================================================
+                 BÀI 5: MODERN HAMBURGER MENU
+                 Biểu tượng 3 gạch chuyển đổi mượt mà thành chữ 'X' bằng CSS Transitions
+                 ==================================================== -->
+            <button class="hamburger-menu" id="hamburger-menu" aria-label="Mở/Đóng menu điều hướng" aria-expanded="false">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+            </button>
+
+            <nav class="header-nav" id="header-nav" aria-label="Điều hướng chính">
+                <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
+                <a href="#thanh-vien" class="nav-link">Thành viên</a>
+                <a href="#ky-nang" class="nav-link">Kỹ năng</a>
+                <a href="#du-an" class="nav-link">Dự án</a>
+                <a href="#lien-he" class="nav-btn">Liên hệ ngay</a>
             </nav>
         </header>
 
-        <aside class="sidebar" aria-label="Thông tin cá nhân">
-            <div class="profile">
-                <div class="profile-avatar" aria-hidden="true">B</div>
-                <h2>Tên của bạn</h2>
-                <p class="profile-role">Sinh viên • Front-end Developer</p>
+        <!-- SIDEBAR THÔNG TIN TỔNG QUAN NHÓM -->
+        <aside class="sidebar" aria-label="Thông tin nhóm phát triển">
+            <div class="sidebar-card">
+                <div class="team-badge">ĐH Lạc Hồng • Lớp Thiết Kế Web</div>
+                <div class="team-avatar-group">
+                    <div class="mini-avatar avatar-thinh" title="Đỗ Quốc Thịnh">T</div>
+                    <div class="mini-avatar avatar-nam" title="Nguyễn Đình Nam">N</div>
+                </div>
+                <h2 class="sidebar-title">Dự Án Nhóm 2</h2>
+                <p class="sidebar-desc">Frontend & Web Development Team</p>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-stats">
+                    <div class="stat-item">
+                        <span class="stat-num">02</span>
+                        <span class="stat-label">Thành viên</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">06+</span>
+                        <span class="stat-label">Hiệu ứng</span>
+                    </div>
+                </div>
+                <div class="sidebar-links">
+                    <a href="#thanh-vien" class="btn-sidebar">Xem hồ sơ thành viên ↓</a>
+                </div>
             </div>
-
-            <section class="contact">
-                <h3>Liên hệ</h3>
-                <p><a href="mailto:hello@example.com">hello@example.com</a></p>
-                <p><a href="https://github.com/">GitHub</a></p>
-                <p><a href="https://www.linkedin.com/">LinkedIn</a></p>
-            </section>
         </aside>
 
+        <!-- NỘI DUNG CHÍNH (MAIN CONTENT) -->
         <main class="main-content" id="trang-chu">
-            <section class="intro section-card" id="gioi-thieu">
-                <p class="eyebrow">XIN CHÀO, MÌNH LÀ</p>
-                <h1>Tên của bạn</h1>
-                <p>
-                    Mình yêu thích xây dựng những trang web rõ ràng, dễ sử dụng và
-                    hoạt động tốt trên nhiều thiết bị. Đây là nơi giới thiệu kỹ năng
-                    và một số dự án của mình.
+            
+            <!-- ====================================================
+                 BÀI 4: PARALLAX IMAGE BANNER
+                 Ảnh nền di chuyển chậm hơn nội dung khi cuộn (background-attachment: fixed)
+                 Kết hợp thẻ kính mờ (Glassmorphism) tăng độ sang trọng
+                 ==================================================== -->
+            <section class="parallax-banner" role="banner" aria-label="Banner công nghệ">
+                <div class="parallax-overlay"></div>
+                <div class="parallax-content glass-card">
+                    <span class="banner-tag">🌟 CREATIVE DEVELOPERS</span>
+                    <h1 class="banner-title">Khám Phá Sáng Tạo Công Nghệ Web</h1>
+                    <p class="banner-subtitle">Trang giới thiệu năng lực thực chiến, tối ưu trải nghiệm và hiệu suất mượt mà.</p>
+                </div>
+            </section>
+
+            <!-- SECTION GIỚI THIỆU -->
+            <section class="section-card intro-section" id="gioi-thieu">
+                <div class="section-header">
+                    <span class="eyebrow">XIN CHÀO, CHÚNG TÔI LÀ NHÓM 2</span>
+                    <h2 class="section-title">Chào Mừng Đến Với Không Gian Của Chúng Tôi</h2>
+                </div>
+                
+                <!-- ====================================================
+                     BÀI 3: TYPING EFFECT (CSS ONLY)
+                     Hiệu ứng chữ tự gõ mượt mà dùng CSS steps() và border nhấp nháy, không tốn tài nguyên JS
+                     ==================================================== -->
+                <div class="typing-container">
+                    <span class="typing-prefix">> </span>
+                    <span class="typing-effect">Tôi là một Web Developer...</span>
+                </div>
+
+                <p class="intro-description">
+                    Chúng tôi đam mê kiến tạo những sản phẩm giao diện web hiện đại, có tính tương tác cao, 
+                    tối ưu hóa tốc độ tải trang và mang lại trải nghiệm người dùng hoàn hảo trên mọi thiết bị di động cũng như máy tính.
                 </p>
-                <a class="primary-link" href="#du-an">Khám phá dự án</a>
+                
+                <div class="cta-actions">
+                    <a class="primary-btn" href="#thanh-vien">Gặp gỡ thành viên</a>
+                    <a class="secondary-btn" href="#du-an">Xem các dự án</a>
+                </div>
             </section>
 
-            <section class="section-card" id="ky-nang">
-                <p class="eyebrow">NHỮNG GÌ MÌNH SỬ DỤNG</p>
-                <h2>Kỹ năng</h2>
-                <ul class="skills-list" aria-label="Danh sách kỹ năng">
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                    <li>Responsive Design</li>
-                    <li>CSS Grid</li>
-                    <li>Flexbox</li>
-                </ul>
+            <!-- ====================================================
+                 BÀI 2: CARD FLIP EFFECT CHO 2 THÀNH VIÊN
+                 Thiết kế 2 thẻ nhân sự cho ĐỖ QUỐC THỊNH & NGUYỄN ĐÌNH NAM.
+                 Khi hover thẻ sẽ xoay lật 180 độ trong không gian 3D để lộ thông tin liên hệ!
+                 ==================================================== -->
+            <section class="section-card team-section" id="thanh-vien">
+                <div class="section-header text-center">
+                    <span class="eyebrow">ĐỘI NGŨ THỰC HIỆN</span>
+                    <h2 class="section-title">Thành Viên Nhóm</h2>
+                    <p class="section-subtitle">Di chuột (hoặc chạm trên điện thoại) vào từng thẻ để khám phá thông tin liên hệ và kết nối!</p>
+                </div>
+
+                <div class="team-cards-grid">
+                    
+                    <!-- THẺ THÀNH VIÊN 1: ĐỖ QUỐC THỊNH -->
+                    <div class="flip-card-wrapper" tabindex="0" aria-label="Thẻ thành viên Đỗ Quốc Thịnh">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <!-- MẶT TRƯỚC (Front side) -->
+                                <div class="flip-card-front card-thinh">
+                                    <div class="card-glow-effect"></div>
+                                    <div class="avatar-container">
+                                        <div class="member-avatar avatar-gradient-1">T</div>
+                                        <span class="status-indicator" title="Sẵn sàng hợp tác"></span>
+                                    </div>
+                                    <h3 class="member-name">Đỗ Quốc Thịnh</h3>
+                                    <p class="member-role">Team Leader • Front-end Developer</p>
+                                    <div class="member-tags">
+                                        <span class="tag">UI/UX</span>
+                                        <span class="tag">HTML/CSS</span>
+                                        <span class="tag">Performance</span>
+                                    </div>
+                                    <div class="flip-instruction">
+                                        <span class="flip-icon">↻</span> Di chuột để xem liên hệ
+                                    </div>
+                                </div>
+
+                                <!-- MẶT SAU (Back side - Lật 180 độ) -->
+                                <div class="flip-card-back">
+                                    <h4 class="back-title">Thông Tin Liên Hệ</h4>
+                                    <p class="back-name">Đỗ Quốc Thịnh</p>
+                                    <div class="back-contact-list">
+                                        <a href="mailto:thinh.do@example.com" class="contact-item">
+                                            <span class="icon">✉️</span>
+                                            <span>thinh.do@example.com</span>
+                                        </a>
+                                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
+                                            <span class="icon">🐙</span>
+                                            <span>github.com/doquocthinh</span>
+                                        </a>
+                                        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
+                                            <span class="icon">💼</span>
+                                            <span>linkedin.com/in/thinh-do</span>
+                                        </a>
+                                        <div class="contact-item">
+                                            <span class="icon">🏫</span>
+                                            <span>Đại Học Lạc Hồng (LHU)</span>
+                                        </div>
+                                    </div>
+                                    <a href="mailto:thinh.do@example.com" class="btn-connect">Gửi tin nhắn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THẺ THÀNH VIÊN 2: NGUYỄN ĐÌNH NAM -->
+                    <div class="flip-card-wrapper" tabindex="0" aria-label="Thẻ thành viên Nguyễn Đình Nam">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <!-- MẶT TRƯỚC (Front side) -->
+                                <div class="flip-card-front card-nam">
+                                    <div class="card-glow-effect"></div>
+                                    <div class="avatar-container">
+                                        <div class="member-avatar avatar-gradient-2">N</div>
+                                        <span class="status-indicator" title="Sẵn sàng hợp tác"></span>
+                                    </div>
+                                    <h3 class="member-name">Nguyễn Đình Nam</h3>
+                                    <p class="member-role">Front-end & Logic Developer</p>
+                                    <div class="member-tags">
+                                        <span class="tag">JavaScript</span>
+                                        <span class="tag">CSS Grid</span>
+                                        <span class="tag">Animation</span>
+                                    </div>
+                                    <div class="flip-instruction">
+                                        <span class="flip-icon">↻</span> Di chuột để xem liên hệ
+                                    </div>
+                                </div>
+
+                                <!-- MẶT SAU (Back side - Lật 180 độ) -->
+                                <div class="flip-card-back">
+                                    <h4 class="back-title">Thông Tin Liên Hệ</h4>
+                                    <p class="back-name">Nguyễn Đình Nam</p>
+                                    <div class="back-contact-list">
+                                        <a href="mailto:nam.nguyen@example.com" class="contact-item">
+                                            <span class="icon">✉️</span>
+                                            <span>nam.nguyen@example.com</span>
+                                        </a>
+                                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
+                                            <span class="icon">🐙</span>
+                                            <span>github.com/dinhnam-dev</span>
+                                        </a>
+                                        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
+                                            <span class="icon">💼</span>
+                                            <span>linkedin.com/in/nam-nguyen</span>
+                                        </a>
+                                        <div class="contact-item">
+                                            <span class="icon">🏫</span>
+                                            <span>Đại Học Lạc Hồng (LHU)</span>
+                                        </div>
+                                    </div>
+                                    <a href="mailto:nam.nguyen@example.com" class="btn-connect">Gửi tin nhắn</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </section>
 
-            <section class="section-card" id="du-an">
-                <p class="eyebrow">MỘT SỐ SẢN PHẨM</p>
-                <h2>Dự án tiêu biểu</h2>
+            <!-- ====================================================
+                 BÀI 6: SKILL BAR ANIMATION
+                 Hiệu ứng thanh kỹ năng chạy mượt từ 0% đến đích (tối ưu IntersectionObserver + requestAnimationFrame)
+                 ==================================================== -->
+            <section class="section-card skills-section" id="ky-nang">
+                <div class="section-header">
+                    <span class="eyebrow">NĂNG LỰC CHUYÊN MÔN</span>
+                    <h2 class="section-title">Kỹ Năng & Công Nghệ</h2>
+                </div>
+
+                <div class="skills-container" aria-label="Thanh kỹ năng lập trình">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-title">HTML5 Semantic & SEO</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-progress bar-html" data-target="95" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-title">CSS3 (Grid, Flexbox, 3D Transform, Animation)</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-progress bar-css" data-target="90" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-title">JavaScript ES6+ & DOM Manipulation</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-progress bar-js" data-target="80" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-title">Responsive Web Design (Mobile First)</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-progress bar-responsive" data-target="95" style="width: 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION DỰ ÁN TIÊU BIỂU -->
+            <section class="section-card projects-section" id="du-an">
+                <div class="section-header">
+                    <span class="eyebrow">SẢN PHẨM HOÀN THIỆN</span>
+                    <h2 class="section-title">Dự Án Tiêu Biểu</h2>
+                </div>
+
                 <div class="projects-grid">
                     <article class="project-card">
-                        <span class="project-number">01</span>
-                        <h3>Trang giới thiệu cá nhân</h3>
-                        <p>Trang web responsive giới thiệu thông tin, kỹ năng và liên hệ.</p>
-                        <span class="project-tech">HTML · CSS</span>
+                        <div class="project-header">
+                            <span class="project-number">01</span>
+                            <span class="project-badge">Dự án nhóm</span>
+                        </div>
+                        <h3 class="project-title">Trang Web Portfolio Cá Nhân & Nhóm</h3>
+                        <p class="project-desc">Trang portfolio tương tác cao với 6 hiệu ứng chuyển động mượt mà, tối ưu hóa phần cứng, giao diện responsive toàn diện.</p>
+                        <div class="project-tech-list">
+                            <span class="tech-pill">HTML5</span>
+                            <span class="tech-pill">CSS3 Animation</span>
+                            <span class="tech-pill">JavaScript ES6</span>
+                        </div>
                     </article>
+
                     <article class="project-card">
-                        <span class="project-number">02</span>
-                        <h3>Thư viện ảnh</h3>
-                        <p>Bố cục ảnh dạng lưới, sắp xếp linh hoạt theo kích thước màn hình.</p>
-                        <span class="project-tech">CSS Grid</span>
+                        <div class="project-header">
+                            <span class="project-number">02</span>
+                            <span class="project-badge">Responsive Grid</span>
+                        </div>
+                        <h3 class="project-title">Thư Viện Ảnh Tương Tác Hiện Đại</h3>
+                        <p class="project-desc">Bố cục ảnh ứng dụng CSS Grid hiện đại, tối ưu load ảnh bất đồng bộ với hiệu ứng hover zoom và xem chi tiết mượt mà.</p>
+                        <div class="project-tech-list">
+                            <span class="tech-pill">CSS Grid</span>
+                            <span class="tech-pill">Flexbox</span>
+                            <span class="tech-pill">IntersectionObserver</span>
+                        </div>
                     </article>
                 </div>
             </section>
+
+            <!-- SECTION LIÊN HỆ ĐỒNG THỜI LÀ ĐÍCH ĐẾN CỦA NÚT FAB -->
+            <section class="section-card contact-section" id="lien-he">
+                <div class="section-header text-center">
+                    <span class="eyebrow">KẾT NỐI VỚI CHÚNG TÔI</span>
+                    <h2 class="section-title">Sẵn Sàng Hợp Tác Trong Dự Án Tiếp Theo?</h2>
+                    <p class="section-subtitle">Đừng ngần ngại để lại lời nhắn hoặc gửi thư trực tiếp cho nhóm 2 chúng tôi!</p>
+                </div>
+                <div class="contact-action-box">
+                    <a href="mailto:thinh.do@example.com?cc=nam.nguyen@example.com" class="primary-btn pulse-hover">Gửi Email Cho Nhóm 2</a>
+                </div>
+            </section>
+
         </main>
 
+        <!-- FOOTER TRANG WEB -->
         <footer class="site-footer">
-            <p>© 2026 Tên của bạn · Portfolio cá nhân</p>
+            <div class="footer-content">
+                <p class="footer-brand">© 2026 Nhóm 2 • Đỗ Quốc Thịnh & Nguyễn Đình Nam</p>
+                <p class="footer-sub">Trường Đại Học Lạc Hồng (LHU) • Môn Thiết Kế Web</p>
+            </div>
         </footer>
     </div>
 </body>
