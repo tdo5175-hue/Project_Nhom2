@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tạp chí tin tức với các chuyên mục thời sự, kinh doanh, công nghệ và văn hóa.">
+    <title>Tin Mới — Tạp chí tin tức</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#noi-dung-chinh">Bỏ qua điều hướng, đến nội dung chính</a>
+
+    <header class="site-header">
+        <div class="header-top">
+            <a class="masthead" href="#trang-chu" aria-label="Tin Mới — Trang chủ">
+                <span class="masthead-mark" aria-hidden="true">T</span>
+                <span class="masthead-name">TIN MỚI</span>
+            </a>
+            <p class="header-note">Góc nhìn mỗi ngày</p>
+            <form class="search-form" role="search" action="#" method="get">
+                <label class="visually-hidden" for="site-search">Tìm kiếm bài viết</label>
+                <input id="site-search" type="search" name="q" placeholder="Tìm kiếm tin tức">
+                <button type="submit" aria-label="Tìm kiếm">Tìm</button>
+            </form>
+        </div>
+
+        <nav class="main-nav" aria-label="Chuyên mục">
+            <a class="nav-home" href="#trang-chu">Trang chủ</a>
+            <a href="#thoi-su">Thời sự</a>
+            <a href="#kinh-doanh">Kinh doanh</a>
+            <a href="#cong-nghe">Công nghệ</a>
+            <a href="#van-hoa">Văn hóa</a>
+            <a href="#doi-song">Đời sống</a>
+        </nav>
+    </header>
+
+    <main id="noi-dung-chinh" class="page-content">
+        <section class="breaking-news" aria-label="Tin cập nhật">
+            <span class="breaking-label">ĐANG QUAN TÂM</span>
+            <p>Cập nhật những câu chuyện đáng chú ý trong ngày</p>
+            <time datetime="2026-10-07">Thứ Tư, 07/10/2026</time>
+        </section>
+
+        <section class="top-stories" id="trang-chu" aria-labelledby="top-stories-title">
+            <div class="section-heading">
+                <p class="eyebrow">ĐIỂM TIN HÔM NAY</p>
+                <h1 id="top-stories-title">Tin nổi bật</h1>
+            </div>
+
+            <div class="featured-grid">
+                <article class="lead-story">
+                    <a class="story-art lead-art" href="article.html" aria-label="Đọc bài viết: Những chuyển động mới trong đời sống đô thị">
+                        <span class="art-label">GÓC NHÌN</span>
+                        <span class="art-caption">Đô thị<br>đang đổi thay</span>
+                    </a>
+                    <div class="lead-copy">
+                        <p class="article-meta"><a href="#thoi-su">Thời sự</a><span aria-hidden="true">•</span><time datetime="2026-10-07">07/10/2026</time></p>
+                        <h2><a href="article.html">Những chuyển động mới đang định hình nhịp sống đô thị</a></h2>
+                        <p class="article-summary"><a href="article.html">Một góc nhìn về không gian công cộng, giao thông và những thay đổi trong đời sống thường nhật.</a></p>
+                        <input class="save-toggle visually-hidden" type="checkbox" id="save-lead-story">
+                        <label class="save-button" for="save-lead-story">
+                            <span class="save-prompt">♡ Lưu bài viết</span>
+                            <span class="saved-message">✓ Đã lưu bài viết</span>
+                        </label>
+                        <details class="article-details">
+                            <summary>Đọc thêm tóm tắt</summary>
+                            <p>Bài viết minh họa cách quy hoạch không gian chung, giao thông và hoạt động cộng đồng có thể góp phần tạo nên một đô thị gần gũi hơn.</p>
+                        </details>
+                    </div>
+                </article>
+
+                <div class="secondary-stories">
+                    <article class="secondary-story">
+                        <a class="story-art secondary-art art-business" href="#kinh-doanh" aria-label="Đọc bài viết: Xu hướng mới của kinh tế địa phương">
+                            <span class="art-label">KINH TẾ</span>
+                        </a>
+                        <div>
+                            <p class="article-meta"><a href="#kinh-doanh">Kinh doanh</a><span aria-hidden="true">•</span><time datetime="2026-10-07">07/10/2026</time></p>
+                            <h2><a href="#kinh-doanh">Xu hướng mới mở ra cơ hội cho doanh nghiệp địa phương</a></h2>
+                        </div>
+                    </article>
+                    <article class="secondary-story">
+                        <a class="story-art secondary-art art-tech" href="#cong-nghe" aria-label="Đọc bài viết: Công nghệ gần gũi hơn với người dùng">
+                            <span class="art-label">CÔNG NGHỆ</span>
+                        </a>
+                        <div>
+                            <p class="article-meta"><a href="#cong-nghe">Công nghệ</a><span aria-hidden="true">•</span><time datetime="2026-10-06">06/10/2026</time></p>
+                            <h2><a href="#cong-nghe">Khi công nghệ hữu ích bắt đầu từ những nhu cầu giản dị</a></h2>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <div class="news-column">
+                <section class="latest-news" id="thoi-su" aria-labelledby="latest-title">
+                    <div class="section-heading section-heading-row">
+                        <div>
+                            <p class="eyebrow">MỚI CẬP NHẬT</p>
+                            <h2 id="latest-title">Tin mới nhất</h2>
+                        </div>
+                        <a class="text-link" href="#tin-lien-quan">Xem thêm <span aria-hidden="true">→</span></a>
+                    </div>
+
+                    <div class="latest-list">
+                        <article class="latest-item">
+                            <span class="list-number" aria-hidden="true">01</span>
+                            <div>
+                                <p class="article-meta"><a href="#thoi-su">Thời sự</a><span aria-hidden="true">•</span><time datetime="2026-10-07T09:30">09:30</time></p>
+                                <h3><a href="#thoi-su">Cộng đồng cùng tham gia xây dựng những khu phố đáng sống</a></h3>
+                                <p class="article-summary">Các sáng kiến tại địa phương cho thấy vai trò của người dân trong việc cải thiện môi trường sống.</p>
+                            </div>
+                        </article>
+                        <article class="latest-item" id="kinh-doanh">
+                            <span class="list-number" aria-hidden="true">02</span>
+                            <div>
+                                <p class="article-meta"><a href="#kinh-doanh">Kinh doanh</a><span aria-hidden="true">•</span><time datetime="2026-10-07T08:45">08:45</time></p>
+                                <h3><a href="#kinh-doanh">Doanh nghiệp nhỏ tìm hướng phát triển bền vững</a></h3>
+                                <p class="article-summary">Tối ưu nguồn lực và lắng nghe khách hàng là những chủ đề được nhiều đơn vị quan tâm.</p>
+                            </div>
+                        </article>
+                        <article class="latest-item" id="cong-nghe">
+                            <span class="list-number" aria-hidden="true">03</span>
+                            <div>
+                                <p class="article-meta"><a href="#cong-nghe">Công nghệ</a><span aria-hidden="true">•</span><time datetime="2026-10-06T16:20">Hôm qua</time></p>
+                                <h3><a href="#cong-nghe">Thiết kế số lấy trải nghiệm người dùng làm trung tâm</a></h3>
+                                <p class="article-summary">Sản phẩm số dễ tiếp cận cần được xây dựng dựa trên nhu cầu thực tế của nhiều nhóm người dùng.</p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="category-section" id="van-hoa" aria-labelledby="culture-title">
+                    <div class="section-heading section-heading-row">
+                        <div>
+                            <p class="eyebrow">ĐỌC VÀ KHÁM PHÁ</p>
+                            <h2 id="culture-title">Văn hóa & Đời sống</h2>
+                        </div>
+                    </div>
+                    <div class="category-cards">
+                        <article class="category-card">
+                            <span class="category-icon" aria-hidden="true">V</span>
+                            <p class="article-meta"><a href="#van-hoa">Văn hóa</a></p>
+                            <h3><a href="#van-hoa">Những không gian nhỏ nuôi dưỡng thói quen đọc</a></h3>
+                        </article>
+                        <article class="category-card" id="doi-song">
+                            <span class="category-icon category-icon-warm" aria-hidden="true">Đ</span>
+                            <p class="article-meta"><a href="#doi-song">Đời sống</a></p>
+                            <h3><a href="#doi-song">Chọn sống chậm giữa lịch trình bận rộn</a></h3>
+                        </article>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="sidebar" aria-label="Tin chọn lọc">
+                <section class="most-read" id="tin-lien-quan" aria-labelledby="most-read-title">
+                    <p class="eyebrow">ĐƯỢC QUAN TÂM</p>
+                    <h2 id="most-read-title">Đọc nhiều</h2>
+                    <ol class="popular-list">
+                        <li><a href="#thoi-su">Điều gì làm nên một khu phố thân thiện với mọi thế hệ?</a></li>
+                        <li><a href="#kinh-doanh">Bắt đầu kinh doanh nhỏ: những điều cần chuẩn bị</a></li>
+                        <li><a href="#cong-nghe">Mẹo sử dụng công nghệ số an toàn mỗi ngày</a></li>
+                        <li><a href="#van-hoa">Gợi ý những hoạt động cuối tuần cho gia đình</a></li>
+                    </ol>
+                </section>
+
+                <section class="newsletter" aria-labelledby="newsletter-title">
+                    <span class="newsletter-mark" aria-hidden="true">✳</span>
+                    <p class="eyebrow">BẢN TIN</p>
+                    <h2 id="newsletter-title">Chuyện hay gửi đến bạn</h2>
+                    <p>Đăng ký nhận bản tin định kỳ từ tòa soạn.</p>
+                    <form action="#" method="get">
+                        <label class="visually-hidden" for="newsletter-email">Địa chỉ email</label>
+                        <input id="newsletter-email" type="email" placeholder="Email của bạn" autocomplete="email" required>
+                        <button type="submit">Đăng ký</button>
+                    </form>
+                    <p class="form-note">Bản mẫu: trình duyệt kiểm tra định dạng email; chưa gửi dữ liệu.</p>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <a class="masthead footer-brand" href="#trang-chu">TIN MỚI</a>
+            <p>Tạp chí tin tức · Nội dung minh họa cho giao diện mẫu</p>
+            <p class="copyright">© 2026 Tin Mới</p>
+        </div>
+    </footer>
+</body>
+</html>
