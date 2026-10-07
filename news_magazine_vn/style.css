@@ -1,0 +1,1220 @@
+/* ==========================================================================
+   STYLE.CSS - PORTFOLIO NHÓM 2
+   THỐNG NHẤT 100% THEO CHỦ ĐẠO TRANG INDEX.HTML (TIN MỚI):
+   - Font chữ chuẩn: Be Vietnam Pro + Playfair Display (tiêu đề serif trang nhã)
+   - Bảng màu: Teal (#0f766e) + Amber (#f59e0b) + Nền nhã nhặn, KHÔNG MÀU MÈ
+   - Hỗ trợ giao diện Sáng / Tối (Dark Mode) khớp data-theme
+   - Chuyển động GPU 60 FPS (transform, opacity), tuyệt đối không dùng top/left
+   - Thẻ lật 3D, Skill bars, Modal CV chi tiết
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. ROOT VARIABLES - ĐỒNG BỘ VỚI THEME.CSS
+   -------------------------------------------------------------------------- */
+:root {
+    --primary: #0f766e;
+    --primary-600: #0d9488;
+    --primary-strong: #115e59;
+    --primary-soft: #e3f6f3;
+    --on-primary: #ffffff;
+    --accent: #f59e0b;
+    --accent-strong: #d97706;
+    --accent-soft: #fef3c7;
+
+    --bg: #f5f8f7;
+    --surface: #ffffff;
+    --surface-2: #eef4f2;
+    --ink: #10201e;
+    --ink-2: #2b3d3a;
+    --muted: #5d6f6b;
+    --line: #dde7e4;
+
+    --shadow-sm: 0 1px 3px rgba(16, 32, 30, 0.06);
+    --shadow-md: 0 10px 24px -8px rgba(16, 32, 30, 0.12);
+    --shadow-lg: 0 20px 40px -12px rgba(15, 118, 110, 0.22);
+    --ring: 0 0 0 3px rgba(13, 148, 136, 0.35);
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 999px;
+
+    --font-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-display: "Playfair Display", "Palatino Linotype", Georgia, serif;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --t-fast: 0.2s var(--ease);
+    --t-normal: 0.35s var(--ease);
+}
+
+[data-theme="dark"] {
+    --primary: #2dd4bf;
+    --primary-600: #14b8a6;
+    --primary-strong: #5eead4;
+    --primary-soft: rgba(45, 212, 191, 0.12);
+    --on-primary: #03211e;
+    --accent: #fbbf24;
+    --accent-strong: #f59e0b;
+    --accent-soft: rgba(251, 191, 36, 0.14);
+
+    --bg: #08110f;
+    --surface: #0f1c1a;
+    --surface-2: #142624;
+    --ink: #e7f2ef;
+    --ink-2: #c3d4d0;
+    --muted: #8fa5a0;
+    --line: #1f3532;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 10px 24px -8px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 20px 40px -12px rgba(0, 0, 0, 0.7);
+    --ring: 0 0 0 3px rgba(45, 212, 191, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   2. CẤU TRÚC TRANG PORTFOLIO (PAGE LAYOUT)
+   -------------------------------------------------------------------------- */
+.portfolio-body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background-color: var(--bg);
+    line-height: 1.6;
+}
+
+.portfolio-container {
+    width: min(1200px, 100% - 40px);
+    margin-inline: auto;
+    padding: 32px 0 64px;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 36px;
+    align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   3. BÀI 1: FLOATING ACTION BUTTON (FAB)
+   -------------------------------------------------------------------------- */
+.fab {
+    position: fixed;
+    right: 28px;
+    bottom: 84px;
+    z-index: 95;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-lg);
+    text-decoration: none;
+    transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+.fab:hover {
+    transform: translateY(-4px) scale(1.03);
+    background: var(--primary-600);
+}
+
+.fab:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.fab-icon {
+    font-size: 1.15rem;
+}
+
+.fab-pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--primary);
+    animation: fabPulse 2.4s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    pointer-events: none;
+}
+
+@keyframes fabPulse {
+    0% { transform: scale(0.95); opacity: 0.9; }
+    70% { transform: scale(1.35); opacity: 0; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   4. CỘT TRÁI (SIDEBAR) - THÔNG TIN NHÓM & THANH KỸ NĂNG
+   -------------------------------------------------------------------------- */
+.sidebar {
+    display: grid;
+    gap: 24px;
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+}
+
+.sidebar-box {
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--t-normal), box-shadow var(--t-normal);
+}
+
+.sidebar-box:hover {
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--line));
+    box-shadow: var(--shadow-md);
+}
+
+.team-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.team-avatar-group {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.mini-avatar {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid var(--surface);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.avatar-thinh {
+    background: var(--primary);
+    z-index: 2;
+}
+
+.avatar-nam {
+    background: var(--accent);
+    color: #2a1a00;
+    margin-left: -14px;
+    z-index: 1;
+}
+
+.sidebar-team-name {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.sidebar-team-role {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.sidebar-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.stat-pill {
+    padding: 12px;
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    text-align: center;
+}
+
+.stat-pill-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.stat-pill-text {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+/* Bài 6: Skill Bar Animation */
+.sidebar-box-header {
+    margin-bottom: 18px;
+}
+
+.sidebar-box-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.sidebar-box-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-top: 4px;
+}
+
+.skills-sidebar-list {
+    display: grid;
+    gap: 16px;
+}
+
+.sidebar-skill-item {
+    display: grid;
+    gap: 6px;
+}
+
+.sidebar-skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ink-2);
+}
+
+.skill-name-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.skill-badge-num {
+    font-weight: 700;
+    color: var(--primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.skill-track {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-anim {
+    background: var(--accent);
+}
+
+.sidebar-tech-stack {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.tech-stack-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.tech-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tech-tag {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    color: var(--ink-2);
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: background-color var(--t-fast), color var(--t-fast);
+}
+
+.tech-tag:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.sidebar-action-btn {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    padding: 10px 16px;
+    border: 1px dashed var(--primary);
+    border-radius: var(--radius-full);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+
+.sidebar-action-btn:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   5. NỘI DUNG CHÍNH (MAIN CONTENT)
+   -------------------------------------------------------------------------- */
+.main-content {
+    display: grid;
+    gap: 32px;
+}
+
+/* Bài 4: Parallax Banner trang nhã */
+.parallax-banner {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: linear-gradient(140deg, #0f766e 0%, #115e59 55%, #134e48 100%);
+    color: #fff;
+    padding: 48px 36px;
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] .parallax-banner {
+    background: linear-gradient(140deg, #0b2421 0%, #0f3530 100%);
+    border: 1px solid var(--line);
+}
+
+.banner-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #e7fbf7;
+    margin-bottom: 14px;
+}
+
+.banner-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1.25;
+    color: #fff;
+    max-width: 680px;
+}
+
+.banner-subtitle {
+    margin-top: 12px;
+    font-size: 1rem;
+    color: #c7ede6;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* Thẻ chung các Section */
+.section-card {
+    padding: 36px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-header.text-center {
+    text-align: center;
+}
+
+.section-header .eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.section-subtitle {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Bài 3: Typing Effect CSS Only */
+.typing-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    font-family: monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+}
+
+.typing-prefix {
+    color: var(--accent);
+}
+
+.typing-effect {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid var(--primary);
+    animation: typing 3.5s steps(28, end) infinite, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    0%, 10% { width: 0; }
+    50%, 80% { width: 100%; }
+    90%, 100% { width: 0; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.intro-description {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--ink-2);
+}
+
+.cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   6. BÀI 2: THẺ LẬT 3D (CARD FLIP EFFECT) CHO 2 THÀNH VIÊN
+   -------------------------------------------------------------------------- */
+.team-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.flip-card-wrapper {
+    perspective: 1200px;
+    height: 380px;
+    outline: none;
+    cursor: pointer;
+}
+
+.flip-card {
+    width: 100%;
+    height: 100%;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s var(--ease);
+}
+
+.flip-card-wrapper:hover .flip-card-inner,
+.flip-card-wrapper:focus .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+/* Mặt trước */
+.flip-card-front {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    justify-content: space-between;
+}
+
+.card-cv-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.avatar-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.member-avatar {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.avatar-gradient-1 {
+    background: var(--primary);
+}
+
+.avatar-gradient-2 {
+    background: var(--accent);
+    color: #2a1a00;
+}
+
+.member-name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-top: 14px;
+}
+
+.member-role {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.member-sub-edu {
+    font-size: 0.84rem;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.member-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 12px 0;
+}
+
+.member-tags .tag {
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    color: var(--ink-2);
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.card-footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+}
+
+.flip-instruction {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.btn-open-cv {
+    padding: 7px 14px;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+
+.btn-open-cv:hover {
+    background: var(--primary);
+    color: var(--on-primary);
+    transform: translateY(-2px);
+}
+
+.btn-open-cv:active {
+    transform: scale(0.95);
+}
+
+/* Mặt sau (lật 180 độ) */
+.flip-card-back {
+    background: linear-gradient(145deg, #0f766e 0%, #115e59 100%);
+    color: #fff;
+    transform: rotateY(180deg);
+    justify-content: space-between;
+}
+
+[data-theme="dark"] .flip-card-back {
+    background: linear-gradient(145deg, #09201d 0%, #0d2f2b 100%);
+    border: 1px solid var(--line);
+}
+
+.back-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.back-name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 4px;
+}
+
+.back-role-text {
+    font-size: 0.85rem;
+    color: #c7ede6;
+}
+
+.back-contact-list {
+    display: grid;
+    gap: 8px;
+    margin: 14px 0;
+    font-size: 0.86rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e7fbf7;
+    text-decoration: none;
+    transition: transform var(--t-fast);
+}
+
+.contact-item:hover {
+    transform: translateX(4px);
+    color: #fff;
+}
+
+.btn-open-cv-secondary {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: var(--accent);
+    color: #2a1a00;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+.btn-open-cv-secondary:hover {
+    background: var(--accent-strong);
+    transform: translateY(-2px);
+}
+
+.btn-open-cv-secondary:active {
+    transform: scale(0.95);
+}
+
+/* --------------------------------------------------------------------------
+   7. TIÊU CHUẨN THIẾT KẾ & DỰ ÁN TIÊU BIỂU
+   -------------------------------------------------------------------------- */
+.standards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.standard-item {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+    transition: transform var(--t-fast), border-color var(--t-fast);
+}
+
+.standard-item:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+}
+
+.standard-icon-box {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--surface);
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.standard-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+
+.standard-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* Dự án */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: transform var(--t-normal), box-shadow var(--t-normal), border-color var(--t-normal);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: color-mix(in srgb, var(--primary) 40%, var(--line));
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.project-number {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.project-badge {
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.project-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.35;
+}
+
+.project-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.project-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+}
+
+.tech-pill {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--ink-2);
+}
+
+/* Liên hệ */
+.contact-section {
+    text-align: center;
+    background: linear-gradient(145deg, var(--surface) 0%, var(--primary-soft) 120%);
+}
+
+.contact-action-box {
+    margin-top: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   8. MODAL XEM CV CHI TIẾT (CHUẨN FORM HỒ SƠ)
+   -------------------------------------------------------------------------- */
+.cv-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(4, 20, 18, 0.7);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--t-normal), visibility 0s linear 0.4s;
+    overflow-y: auto;
+}
+
+.cv-modal-backdrop.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--t-normal), visibility 0s;
+}
+
+.cv-modal-container {
+    position: relative;
+    width: min(920px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-lg);
+    padding: 36px;
+    border: 1px solid var(--line);
+    transform: translateY(24px) scale(0.97);
+    transition: transform var(--t-normal);
+}
+
+.cv-modal-backdrop.show-modal .cv-modal-container {
+    transform: translateY(0) scale(1);
+}
+
+.cv-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+.cv-modal-close:hover {
+    background: var(--primary-soft);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+
+.cv-modal-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 12px;
+}
+
+.cv-tab-btn {
+    padding: 8px 18px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background-color var(--t-fast), color var(--t-fast);
+}
+
+.cv-tab-btn.active {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.cv-paper {
+    display: none;
+}
+
+.cv-paper.active {
+    display: block;
+    animation: introFade 0.4s var(--ease);
+}
+
+.cv-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.cv-name {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+}
+
+.cv-headline {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--primary);
+    margin-top: 4px;
+}
+
+.cv-divider-thick {
+    height: 3px;
+    background: var(--primary);
+    margin-bottom: 24px;
+}
+
+.cv-divider-thin {
+    height: 1px;
+    background: var(--line);
+    margin: 24px 0;
+}
+
+.cv-top-grid {
+    display: grid;
+    grid-template-columns: 140px 1.2fr 1.4fr;
+    gap: 24px;
+}
+
+.cv-photo-box {
+    display: flex;
+    justify-content: center;
+}
+
+.cv-photo-frame {
+    display: grid;
+    place-items: center;
+    width: 120px;
+    height: 150px;
+    border-radius: var(--radius-md);
+    background: var(--primary-soft);
+    border: 2px solid var(--line);
+}
+
+.cv-photo-initial {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.cv-sec-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px;
+}
+
+.cv-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 6px;
+    font-size: 0.86rem;
+}
+
+.cv-bullet-list {
+    margin: 6px 0 0 18px;
+    padding: 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.cv-edu-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+}
+
+.cv-major {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin: 2px 0;
+}
+
+.cv-rank {
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+.cv-rows-container {
+    display: grid;
+    gap: 20px;
+}
+
+.cv-row-section {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+}
+
+.cv-row-label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
+.cv-row-content {
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+.cv-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.btn-print-cv {
+    padding: 10px 20px;
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+.btn-print-cv:hover {
+    background: var(--primary-600);
+    transform: translateY(-2px);
+}
+
+.btn-close-modal-bottom {
+    padding: 10px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   9. RESPONSIVE CHO PORTFOLIO
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .team-cards-grid,
+    .standards-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cv-top-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cv-row-section {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 640px) {
+    .portfolio-container {
+        width: min(1200px, 100% - 24px);
+    }
+
+    .section-card {
+        padding: 24px;
+    }
+
+    .parallax-banner {
+        padding: 32px 20px;
+    }
+
+    .cv-modal-container {
+        padding: 20px;
+    }
+}

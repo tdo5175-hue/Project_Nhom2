@@ -3,21 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio Nhóm 2 - Giới thiệu thành viên Đỗ Quốc Thịnh, Nguyễn Đình Nam cùng các kỹ năng và dự án Web.">
+    <meta name="description" content="Portfolio Nhóm 2 - Giới thiệu thành viên Đỗ Quốc Thịnh, Nguyễn Đình Nam cùng hồ sơ CV năng lực chuyên môn và dự án Web.">
     <title>Portfolio Nhóm 2 | Đỗ Quốc Thịnh & Nguyễn Đình Nam</title>
-    <!-- Nhúng Google Fonts (Inter & Poppins) để giao diện hiện đại, sắc nét -->
+    <!-- Nhúng Google Fonts (Plus Jakarta Sans) tối ưu hiển thị chữ công nghệ cao cấp -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Tối ưu hiệu năng: nạp script bất đồng bộ bằng defer để không block render DOM -->
+    <!-- Nạp script bất đồng bộ với defer để không block render DOM -->
     <script defer src="script.js"></script>
 </head>
 <body>
     <!-- ========================================================
+         HIỆU ỨNG MỞ ĐẦU (WELCOME ENTRANCE SCREEN)
+         Màn hình chào đón công nghệ xuất hiện khi bắt đầu vào trang web,
+         tải nhanh mượt mà (0.85s) sau đó trượt mờ hé lộ giao diện chính
+         ======================================================== -->
+    <div id="welcome-screen" class="welcome-screen" aria-hidden="true">
+        <div class="welcome-content">
+            <div class="welcome-logo-badge">
+                <span class="welcome-dot"></span>
+                <span>NHÓM 2 • LHU & FPT POLY</span>
+            </div>
+            <h2 class="welcome-title">PORTFOLIO KHÔNG GIAN SÁNG TẠO</h2>
+            <p class="welcome-desc">Đang khởi tạo các hiệu ứng công nghệ & giao diện...</p>
+            <div class="welcome-loader">
+                <div class="welcome-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================
          BÀI 1: FLOATING ACTION BUTTON (FAB)
-         Nút tròn "Liên hệ" cố định góc màn hình, hiệu ứng sóng xung kích (pulse animation)
-         tối ưu GPU rendering không gây giật lag
+         Nút tròn "Liên hệ" cố định góc màn hình, hiệu ứng phập phồng (pulse animation)
          ======================================================== -->
     <a href="#lien-he" class="fab" aria-label="Liên hệ với chúng tôi" title="Liên hệ ngay">
         <span class="fab-icon">💬</span>
@@ -35,7 +53,7 @@
             
             <!-- ====================================================
                  BÀI 5: MODERN HAMBURGER MENU
-                 Biểu tượng 3 gạch chuyển đổi mượt mà thành chữ 'X' bằng CSS Transitions
+                 Biểu tượng 3 gạch chuyển đổi thành dấu 'X' bằng CSS Transitions
                  ==================================================== -->
             <button class="hamburger-menu" id="hamburger-menu" aria-label="Mở/Đóng menu điều hướng" aria-expanded="false">
                 <span class="bar bar1"></span>
@@ -45,37 +63,133 @@
 
             <nav class="header-nav" id="header-nav" aria-label="Điều hướng chính">
                 <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
-                <a href="#thanh-vien" class="nav-link">Thành viên</a>
-                <a href="#ky-nang" class="nav-link">Kỹ năng</a>
+                <a href="#thanh-vien" class="nav-link">Thành viên & CV</a>
+                <a href="#tieu-chuan" class="nav-link">Tiêu chuẩn</a>
                 <a href="#du-an" class="nav-link">Dự án</a>
                 <a href="#lien-he" class="nav-btn">Liên hệ ngay</a>
             </nav>
         </header>
 
-        <!-- SIDEBAR THÔNG TIN TỔNG QUAN NHÓM -->
-        <aside class="sidebar" aria-label="Thông tin nhóm phát triển">
-            <div class="sidebar-card">
+        <!-- ====================================================
+             THANH TRÁI (SIDEBAR) TÁI CẤU TRÚC:
+             TÍCH HỢP TOÀN BỘ PHẦN NĂNG LỰC CHUYÊN MÔN & KỸ NĂNG & CÔNG NGHỆ
+             VÀO CỘT TRÁI ĐẢM BẢO GỌN GÀNG, SANG TRỌNG VÀ LIÊN KẾT CHẶT CHẼ
+             ==================================================== -->
+        <aside class="sidebar" aria-label="Thông tin nhóm và năng lực chuyên môn">
+            <!-- Thẻ hồ sơ tóm tắt nhóm -->
+            <div class="sidebar-box team-summary-box">
                 <div class="team-badge">ĐH Lạc Hồng • Lớp Thiết Kế Web</div>
                 <div class="team-avatar-group">
                     <div class="mini-avatar avatar-thinh" title="Đỗ Quốc Thịnh">T</div>
                     <div class="mini-avatar avatar-nam" title="Nguyễn Đình Nam">N</div>
                 </div>
-                <h2 class="sidebar-title">Dự Án Nhóm 2</h2>
-                <p class="sidebar-desc">Frontend & Web Development Team</p>
-                <div class="sidebar-divider"></div>
-                <div class="sidebar-stats">
-                    <div class="stat-item">
-                        <span class="stat-num">02</span>
-                        <span class="stat-label">Thành viên</span>
+                <h2 class="sidebar-team-name">Dự Án Nhóm 2</h2>
+                <p class="sidebar-team-role">CNTT & Sư Phạm Tin Học</p>
+                
+                <div class="sidebar-stats-row">
+                    <div class="stat-pill">
+                        <span class="stat-pill-num">02</span>
+                        <span class="stat-pill-text">Thành viên</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-num">06+</span>
-                        <span class="stat-label">Hiệu ứng</span>
+                    <div class="stat-pill">
+                        <span class="stat-pill-num">06+</span>
+                        <span class="stat-pill-text">Kỹ thuật đỉnh</span>
                     </div>
                 </div>
-                <div class="sidebar-links">
-                    <a href="#thanh-vien" class="btn-sidebar">Xem hồ sơ thành viên ↓</a>
+            </div>
+
+            <!-- ====================================================
+                 BÀI 6: SKILL BAR ANIMATION (ĐÃ CHUYỂN SANG THANH TRÁI)
+                 NĂNG LỰC CHUYÊN MÔN - KỸ NĂNG & CÔNG NGHỆ
+                 Con số % và thanh tiến trình chạy với tốc độ vừa phải (~1.1s)
+                 ==================================================== -->
+            <div class="sidebar-box skills-sidebar-box" id="sidebar-skills">
+                <div class="sidebar-box-header">
+                    <span class="sidebar-box-eyebrow">NĂNG LỰC CHUYÊN MÔN</span>
+                    <h3 class="sidebar-box-title">Kỹ Năng & Công Nghệ</h3>
                 </div>
+
+                <!-- Danh sách các thanh kỹ năng động -->
+                <div class="skills-sidebar-list" aria-label="Danh sách thanh kỹ năng">
+                    
+                    <div class="sidebar-skill-item">
+                        <div class="sidebar-skill-info">
+                            <span class="skill-name-with-icon">
+                                <span class="skill-icon">🌐</span> HTML5, CSS3 & Vue.js
+                            </span>
+                            <!-- Con số chạy từ 0% lên đích với tốc độ vừa phải -->
+                            <span class="skill-badge-num" data-target="95">0%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-progress bar-html" data-target="95" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-skill-item">
+                        <div class="sidebar-skill-info">
+                            <span class="skill-name-with-icon">
+                                <span class="skill-icon">💻</span> C#, .NET & ASP.NET MVC
+                            </span>
+                            <span class="skill-badge-num" data-target="88">0%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-progress bar-css" data-target="88" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-skill-item">
+                        <div class="sidebar-skill-info">
+                            <span class="skill-name-with-icon">
+                                <span class="skill-icon">⚡</span> JavaScript ES6+ & DOM
+                            </span>
+                            <span class="skill-badge-num" data-target="90">0%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-progress bar-js" data-target="90" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-skill-item">
+                        <div class="sidebar-skill-info">
+                            <span class="skill-name-with-icon">
+                                <span class="skill-icon">🗄️</span> SQL Server Cơ Bản
+                            </span>
+                            <span class="skill-badge-num" data-target="82">0%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-progress bar-sql" data-target="82" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-skill-item">
+                        <div class="sidebar-skill-info">
+                            <span class="skill-name-with-icon">
+                                <span class="skill-icon">📚</span> Nghiệp Vụ Sư Phạm Tin Học
+                            </span>
+                            <span class="skill-badge-num" data-target="92">0%</span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-progress bar-anim" data-target="92" style="width: 0;"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Nhóm các tags công nghệ phụ trợ -->
+                <div class="sidebar-tech-stack">
+                    <span class="tech-stack-label">HỆ SINH THÁI CÔNG CỤ & KỸ NĂNG</span>
+                    <div class="tech-tags-cloud">
+                        <span class="tech-tag" title="Tin học văn phòng Word, Excel, PPT">Office MS</span>
+                        <span class="tech-tag" title="Visual Studio & VS Code">VS Code</span>
+                        <span class="tech-tag" title="Quản lý mã nguồn">GitHub</span>
+                        <span class="tech-tag" title="Bootstrap 5 framework">Bootstrap 5</span>
+                        <span class="tech-tag" title="SQL Server cơ sở dữ liệu">SQL Server</span>
+                        <span class="tech-tag" title="ASP.NET Core MVC">ASP.NET MVC</span>
+                        <span class="tech-tag" title="Thư viện Vue.js">Vue.js</span>
+                    </div>
+                </div>
+
+                <a href="#thanh-vien" class="sidebar-action-btn">Xem hồ sơ nhân sự & CV ↓</a>
             </div>
         </aside>
 
@@ -90,9 +204,9 @@
             <section class="parallax-banner" role="banner" aria-label="Banner công nghệ">
                 <div class="parallax-overlay"></div>
                 <div class="parallax-content glass-card">
-                    <span class="banner-tag">🌟 CREATIVE DEVELOPERS</span>
-                    <h1 class="banner-title">Khám Phá Sáng Tạo Công Nghệ Web</h1>
-                    <p class="banner-subtitle">Trang giới thiệu năng lực thực chiến, tối ưu trải nghiệm và hiệu suất mượt mà.</p>
+                    <span class="banner-tag">🌟 CREATIVE DEVELOPERS & EDUCATORS</span>
+                    <h1 class="banner-title">Khám Phá Sáng Tạo Công Nghệ Web & Giảng Dạy</h1>
+                    <p class="banner-subtitle">Trang giới thiệu năng lực thực chiến, hồ sơ CV chuẩn xác và các giải pháp phần mềm tối ưu.</p>
                 </div>
             </section>
 
@@ -105,7 +219,7 @@
                 
                 <!-- ====================================================
                      BÀI 3: TYPING EFFECT (CSS ONLY)
-                     Hiệu ứng chữ tự gõ mượt mà dùng CSS steps() và border nhấp nháy, không tốn tài nguyên JS
+                     Hiệu ứng chữ tự gõ cho dòng "Tôi là một Web Developer..." thuần CSS
                      ==================================================== -->
                 <div class="typing-container">
                     <span class="typing-prefix">> </span>
@@ -118,71 +232,91 @@
                 </p>
                 
                 <div class="cta-actions">
-                    <a class="primary-btn" href="#thanh-vien">Gặp gỡ thành viên</a>
+                    <a class="primary-btn" href="#thanh-vien">Xem Hồ Sơ Thành Viên & CV</a>
                     <a class="secondary-btn" href="#du-an">Xem các dự án</a>
                 </div>
             </section>
 
             <!-- ====================================================
                  BÀI 2: CARD FLIP EFFECT CHO 2 THÀNH VIÊN
-                 Thiết kế 2 thẻ nhân sự cho ĐỖ QUỐC THỊNH & NGUYỄN ĐÌNH NAM.
-                 Khi hover thẻ sẽ xoay lật 180 độ trong không gian 3D để lộ thông tin liên hệ!
+                 ĐỖ QUỐC THỊNH & NGUYỄN ĐÌNH NAM
+                 TÍCH HỢP HỒ SƠ CHỨC NĂNG CV THỰC TẾ (HỌC VẤN, KINH NGHIỆM, CHỨNG CHỈ SƯ PHẠM)
+                 VÀ CÓ NÚT MỞ BẢN CV ĐẦY ĐỦ CHI TIẾT
                  ==================================================== -->
             <section class="section-card team-section" id="thanh-vien">
                 <div class="section-header text-center">
-                    <span class="eyebrow">ĐỘI NGŨ THỰC HIỆN</span>
-                    <h2 class="section-title">Thành Viên Nhóm</h2>
-                    <p class="section-subtitle">Di chuột (hoặc chạm trên điện thoại) vào từng thẻ để khám phá thông tin liên hệ và kết nối!</p>
+                    <span class="eyebrow">HỒ SƠ NHÂN SỰ & CHUYÊN MÔN</span>
+                    <h2 class="section-title">Thành Viên Nhóm & Hồ Sơ Năng Lực (CV)</h2>
+                    <p class="section-subtitle">Di chuột để lật thẻ 3D xem nhanh liên hệ, hoặc bấm <strong>"Xem CV Chi Tiết"</strong> để mở toàn bộ hồ sơ nghiệp vụ!</p>
                 </div>
 
                 <div class="team-cards-grid">
                     
-                    <!-- THẺ THÀNH VIÊN 1: ĐỖ QUỐC THỊNH -->
+                    <!-- THẺ THÀNH VIÊN 1: ĐỖ QUỐC THỊNH (CHUẨN FORM CV ĐÃ CUNG CẤP) -->
                     <div class="flip-card-wrapper" tabindex="0" aria-label="Thẻ thành viên Đỗ Quốc Thịnh">
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <!-- MẶT TRƯỚC (Front side) -->
                                 <div class="flip-card-front card-thinh">
-                                    <div class="card-glow-effect"></div>
+                                    <div class="card-cv-badge">HỒ SƠ NỔI BẬT</div>
                                     <div class="avatar-container">
                                         <div class="member-avatar avatar-gradient-1">T</div>
-                                        <span class="status-indicator" title="Sẵn sàng hợp tác"></span>
+                                        <span class="status-indicator" title="Sẵn sàng giảng dạy & phát triển web"></span>
                                     </div>
                                     <h3 class="member-name">Đỗ Quốc Thịnh</h3>
-                                    <p class="member-role">Team Leader • Front-end Developer</p>
+                                    <p class="member-role">Giáo Viên Tin Học | Trợ Giảng CNTT</p>
+                                    <p class="member-sub-edu">🎓 FPT Polytechnic Đồng Nai (GPA 3.6/4.0 - Xuất Sắc)</p>
+                                    
                                     <div class="member-tags">
-                                        <span class="tag">UI/UX</span>
-                                        <span class="tag">HTML/CSS</span>
-                                        <span class="tag">Performance</span>
+                                        <span class="tag">Nghiệp Vụ Sư Phạm</span>
+                                        <span class="tag">C# / .NET MVC</span>
+                                        <span class="tag">Vue.js / HTML5</span>
                                     </div>
-                                    <div class="flip-instruction">
-                                        <span class="flip-icon">↻</span> Di chuột để xem liên hệ
+                                    
+                                    <div class="card-footer-actions">
+                                        <div class="flip-instruction">
+                                            <span class="flip-icon">↻</span> Hover lật liên hệ
+                                        </div>
+                                        <button class="btn-open-cv" data-member="thinh" type="button" aria-label="Xem CV Đỗ Quốc Thịnh">
+                                            📄 Xem CV Chi Tiết
+                                        </button>
                                     </div>
                                 </div>
 
-                                <!-- MẶT SAU (Back side - Lật 180 độ) -->
+                                <!-- MẶT SAU (Back side - Lật 180 độ: Thông tin liên hệ chuẩn từ CV) -->
                                 <div class="flip-card-back">
-                                    <h4 class="back-title">Thông Tin Liên Hệ</h4>
+                                    <h4 class="back-title">Thông Tin Cá Nhân & Liên Hệ</h4>
                                     <p class="back-name">Đỗ Quốc Thịnh</p>
+                                    <p class="back-role-text">Giáo viên Tin học • Trợ giảng CNTT</p>
+                                    
                                     <div class="back-contact-list">
-                                        <a href="mailto:thinh.do@example.com" class="contact-item">
+                                        <a href="tel:0981903400" class="contact-item">
+                                            <span class="icon">📞</span>
+                                            <span>0981903400</span>
+                                        </a>
+                                        <a href="mailto:tdo5175@gmail.com" class="contact-item">
                                             <span class="icon">✉️</span>
-                                            <span>thinh.do@example.com</span>
-                                        </a>
-                                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                                            <span class="icon">🐙</span>
-                                            <span>github.com/doquocthinh</span>
-                                        </a>
-                                        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                                            <span class="icon">💼</span>
-                                            <span>linkedin.com/in/thinh-do</span>
+                                            <span>tdo5175@gmail.com</span>
                                         </a>
                                         <div class="contact-item">
-                                            <span class="icon">🏫</span>
-                                            <span>Đại Học Lạc Hồng (LHU)</span>
+                                            <span class="icon">📅</span>
+                                            <span>Ngày sinh: 21/08/2007</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <span class="icon">📍</span>
+                                            <span>P. Trấn Biên, TP.Đồng Nai</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <span class="icon">📜</span>
+                                            <span>Chứng chỉ NVSP Cao Đẳng (VTE 2026)</span>
                                         </div>
                                     </div>
-                                    <a href="mailto:thinh.do@example.com" class="btn-connect">Gửi tin nhắn</a>
+                                    
+                                    <div class="back-action-group">
+                                        <button class="btn-open-cv-secondary" data-member="thinh" type="button">
+                                            Mở Bản CV Đầy Đủ
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -194,28 +328,42 @@
                             <div class="flip-card-inner">
                                 <!-- MẶT TRƯỚC (Front side) -->
                                 <div class="flip-card-front card-nam">
-                                    <div class="card-glow-effect"></div>
+                                    <div class="card-cv-badge">HỒ SƠ NỔI BẬT</div>
                                     <div class="avatar-container">
                                         <div class="member-avatar avatar-gradient-2">N</div>
                                         <span class="status-indicator" title="Sẵn sàng hợp tác"></span>
                                     </div>
                                     <h3 class="member-name">Nguyễn Đình Nam</h3>
-                                    <p class="member-role">Front-end & Logic Developer</p>
+                                    <p class="member-role">Kỹ Sư Phần Mềm | Lập Trình Viên Web</p>
+                                    <p class="member-sub-edu">🎓 Đại Học Lạc Hồng (LHU) - Ngành CNTT</p>
+                                    
                                     <div class="member-tags">
-                                        <span class="tag">JavaScript</span>
-                                        <span class="tag">CSS Grid</span>
-                                        <span class="tag">Animation</span>
+                                        <span class="tag">JavaScript ES6</span>
+                                        <span class="tag">CSS Grid & 3D</span>
+                                        <span class="tag">Database SQL</span>
                                     </div>
-                                    <div class="flip-instruction">
-                                        <span class="flip-icon">↻</span> Di chuột để xem liên hệ
+                                    
+                                    <div class="card-footer-actions">
+                                        <div class="flip-instruction">
+                                            <span class="flip-icon">↻</span> Hover lật liên hệ
+                                        </div>
+                                        <button class="btn-open-cv" data-member="nam" type="button" aria-label="Xem CV Nguyễn Đình Nam">
+                                            📄 Xem CV Chi Tiết
+                                        </button>
                                     </div>
                                 </div>
 
                                 <!-- MẶT SAU (Back side - Lật 180 độ) -->
                                 <div class="flip-card-back">
-                                    <h4 class="back-title">Thông Tin Liên Hệ</h4>
+                                    <h4 class="back-title">Thông Tin Cá Nhân & Liên Hệ</h4>
                                     <p class="back-name">Nguyễn Đình Nam</p>
+                                    <p class="back-role-text">Web Frontend & Logic Developer</p>
+                                    
                                     <div class="back-contact-list">
+                                        <a href="tel:0912345678" class="contact-item">
+                                            <span class="icon">📞</span>
+                                            <span>0912345678</span>
+                                        </a>
                                         <a href="mailto:nam.nguyen@example.com" class="contact-item">
                                             <span class="icon">✉️</span>
                                             <span>nam.nguyen@example.com</span>
@@ -224,16 +372,21 @@
                                             <span class="icon">🐙</span>
                                             <span>github.com/dinhnam-dev</span>
                                         </a>
-                                        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                                            <span class="icon">💼</span>
-                                            <span>linkedin.com/in/nam-nguyen</span>
-                                        </a>
+                                        <div class="contact-item">
+                                            <span class="icon">📍</span>
+                                            <span>TP. Biên Hòa, Đồng Nai</span>
+                                        </div>
                                         <div class="contact-item">
                                             <span class="icon">🏫</span>
                                             <span>Đại Học Lạc Hồng (LHU)</span>
                                         </div>
                                     </div>
-                                    <a href="mailto:nam.nguyen@example.com" class="btn-connect">Gửi tin nhắn</a>
+                                    
+                                    <div class="back-action-group">
+                                        <button class="btn-open-cv-secondary" data-member="nam" type="button">
+                                            Mở Bản CV Đầy Đủ
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -242,92 +395,75 @@
                 </div>
             </section>
 
-            <!-- ====================================================
-                 BÀI 6: SKILL BAR ANIMATION
-                 Hiệu ứng thanh kỹ năng chạy mượt từ 0% đến đích (tối ưu IntersectionObserver + requestAnimationFrame)
-                 ==================================================== -->
-            <section class="section-card skills-section" id="ky-nang">
+            <!-- SECTION MỚI: TIÊU CHUẨN & NGUYÊN TẮC PHÁT TRIỂN (TĂNG ĐỘ LOGIC & ĐẸP MẮT CHO NỘI DUNG CHÍNH) -->
+            <section class="section-card standards-section" id="tieu-chuan">
                 <div class="section-header">
-                    <span class="eyebrow">NĂNG LỰC CHUYÊN MÔN</span>
-                    <h2 class="section-title">Kỹ Năng & Công Nghệ</h2>
+                    <span class="eyebrow">CHẤT LƯỢNG SẢN PHẨM</span>
+                    <h2 class="section-title">Tiêu Chuẩn Thiết Kế & Lập Trình</h2>
                 </div>
 
-                <div class="skills-container" aria-label="Thanh kỹ năng lập trình">
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-title">HTML5 Semantic & SEO</span>
-                            <span class="skill-percent">95%</span>
-                        </div>
-                        <div class="skill-bar-track">
-                            <div class="skill-progress bar-html" data-target="95" style="width: 0;"></div>
-                        </div>
+                <div class="standards-grid">
+                    <div class="standard-item">
+                        <div class="standard-icon-box">⚡</div>
+                        <h3 class="standard-title">Tối Ưu Tốc Độ 60 FPS</h3>
+                        <p class="standard-desc">Tận dụng GPU acceleration qua transform và opacity, ngăn chặn hoàn toàn giật lag và hiện tượng layout reflow.</p>
                     </div>
 
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-title">CSS3 (Grid, Flexbox, 3D Transform, Animation)</span>
-                            <span class="skill-percent">90%</span>
-                        </div>
-                        <div class="skill-bar-track">
-                            <div class="skill-progress bar-css" data-target="90" style="width: 0;"></div>
-                        </div>
+                    <div class="standard-item">
+                        <div class="standard-icon-box">📱</div>
+                        <h3 class="standard-title">Responsive Toàn Diện</h3>
+                        <p class="standard-desc">Giao diện co giãn thông minh thích ứng mượt mà từ màn hình điện thoại 320px cho đến màn hình lớn 4K.</p>
                     </div>
 
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-title">JavaScript ES6+ & DOM Manipulation</span>
-                            <span class="skill-percent">80%</span>
-                        </div>
-                        <div class="skill-bar-track">
-                            <div class="skill-progress bar-js" data-target="80" style="width: 0;"></div>
-                        </div>
+                    <div class="standard-item">
+                        <div class="standard-icon-box">💎</div>
+                        <h3 class="standard-title">Giao Diện Hiện Đại</h3>
+                        <p class="standard-desc">Ứng dụng xu hướng Glassmorphism, 3D Perspective và bảng màu Gradient công nghệ mang lại cảm xúc thị giác cao cấp.</p>
                     </div>
 
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="skill-title">Responsive Web Design (Mobile First)</span>
-                            <span class="skill-percent">95%</span>
-                        </div>
-                        <div class="skill-bar-track">
-                            <div class="skill-progress bar-responsive" data-target="95" style="width: 0;"></div>
-                        </div>
+                    <div class="standard-item">
+                        <div class="standard-icon-box">🧼</div>
+                        <h3 class="standard-title">Mã Nguồn Chuẩn SEO</h3>
+                        <p class="standard-desc">Cấu trúc HTML5 ngữ nghĩa, tuân thủ tiêu chuẩn trợ năng WAI-ARIA và chú thích mã nguồn rõ ràng, dễ bảo trì.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION DỰ ÁN TIÊU BIỂU -->
+            <!-- SECTION DỰ ÁN TIÊU BIỂU (BỔ SUNG CÁC DỰ ÁN TỪ CV ĐỖ QUỐC THỊNH: CÔNG TY CHEAP, SMARTSTAY) -->
             <section class="section-card projects-section" id="du-an">
                 <div class="section-header">
-                    <span class="eyebrow">SẢN PHẨM HOÀN THIỆN</span>
-                    <h2 class="section-title">Dự Án Tiêu Biểu</h2>
+                    <span class="eyebrow">KINH NGHIỆM THỰC CHIẾN</span>
+                    <h2 class="section-title">Dự Án & Sản Phẩm Tiêu Biểu</h2>
                 </div>
 
                 <div class="projects-grid">
                     <article class="project-card">
                         <div class="project-header">
                             <span class="project-number">01</span>
-                            <span class="project-badge">Dự án nhóm</span>
+                            <span class="project-badge">Dự án Tốt Nghiệp</span>
                         </div>
-                        <h3 class="project-title">Trang Web Portfolio Cá Nhân & Nhóm</h3>
-                        <p class="project-desc">Trang portfolio tương tác cao với 6 hiệu ứng chuyển động mượt mà, tối ưu hóa phần cứng, giao diện responsive toàn diện.</p>
+                        <h3 class="project-title">SmartStay – Hệ Thống Quản Lý Phòng Trọ</h3>
+                        <p class="project-desc">Tham gia phát triển giao diện người dùng bằng HTML, CSS, JavaScript, Vue.js và Bootstrap. Xây dựng tài liệu kỹ thuật và kiểm thử chức năng.</p>
                         <div class="project-tech-list">
-                            <span class="tech-pill">HTML5</span>
-                            <span class="tech-pill">CSS3 Animation</span>
-                            <span class="tech-pill">JavaScript ES6</span>
+                            <span class="tech-pill">Vue.js</span>
+                            <span class="tech-pill">HTML5/CSS3</span>
+                            <span class="tech-pill">Bootstrap 5</span>
+                            <span class="tech-pill">JavaScript</span>
                         </div>
                     </article>
 
                     <article class="project-card">
                         <div class="project-header">
                             <span class="project-number">02</span>
-                            <span class="project-badge">Responsive Grid</span>
+                            <span class="project-badge">Thực Tập Doanh Nghiệp</span>
                         </div>
-                        <h3 class="project-title">Thư Viện Ảnh Tương Tác Hiện Đại</h3>
-                        <p class="project-desc">Bố cục ảnh ứng dụng CSS Grid hiện đại, tối ưu load ảnh bất đồng bộ với hiệu ứng hover zoom và xem chi tiết mượt mà.</p>
+                        <h3 class="project-title">Hệ Thống Đặt Đồ Ăn Trực Tuyến & Quản Lý</h3>
+                        <p class="project-desc">Thực tập tại Công ty TNHH Cheap: Hỗ trợ xây dựng giao diện, tìm hiểu Vue.js & ASP.NET Core MVC. Phát triển tính năng Giỏ hàng, Đơn hàng, Quản lý tài khoản.</p>
                         <div class="project-tech-list">
-                            <span class="tech-pill">CSS Grid</span>
-                            <span class="tech-pill">Flexbox</span>
-                            <span class="tech-pill">IntersectionObserver</span>
+                            <span class="tech-pill">ASP.NET Core MVC</span>
+                            <span class="tech-pill">C# .NET</span>
+                            <span class="tech-pill">SQL Server</span>
+                            <span class="tech-pill">Testing (Bug Report)</span>
                         </div>
                     </article>
                 </div>
@@ -337,11 +473,11 @@
             <section class="section-card contact-section" id="lien-he">
                 <div class="section-header text-center">
                     <span class="eyebrow">KẾT NỐI VỚI CHÚNG TÔI</span>
-                    <h2 class="section-title">Sẵn Sàng Hợp Tác Trong Dự Án Tiếp Theo?</h2>
-                    <p class="section-subtitle">Đừng ngần ngại để lại lời nhắn hoặc gửi thư trực tiếp cho nhóm 2 chúng tôi!</p>
+                    <h2 class="section-title">Sẵn Sàng Hợp Tác Trong Dự Án & Giảng Dạy</h2>
+                    <p class="section-subtitle">Đừng ngần ngại để lại lời nhắn hoặc gửi thư trực tiếp cho Đỗ Quốc Thịnh & Nguyễn Đình Nam!</p>
                 </div>
                 <div class="contact-action-box">
-                    <a href="mailto:thinh.do@example.com?cc=nam.nguyen@example.com" class="primary-btn pulse-hover">Gửi Email Cho Nhóm 2</a>
+                    <a href="mailto:tdo5175@gmail.com?cc=nam.nguyen@example.com" class="primary-btn pulse-hover">Gửi Email Kết Nối Ngay</a>
                 </div>
             </section>
 
@@ -351,9 +487,259 @@
         <footer class="site-footer">
             <div class="footer-content">
                 <p class="footer-brand">© 2026 Nhóm 2 • Đỗ Quốc Thịnh & Nguyễn Đình Nam</p>
-                <p class="footer-sub">Trường Đại Học Lạc Hồng (LHU) • Môn Thiết Kế Web</p>
+                <p class="footer-sub">Trường Đại Học Lạc Hồng (LHU) & FPT Polytechnic • Môn Thiết Kế Web</p>
             </div>
         </footer>
     </div>
+
+    <!-- ========================================================
+         MODAL XEM CV CHI TIẾT (CHUẨN FORM CV ĐÃ CUNG CẤP TRONG ẢNH)
+         Hiển thị đầy đủ thông tin: Thông tin cá nhân, Học vấn, Mục tiêu nghề nghiệp,
+         Dự án & Kinh nghiệm, Kỹ năng sư phạm, Sở thích & Điểm mạnh
+         ======================================================== -->
+    <div id="cv-modal" class="cv-modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="modal-cv-name">
+        <div class="cv-modal-container">
+            <!-- Nút đóng Modal -->
+            <button class="cv-modal-close" id="btn-close-cv-modal" aria-label="Đóng cửa sổ CV">&times;</button>
+            
+            <!-- Tabs chuyển đổi giữa 2 thành viên nếu muốn -->
+            <div class="cv-modal-tabs">
+                <button class="cv-tab-btn active" data-target-cv="thinh">CV Đỗ Quốc Thịnh</button>
+                <button class="cv-tab-btn" data-target-cv="nam">CV Nguyễn Đình Nam</button>
+            </div>
+
+            <!-- NỘI DUNG CV 1: ĐỖ QUỐC THỊNH (KHỚP HOÀN TOÀN VỚI HÌNH ẢNH CV) -->
+            <div id="cv-content-thinh" class="cv-paper active">
+                
+                <!-- HEADER CV -->
+                <header class="cv-header">
+                    <div class="cv-title-box">
+                        <h1 class="cv-name" id="modal-cv-name">ĐỖ QUỐC THỊNH</h1>
+                        <p class="cv-headline">GIÁO VIÊN TIN HỌC | TRỢ GIẢNG CNTT</p>
+                    </div>
+                </header>
+
+                <div class="cv-divider-thick"></div>
+
+                <!-- TOP ROW: AVATAR + THÔNG TIN + HỌC VẤN + KỸ NĂNG -->
+                <div class="cv-top-grid">
+                    <!-- Ảnh chân dung -->
+                    <div class="cv-photo-box">
+                        <div class="cv-photo-frame">
+                            <span class="cv-photo-initial">T</span>
+                        </div>
+                    </div>
+
+                    <!-- Cột 1: Thông tin cá nhân -->
+                    <div class="cv-info-col">
+                        <h2 class="cv-sec-title">THÔNG TIN CÁ NHÂN</h2>
+                        <ul class="cv-info-list">
+                            <li><span class="cv-icon">📞</span> <strong>0981903400</strong></li>
+                            <li><span class="cv-icon">📅</span> 21/08/2007</li>
+                            <li><span class="cv-icon">✉️</span> tdo5175@gmail.com</li>
+                            <li><span class="cv-icon">📍</span> Phường Trấn Biên, TP.Đồng Nai</li>
+                        </ul>
+
+                        <h2 class="cv-sec-title mt-3">KỸ NĂNG CHUYÊN MÔN</h2>
+                        <div class="cv-text-block">
+                            <p class="cv-sub-heading">KIẾN THỨC CHUYÊN MÔN:</p>
+                            <ul class="cv-bullet-list">
+                                <li>Tin học văn phòng: Microsoft Word, Excel, PowerPoint</li>
+                                <li>HTML5, CSS3, JavaScript, Vue.js, Bootstrap 5</li>
+                                <li>C#, .NET, ASP.NET Core MVC</li>
+                                <li>SQL Server (cơ bản)</li>
+                            </ul>
+                            <p class="cv-sub-heading mt-2">CÔNG CỤ SỬ DỤNG:</p>
+                            <p class="cv-tools-row">VS Code • Visual Studio • SQL Server • GitHub</p>
+                        </div>
+                    </div>
+
+                    <!-- Cột 2: Học vấn & Chứng chỉ -->
+                    <div class="cv-edu-col">
+                        <h2 class="cv-sec-title">HỌC VẤN & CHỨNG CHỈ</h2>
+                        
+                        <div class="cv-edu-item">
+                            <div class="cv-edu-header">
+                                <strong class="cv-school">TRƯỜNG CAO ĐẲNG FPT POLYTECHNIC ĐỒNG NAI</strong>
+                                <span class="cv-year">2022 - 2026</span>
+                            </div>
+                            <p class="cv-major">CHUYÊN NGÀNH: PHÁT TRIỂN PHẦN MỀM - CAO ĐẲNG CNTT</p>
+                            <p class="cv-rank">Xếp loại: <strong>Xuất sắc</strong> • GPA: <strong>3.6 / 4.0</strong></p>
+                        </div>
+
+                        <div class="cv-edu-item mt-3">
+                            <div class="cv-edu-header">
+                                <strong class="cv-school">TRUNG TÂM ĐÀO TẠO VTE</strong>
+                                <span class="cv-year">2026</span>
+                            </div>
+                            <p class="cv-major">CHỨNG CHỈ NGHIỆP VỤ SƯ PHẠM DẠY TRÌNH ĐỘ CAO ĐẲNG, TRUNG CẤP</p>
+                            <p class="cv-rank">Xếp loại: <strong>Khá</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-divider-thin"></div>
+
+                <!-- MAIN SECTIONS CỦA CV -->
+                <div class="cv-rows-container">
+                    
+                    <!-- Mục tiêu nghề nghiệp -->
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">MỤC TIÊU NGHỀ NGHIỆP</div>
+                        <div class="cv-row-content">
+                            <p>Mong muốn trở thành Giáo viên Tin học, vận dụng kiến thức chuyên môn và chứng chỉ Nghiệp vụ Sư phạm để tham gia giảng dạy, hướng dẫn học viên và hỗ trợ xây dựng tài liệu học tập. Không ngừng học hỏi, nâng cao kỹ năng sư phạm và chuyên môn CNTT nhằm mang đến những bài giảng hiệu quả, góp phần nâng cao chất lượng đào tạo của nhà trường.</p>
+                        </div>
+                    </div>
+
+                    <!-- Dự án & Kinh nghiệm -->
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">DỰ ÁN & KINH NGHIỆM</div>
+                        <div class="cv-row-content">
+                            <div class="cv-exp-block">
+                                <p class="cv-exp-role"><em>Thực tập sinh Phát triển phần mềm (01/2026 – 03/2026)</em></p>
+                                <strong class="cv-exp-company">CÔNG TY TNHH CHEAP</strong>
+                                <ul class="cv-bullet-list">
+                                    <li>Hỗ trợ phát triển và kiểm thử hệ thống phần mềm quản lý doanh nghiệp.</li>
+                                    <li>Tham gia xây dựng giao diện bằng HTML, CSS, Bootstrap và tìm hiểu Vue.js, ASP.NET Core MVC.</li>
+                                    <li>Hỗ trợ kiểm thử (Testing), báo cáo lỗi (Bug) và hướng dẫn người dùng sử dụng phần mềm.</li>
+                                    <li>Tham gia phát triển website đặt đồ ăn trực tuyến, xây dựng các chức năng Giỏ hàng, Đơn hàng, Quản lý tài khoản.</li>
+                                    <li>Làm việc nhóm, phối hợp với các bộ phận trong quá trình phát triển và triển khai hệ thống.</li>
+                                </ul>
+                            </div>
+
+                            <div class="cv-exp-block mt-3">
+                                <strong class="cv-exp-company">SmartStay – Hệ thống quản lý phòng trọ (Đồ án tốt nghiệp)</strong>
+                                <ul class="cv-bullet-list">
+                                    <li>Tham gia phát triển giao diện người dùng bằng HTML, CSS, JavaScript, Vue.js và Bootstrap.</li>
+                                    <li>Hỗ trợ xây dựng tài liệu kỹ thuật và kiểm thử chức năng của hệ thống trước khi hoàn thiện.</li>
+                                    <li>Làm việc theo nhóm trong quá trình phát triển dự án.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kỹ năng sư phạm -->
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">KỸ NĂNG SƯ PHẠM</div>
+                        <div class="cv-row-content">
+                            <ul class="cv-bullet-list">
+                                <li>Có kiến thức về phương pháp giảng dạy và quản lý lớp học từ chương trình Nghiệp vụ Sư phạm.</li>
+                                <li>Có khả năng trình bày, hướng dẫn và hỗ trợ người học dễ hiểu, trực quan.</li>
+                                <li>Có khả năng soạn giáo án, tài liệu học tập cơ bản chuẩn khoa học.</li>
+                                <li>Sẵn sàng học hỏi và cập nhật kiến thức CNTT phục vụ giảng dạy hiệu quả.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Sở thích & Điểm mạnh -->
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">SỞ THÍCH & ĐIỂM MẠNH</div>
+                        <div class="cv-row-content">
+                            <ul class="cv-bullet-list">
+                                <li>Yêu thích nghiên cứu công nghệ và chia sẻ kiến thức CNTT với học viên, cộng đồng.</li>
+                                <li>Thường xuyên cập nhật các phần mềm và công nghệ mới.</li>
+                                <li>Duy trì sức khỏe tốt bằng việc chạy bộ, đạp xe và bơi lội.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin khác -->
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">THÔNG TIN KHÁC</div>
+                        <div class="cv-row-content">
+                            <ul class="cv-bullet-list">
+                                <li>Sẵn sàng tham gia giảng dạy và trợ giảng theo sự phân công của nhà trường/trung tâm.</li>
+                                <li>Có khả năng phối hợp tốt với đồng nghiệp và học viên.</li>
+                                <li>Sẵn sàng tham gia các hoạt động chuyên môn và ngoại khóa của trung tâm.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- NỘI DUNG CV 2: NGUYỄN ĐÌNH NAM -->
+            <div id="cv-content-nam" class="cv-paper">
+                <header class="cv-header">
+                    <div class="cv-title-box">
+                        <h1 class="cv-name">NGUYỄN ĐÌNH NAM</h1>
+                        <p class="cv-headline">KỸ SƯ PHẦN MỀM | FRONTEND DEVELOPER</p>
+                    </div>
+                </header>
+
+                <div class="cv-divider-thick"></div>
+
+                <div class="cv-top-grid">
+                    <div class="cv-photo-box">
+                        <div class="cv-photo-frame bg-nam">
+                            <span class="cv-photo-initial">N</span>
+                        </div>
+                    </div>
+
+                    <div class="cv-info-col">
+                        <h2 class="cv-sec-title">THÔNG TIN CÁ NHÂN</h2>
+                        <ul class="cv-info-list">
+                            <li><span class="cv-icon">📞</span> <strong>0912345678</strong></li>
+                            <li><span class="cv-icon">✉️</span> nam.nguyen@example.com</li>
+                            <li><span class="cv-icon">📍</span> TP. Biên Hòa, Đồng Nai</li>
+                            <li><span class="cv-icon">🐙</span> github.com/dinhnam-dev</li>
+                        </ul>
+
+                        <h2 class="cv-sec-title mt-3">KỸ NĂNG CHUYÊN MÔN</h2>
+                        <div class="cv-text-block">
+                            <ul class="cv-bullet-list">
+                                <li>HTML5 Semantic, CSS Grid, Flexbox, Animations 3D</li>
+                                <li>JavaScript ES6+, Xử lý DOM, Bất đồng bộ Async/Await</li>
+                                <li>SQL Server, Quản lý CSDL quan hệ</li>
+                                <li>Responsive Web Design Mobile-First</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cv-edu-col">
+                        <h2 class="cv-sec-title">HỌC VẤN & TRƯỜNG LỚP</h2>
+                        <div class="cv-edu-item">
+                            <div class="cv-edu-header">
+                                <strong class="cv-school">TRƯỜNG ĐẠI HỌC LẠC HỒNG (LHU)</strong>
+                                <span class="cv-year">2023 - 2027</span>
+                            </div>
+                            <p class="cv-major">KHOA CÔNG NGHỆ THÔNG TIN - THIẾT KẾ WEB</p>
+                            <p class="cv-rank">Xếp loại: <strong>Giỏi</strong> • Đam mê kỹ thuật frontend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cv-divider-thin"></div>
+
+                <div class="cv-rows-container">
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">MỤC TIÊU NGHỀ NGHIỆP</div>
+                        <div class="cv-row-content">
+                            <p>Mong muốn trở thành Kỹ sư phần mềm chuyên sâu về Frontend, xây dựng các giải pháp ứng dụng web tương tác cao, mượt mà và tối ưu hóa hiệu năng tối đa cho người dùng cuối.</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-row-section">
+                        <div class="cv-row-label">DỰ ÁN TIÊU BIỂU</div>
+                        <div class="cv-row-content">
+                            <div class="cv-exp-block">
+                                <strong class="cv-exp-company">Portfolio Nhóm 2 - ĐH Lạc Hồng</strong>
+                                <p>Phát triển cấu trúc responsive, tối ưu chuyển động 60 FPS, xây dựng các bài tập hiệu ứng tương tác cao.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút in / tải CV -->
+            <div class="cv-modal-footer">
+                <button class="btn-print-cv" onclick="window.print()">🖨️ In / Xuất File PDF</button>
+                <button class="btn-close-modal-bottom" id="btn-close-modal-bottom">Đóng Cửa Sổ</button>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
