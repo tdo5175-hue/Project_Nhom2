@@ -141,7 +141,8 @@ button {
     font-weight: 800;
     letter-spacing: 0.08em;
     background: var(--grad-primary);
-    /* -webkit-background-clip: text; */
+    background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
