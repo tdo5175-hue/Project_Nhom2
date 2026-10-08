@@ -536,7 +536,7 @@
 
 .flip-card-wrapper {
     perspective: 1200px;
-    height: 380px;
+    height: 520px;
     outline: none;
     cursor: pointer;
 }
@@ -565,60 +565,87 @@
     inset: 0;
     display: flex;
     flex-direction: column;
-    padding: 28px;
+    padding: 24px;
     border-radius: var(--radius-lg);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 10px 30px -10px rgba(16, 32, 30, 0.08), 0 1px 3px rgba(16, 32, 30, 0.04);
 }
 
-/* Mặt trước */
+/* Mặt trước - Phong cách Executive Minimalist Sang Trọng */
 .flip-card-front {
     background: var(--surface);
     border: 1px solid var(--line);
     justify-content: space-between;
 }
 
-.card-cv-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 3px 10px;
-    border-radius: var(--radius-full);
-    background: var(--primary-soft);
-    color: var(--primary);
+.card-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.card-role-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 6px;
     font-size: 0.72rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    background: rgba(15, 118, 110, 0.08);
+    color: var(--primary);
+    border: 1px solid rgba(15, 118, 110, 0.2);
 }
 
-.avatar-container {
-    display: flex;
+.card-status-pill {
+    display: inline-flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 8px;
+    gap: 6px;
+    font-size: 0.74rem;
+    color: var(--muted);
+    font-weight: 500;
 }
 
-.member-avatar {
-    display: grid;
-    place-items: center;
-    width: 68px;
-    height: 68px;
+.status-dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    color: #fff;
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    font-weight: 900;
+    background-color: #10b981;
+    display: inline-block;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
 }
 
-.avatar-gradient-1 {
-    background: var(--primary);
+.card-profile-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 14px;
 }
 
-.avatar-gradient-2 {
-    background: var(--accent);
-    color: #2a1a00;
+.member-photo-box {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.member-photo-square {
+    width: 96px;
+    height: 96px;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: center top;
+    border: 1.5px solid var(--line);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    background-color: var(--surface-2);
+    display: block;
+}
+
+.member-title-meta {
+    flex: 1;
+    min-width: 0;
 }
 
 .member-name {
@@ -626,34 +653,75 @@
     font-size: 1.35rem;
     font-weight: 800;
     color: var(--ink);
-    margin-top: 14px;
+    margin: 0 0 4px 0;
+    line-height: 1.25;
 }
 
 .member-role {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     font-weight: 600;
     color: var(--primary);
+    margin: 0 0 4px 0;
 }
 
 .member-sub-edu {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     color: var(--muted);
-    margin-top: 4px;
+    margin: 0 0 4px 0;
+}
+
+.member-gpa-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.card-body-details {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-section-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.card-project-role {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--ink-2);
+    margin: 0;
 }
 
 .member-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 12px 0;
+    margin-top: 6px;
 }
 
 .member-tags .tag {
-    padding: 3px 10px;
-    border-radius: var(--radius-full);
-    background: var(--surface-2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--line);
     color: var(--ink-2);
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     font-weight: 600;
 }
 
@@ -661,12 +729,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 14px;
+    padding-top: 12px;
     border-top: 1px solid var(--line);
 }
 
 .flip-instruction {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: var(--muted);
 }
 
@@ -692,76 +760,135 @@
     transform: scale(0.95);
 }
 
-/* Mặt sau (lật 180 độ) */
+/* Mặt sau - Phong cách Danh thiếp Doanh nhân Cao cấp (Slate / Navy) */
 .flip-card-back {
-    background: linear-gradient(145deg, #0f766e 0%, #115e59 100%);
-    color: #fff;
+    background: #0f172a;
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transform: rotateY(180deg);
     justify-content: space-between;
 }
 
 [data-theme="dark"] .flip-card-back {
-    background: linear-gradient(145deg, #09201d 0%, #0d2f2b 100%);
+    background: #091a18;
     border: 1px solid var(--line);
 }
 
+.back-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+}
+
+.back-avatar-mini {
+    width: 48px;
+    height: 48px;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center top;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+}
+
 .back-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #94a3b8;
+    display: block;
 }
 
 .back-name {
     font-family: var(--font-display);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 800;
-    color: #fff;
-    margin-top: 4px;
+    color: #ffffff;
+    margin: 2px 0 0;
 }
 
 .back-role-text {
-    font-size: 0.85rem;
-    color: #c7ede6;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin: 0;
 }
 
 .back-contact-list {
     display: grid;
-    gap: 8px;
-    margin: 14px 0;
-    font-size: 0.86rem;
+    gap: 7px;
+    margin-bottom: 10px;
+    font-size: 0.82rem;
 }
 
 .contact-item {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #e7fbf7;
+    color: #e2e8f0;
     text-decoration: none;
-    transition: transform var(--t-fast);
+    transition: transform var(--t-fast), color var(--t-fast);
 }
 
 .contact-item:hover {
-    transform: translateX(4px);
-    color: #fff;
+    transform: translateX(3px);
+    color: #38bdf8;
+}
+
+.c-icon {
+    font-size: 0.92rem;
+    opacity: 0.9;
+}
+
+.back-assignment-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+}
+
+.assignment-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.assignment-desc {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: #cbd5e1;
+    margin: 0;
+}
+
+.back-action-group {
+    width: 100%;
 }
 
 .btn-open-cv-secondary {
     width: 100%;
     padding: 10px;
-    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--radius-full);
-    background: var(--accent);
-    color: #2a1a00;
-    font-weight: 800;
-    font-size: 0.88rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: transform var(--t-fast), background-color var(--t-fast);
+    backdrop-filter: blur(4px);
+    transition: transform var(--t-fast), background-color var(--t-fast), border-color var(--t-fast);
 }
 
 .btn-open-cv-secondary:hover {
-    background: var(--accent-strong);
+    background: var(--primary);
+    border-color: var(--primary);
     transform: translateY(-2px);
 }
 
@@ -1049,13 +1176,23 @@
 }
 
 .cv-photo-frame {
-    display: grid;
-    place-items: center;
-    width: 120px;
-    height: 150px;
+    display: block;
+    width: 130px;
+    height: 130px;
+    aspect-ratio: 1 / 1;
     border-radius: var(--radius-md);
-    background: var(--primary-soft);
+    background: var(--surface-2);
     border: 2px solid var(--line);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.cv-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
 }
 
 .cv-photo-initial {
@@ -1063,6 +1200,10 @@
     font-size: 3rem;
     font-weight: 900;
     color: var(--primary);
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .cv-sec-title {

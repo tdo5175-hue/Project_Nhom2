@@ -41,10 +41,8 @@ kbd {
 }
 
 .text-grad {
-    background: var(--grad-mix);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--primary);
+    font-weight: 700;
 }
 
 /* ------------------------------- TICKER ------------------------------- */
@@ -1032,6 +1030,14 @@ kbd {
     background: var(--grad-brand);
     color: #fff;
     font-weight: 800;
+    overflow: hidden;
+}
+
+.about-mini-avatars span img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
 }
 
 .about-mini-avatars span + span {
@@ -1303,15 +1309,25 @@ code {
 .flip-avatar {
     display: grid;
     place-items: center;
-    width: 84px;
-    height: 84px;
-    margin-bottom: 10px;
-    border: 3px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
+    width: 88px;
+    height: 88px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     font-family: var(--font-display);
     font-size: 2.2rem;
     font-weight: 900;
+    overflow: hidden;
+}
+
+.flip-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
 }
 
 .flip-hint {

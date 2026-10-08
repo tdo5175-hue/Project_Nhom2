@@ -80,8 +80,8 @@
             <div class="sidebar-box team-summary-box">
                 <div class="team-badge">ĐH Lạc Hồng • Lớp Thiết Kế Web</div>
                 <div class="team-avatar-group">
-                    <div class="mini-avatar avatar-thinh" title="Đỗ Quốc Thịnh">T</div>
-                    <div class="mini-avatar avatar-nam" title="Nguyễn Đình Nam">N</div>
+                    <img src="images/DoQuocThinh.jpg" alt="Đỗ Quốc Thịnh" class="mini-avatar-img" title="Đỗ Quốc Thịnh" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
+                    <img src="images/Anh-the-Dinh-Nam.jpg" alt="Nguyễn Đình Nam" class="mini-avatar-img" title="Nguyễn Đình Nam" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
                 </div>
                 <h2 class="sidebar-team-name">Dự Án Nhóm 2</h2>
                 <p class="sidebar-team-role">CNTT & Sư Phạm Tin Học</p>
@@ -257,64 +257,84 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <!-- MẶT TRƯỚC (Front side) -->
-                                <div class="flip-card-front card-thinh">
-                                    <div class="card-cv-badge">HỒ SƠ NỔI BẬT</div>
-                                    <div class="avatar-container">
-                                        <div class="member-avatar avatar-gradient-1">T</div>
-                                        <span class="status-indicator" title="Sẵn sàng giảng dạy & phát triển web"></span>
+                                <div class="flip-card-front card-executive card-thinh">
+                                    <div class="card-top-bar">
+                                        <span class="card-role-badge">TRƯỞNG NHÓM · DEV LEAD</span>
+                                        <span class="card-status-pill"><span class="status-dot"></span> Sẵn sàng hợp tác</span>
                                     </div>
-                                    <h3 class="member-name">Đỗ Quốc Thịnh</h3>
-                                    <p class="member-role">Giáo Viên Tin Học | Trợ Giảng CNTT</p>
-                                    <p class="member-sub-edu">🎓 FPT Polytechnic Đồng Nai (GPA 3.6/4.0 - Xuất Sắc)</p>
-                                    
-                                    <div class="member-tags">
-                                        <span class="tag">Nghiệp Vụ Sư Phạm</span>
-                                        <span class="tag">C# / .NET MVC</span>
-                                        <span class="tag">Vue.js / HTML5</span>
+
+                                    <div class="card-profile-header">
+                                        <div class="member-photo-box">
+                                            <img src="images/DoQuocThinh.jpg" alt="Ảnh thẻ Đỗ Quốc Thịnh" class="member-photo-square" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
+                                        </div>
+                                        <div class="member-title-meta">
+                                            <h3 class="member-name">Đỗ Quốc Thịnh</h3>
+                                            <p class="member-role">Giáo Viên Tin Học · Trợ Giảng CNTT</p>
+                                            <p class="member-sub-edu">🎓 CĐ FPT Polytechnic Đồng Nai</p>
+                                            <span class="member-gpa-badge">GPA 3.6 / 4.0 — Tốt nghiệp Xuất Sắc</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body-details">
+                                        <div class="card-section-label">ĐÓNG GÓP TRỌNG TÂM DỰ ÁN TIN MỚI</div>
+                                        <p class="card-project-role">
+                                            Kiến trúc hệ thống Semantic HTML5, hệ thống Design Tokens CSS, tối ưu trải nghiệm Responsive & khả năng tiếp cận chuẩn W3C / SEO.
+                                        </p>
+                                        
+                                        <div class="card-section-label" style="margin-top: 10px;">KỸ NĂNG NỔI BẬT</div>
+                                        <div class="member-tags">
+                                            <span class="tag">Nghiệp Vụ Sư Phạm VTE</span>
+                                            <span class="tag">C# / .NET MVC</span>
+                                            <span class="tag">Vue.js / HTML5</span>
+                                            <span class="tag">SQL Server</span>
+                                        </div>
                                     </div>
                                     
                                     <div class="card-footer-actions">
-                                        <div class="flip-instruction">
-                                            <span class="flip-icon">↻</span> Hover lật liên hệ
-                                        </div>
+                                        <span class="flip-instruction">↻ Di chuột / Chạm để lật thẻ</span>
                                         <button class="btn-open-cv" data-member="thinh" type="button" aria-label="Xem CV Đỗ Quốc Thịnh">
-                                            📄 Xem CV Chi Tiết
+                                            📄 Xem Hồ Sơ CV Chi Tiết
                                         </button>
                                     </div>
                                 </div>
 
                                 <!-- MẶT SAU (Back side - Lật 180 độ: Thông tin liên hệ chuẩn từ CV) -->
-                                <div class="flip-card-back">
-                                    <h4 class="back-title">Thông Tin Cá Nhân & Liên Hệ</h4>
-                                    <p class="back-name">Đỗ Quốc Thịnh</p>
-                                    <p class="back-role-text">Giáo viên Tin học • Trợ giảng CNTT</p>
+                                <div class="flip-card-back card-back-executive">
+                                    <div class="back-header">
+                                        <img src="images/DoQuocThinh.jpg" alt="Đỗ Quốc Thịnh" class="back-avatar-mini" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
+                                        <div>
+                                            <span class="back-title">THÔNG TIN LIÊN HỆ & BỔ NHIỆM</span>
+                                            <h4 class="back-name">Đỗ Quốc Thịnh</h4>
+                                            <p class="back-role-text">Trưởng Nhóm &amp; Web Architect</p>
+                                        </div>
+                                    </div>
                                     
                                     <div class="back-contact-list">
                                         <a href="tel:0981903400" class="contact-item">
-                                            <span class="icon">📞</span>
-                                            <span>0981903400</span>
+                                            <span class="c-icon">📞</span> <span><strong>0981 903 400</strong></span>
                                         </a>
                                         <a href="mailto:tdo5175@gmail.com" class="contact-item">
-                                            <span class="icon">✉️</span>
-                                            <span>tdo5175@gmail.com</span>
+                                            <span class="c-icon">✉️</span> <span>tdo5175@gmail.com</span>
                                         </a>
                                         <div class="contact-item">
-                                            <span class="icon">📅</span>
-                                            <span>Ngày sinh: 21/08/2007</span>
+                                            <span class="c-icon">📅</span> <span>Ngày sinh: 21/08/2007</span>
                                         </div>
                                         <div class="contact-item">
-                                            <span class="icon">📍</span>
-                                            <span>P. Trấn Biên, TP.Đồng Nai</span>
+                                            <span class="c-icon">📍</span> <span>P. Trấn Biên, TP. Biên Hòa, Đồng Nai</span>
                                         </div>
                                         <div class="contact-item">
-                                            <span class="icon">📜</span>
-                                            <span>Chứng chỉ NVSP Cao Đẳng (VTE 2026)</span>
+                                            <span class="c-icon">📜</span> <span>Chứng chỉ NV Sư phạm Giảng viên VTE (2026)</span>
                                         </div>
+                                    </div>
+
+                                    <div class="back-assignment-box">
+                                        <span class="assignment-title">PHÂN CÔNG DỰ ÁN</span>
+                                        <p class="assignment-desc">Chủ trì lập kế hoạch kiến trúc, kiểm duyệt mã nguồn, tối ưu hóa giao diện báo điện tử đạt chuẩn 100 điểm Performance.</p>
                                     </div>
                                     
                                     <div class="back-action-group">
                                         <button class="btn-open-cv-secondary" data-member="thinh" type="button">
-                                            Mở Bản CV Đầy Đủ
+                                            Mở Toàn Bộ Bản CV Đầy Đủ →
                                         </button>
                                     </div>
                                 </div>
@@ -327,64 +347,84 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <!-- MẶT TRƯỚC (Front side) -->
-                                <div class="flip-card-front card-nam">
-                                    <div class="card-cv-badge">HỒ SƠ NỔI BẬT</div>
-                                    <div class="avatar-container">
-                                        <div class="member-avatar avatar-gradient-2">N</div>
-                                        <span class="status-indicator" title="Sẵn sàng hợp tác"></span>
+                                <div class="flip-card-front card-executive card-nam">
+                                    <div class="card-top-bar">
+                                        <span class="card-role-badge">KỸ SƯ PHẦN MỀM · CORE DEV</span>
+                                        <span class="card-status-pill"><span class="status-dot"></span> Sẵn sàng hợp tác</span>
                                     </div>
-                                    <h3 class="member-name">Nguyễn Đình Nam</h3>
-                                    <p class="member-role">Kỹ Sư Phần Mềm | Lập Trình Viên Web</p>
-                                    <p class="member-sub-edu">🎓 Đại Học Lạc Hồng (LHU) - Ngành CNTT</p>
-                                    
-                                    <div class="member-tags">
-                                        <span class="tag">JavaScript ES6</span>
-                                        <span class="tag">CSS Grid & 3D</span>
-                                        <span class="tag">Database SQL</span>
+
+                                    <div class="card-profile-header">
+                                        <div class="member-photo-box">
+                                            <img src="images/Anh-the-Dinh-Nam.jpg" alt="Ảnh thẻ Nguyễn Đình Nam" class="member-photo-square" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
+                                        </div>
+                                        <div class="member-title-meta">
+                                            <h3 class="member-name">Nguyễn Đình Nam</h3>
+                                            <p class="member-role">Kỹ Sư Phần Mềm · Frontend & Logic Dev</p>
+                                            <p class="member-sub-edu">🎓 Đại Học Lạc Hồng (LHU)</p>
+                                            <span class="member-gpa-badge">Khoa CNTT — Kỹ thuật Phần mềm</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body-details">
+                                        <div class="card-section-label">ĐÓNG GÓP TRỌNG TÂM DỰ ÁN TIN MỚI</div>
+                                        <p class="card-project-role">
+                                            Phát triển Logic JavaScript tương tác DOM, hiệu ứng chuyển động 3D GPU 60 FPS, hệ thống bộ lọc bài viết, Widget Ticker &amp; Dark/Light Mode.
+                                        </p>
+                                        
+                                        <div class="card-section-label" style="margin-top: 10px;">KỸ NĂNG NỔI BẬT</div>
+                                        <div class="member-tags">
+                                            <span class="tag">JavaScript ES6+</span>
+                                            <span class="tag">CSS Grid & Flexbox</span>
+                                            <span class="tag">Database SQL</span>
+                                            <span class="tag">Git / GitHub</span>
+                                        </div>
                                     </div>
                                     
                                     <div class="card-footer-actions">
-                                        <div class="flip-instruction">
-                                            <span class="flip-icon">↻</span> Hover lật liên hệ
-                                        </div>
+                                        <span class="flip-instruction">↻ Di chuột / Chạm để lật thẻ</span>
                                         <button class="btn-open-cv" data-member="nam" type="button" aria-label="Xem CV Nguyễn Đình Nam">
-                                            📄 Xem CV Chi Tiết
+                                            📄 Xem Hồ Sơ CV Chi Tiết
                                         </button>
                                     </div>
                                 </div>
 
                                 <!-- MẶT SAU (Back side - Lật 180 độ) -->
-                                <div class="flip-card-back">
-                                    <h4 class="back-title">Thông Tin Cá Nhân & Liên Hệ</h4>
-                                    <p class="back-name">Nguyễn Đình Nam</p>
-                                    <p class="back-role-text">Web Frontend & Logic Developer</p>
+                                <div class="flip-card-back card-back-executive">
+                                    <div class="back-header">
+                                        <img src="images/Anh-the-Dinh-Nam.jpg" alt="Nguyễn Đình Nam" class="back-avatar-mini" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
+                                        <div>
+                                            <span class="back-title">THÔNG TIN LIÊN HỆ & BỔ NHIỆM</span>
+                                            <h4 class="back-name">Nguyễn Đình Nam</h4>
+                                            <p class="back-role-text">Core Developer &amp; Logic Engineer</p>
+                                        </div>
+                                    </div>
                                     
                                     <div class="back-contact-list">
                                         <a href="tel:0912345678" class="contact-item">
-                                            <span class="icon">📞</span>
-                                            <span>0912345678</span>
+                                            <span class="c-icon">📞</span> <span><strong>0912 345 678</strong></span>
                                         </a>
                                         <a href="mailto:nam.nguyen@example.com" class="contact-item">
-                                            <span class="icon">✉️</span>
-                                            <span>nam.nguyen@example.com</span>
+                                            <span class="c-icon">✉️</span> <span>nam.nguyen@example.com</span>
                                         </a>
                                         <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                                            <span class="icon">🐙</span>
-                                            <span>github.com/dinhnam-dev</span>
+                                            <span class="c-icon">🐙</span> <span>github.com/dinhnam-dev</span>
                                         </a>
                                         <div class="contact-item">
-                                            <span class="icon">📍</span>
-                                            <span>TP. Biên Hòa, Đồng Nai</span>
+                                            <span class="c-icon">📍</span> <span>TP. Biên Hòa, Đồng Nai</span>
                                         </div>
                                         <div class="contact-item">
-                                            <span class="icon">🏫</span>
-                                            <span>Đại Học Lạc Hồng (LHU)</span>
+                                            <span class="c-icon">🏫</span> <span>Khoa CNTT - Đại Học Lạc Hồng (LHU)</span>
                                         </div>
+                                    </div>
+
+                                    <div class="back-assignment-box">
+                                        <span class="assignment-title">PHÂN CÔNG DỰ ÁN</span>
+                                        <p class="assignment-desc">Chịu trách nhiệm mã nguồn JavaScript xử lý tương tác độc giả, tính năng tìm kiếm nhanh, lưu trữ LocalStorage và form gửi bài viết.</p>
                                     </div>
                                     
                                     <div class="back-action-group">
                                         <button class="btn-open-cv-secondary" data-member="nam" type="button">
-                                            Mở Bản CV Đầy Đủ
+                                            Mở Toàn Bộ Bản CV Đầy Đủ →
                                         </button>
                                     </div>
                                 </div>
@@ -526,7 +566,7 @@
                     <!-- Ảnh chân dung -->
                     <div class="cv-photo-box">
                         <div class="cv-photo-frame">
-                            <span class="cv-photo-initial">T</span>
+                            <img src="images/DoQuocThinh.jpg" alt="Ảnh thẻ Đỗ Quốc Thịnh" class="cv-photo-img" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
                         </div>
                     </div>
 
@@ -672,8 +712,8 @@
 
                 <div class="cv-top-grid">
                     <div class="cv-photo-box">
-                        <div class="cv-photo-frame bg-nam">
-                            <span class="cv-photo-initial">N</span>
+                        <div class="cv-photo-frame">
+                            <img src="images/Anh-the-Dinh-Nam.jpg" alt="Ảnh thẻ Nguyễn Đình Nam" class="cv-photo-img" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
                         </div>
                     </div>
 
