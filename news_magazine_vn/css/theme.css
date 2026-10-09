@@ -916,12 +916,14 @@ p {
 
 /* Ảnh: nền dự phòng khi ảnh chưa tải */
 .media {
+    display: block;
     position: relative;
     overflow: hidden;
     background: var(--grad-mix);
 }
 
 .media img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;

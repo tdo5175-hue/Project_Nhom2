@@ -1,14 +1,28 @@
 /**
- * INDEX.JS — TƯƠNG TÁC RIÊNG CỦA TRANG CHỦ
- * - Lọc tin theo chuyên mục (tabs) + tìm kiếm theo từ khóa
- * - Lưu bài viết (localStorage)
- * - Bộ đếm số liệu chạy khi cuộn tới
- * - Thẻ lật (flip) hỗ trợ chạm / bàn phím
- * - Scrollspy: tô sáng menu theo section đang xem
+ * INDEX.JS — TƯƠNG TÁC RIÊNG CỦA TRANG CHỦ TIN MỚI
+ * - Lọc tin theo 7 chuyên mục (tabs) + tìm kiếm theo từ khóa tức thì
+ * - Lưu bài viết (Bookmark localStorage)
+ * - Bộ đếm số liệu sinh động (Count-up animation)
+ * - Thẻ lật 3D hỗ trợ chạm (mobile) & bàn phím
+ * - Scrollspy: tự động tô sáng menu theo chuyên mục đang cuộn
+ * - Thăm dò ý kiến độc giả (Interactive Reader Poll)
+ * - Form đăng ký nhận bản tin (Newsletter)
+ * - Cập nhật ngày hôm nay tự động theo định dạng tiếng Việt
  */
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
+    /* ---------- 1. CẬP NHẬT NGÀY THÁNG TIẾNG VIỆT ---------- */
+    const todayEl = document.querySelector('[data-today]');
+    if (todayEl) {
+        const now = new Date();
+        const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+        const dayName = days[now.getDay()];
+        const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+        todayEl.textContent = `${dayName}, ${dateStr}`;
+    }
+
+    /* ---------- 2. LỌC TIN THEO CHUYÊN MỤC & TÌM KIẾM ---------- */
     const cards = Array.from(document.querySelectorAll('#news-grid .news-card'));
     const tabs = document.querySelectorAll('.filter-tab');
     const emptyState = document.getElementById('empty-state');
@@ -19,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* Bỏ dấu tiếng Việt để tìm kiếm thân thiện hơn */
     const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
 
-    /* ---------- 1. Ẩn / hiện thẻ bằng opacity + scale rồi mới display:none ---------- */
     function applyFilters() {
         const kw = normalize(currentKeyword.trim());
         let visible = 0;
@@ -37,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.classList.add('is-hiding');
                 setTimeout(() => {
                     if (card.classList.contains('is-hiding')) card.classList.add('is-hidden');
-                }, 300);
+                }, 280);
             }
         });
 
@@ -46,10 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resultText) {
             if (kw) {
                 resultText.innerHTML = '';
-                resultText.append(`Tìm thấy ${visible} bài viết cho "${currentKeyword}".`);
+                resultText.append(`Tìm thấy ${visible} bài viết cho từ khóa "${currentKeyword}". `);
                 const clear = document.createElement('button');
                 clear.type = 'button';
-                clear.textContent = 'Xóa tìm kiếm';
+                clear.textContent = 'Xóa bộ lọc tìm kiếm';
                 clear.addEventListener('click', () => {
                     currentKeyword = '';
                     const input = document.getElementById('site-search');
@@ -74,14 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ---------- 2. Tìm kiếm ---------- */
+    /* ---------- 3. TÌM KIẾM BÀI VIẾT ---------- */
     const searchForm = document.getElementById('search-form');
     if (searchForm) {
         searchForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const input = searchForm.querySelector('input');
             currentKeyword = input ? input.value : '';
-            // Khi tìm kiếm: đưa bộ lọc về "Tất cả"
             currentFilter = 'all';
             tabs.forEach((t) => {
                 const on = t.dataset.filter === 'all';
@@ -95,14 +107,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ---------- 3. Lưu bài viết ---------- */
+    // Các nút gợi ý từ khóa
+    document.querySelectorAll('.search-hint button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const kw = btn.dataset.keyword || btn.textContent;
+            const input = document.getElementById('site-search');
+            if (input) input.value = kw;
+            currentKeyword = kw;
+            currentFilter = 'all';
+            tabs.forEach((t) => {
+                const on = t.dataset.filter === 'all';
+                t.classList.toggle('is-active', on);
+                t.setAttribute('aria-selected', String(on));
+            });
+            applyFilters();
+            document.querySelector('.search-panel')?.classList.remove('is-open');
+            document.querySelector('.search-toggle')?.setAttribute('aria-expanded', 'false');
+            document.getElementById('tin-moi')?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    /* ---------- 4. LƯU BÀI VIẾT (BOOKMARK LOCALSTORAGE) ---------- */
     const SAVE_KEY = 'tm-saved';
     let saved = [];
     try { saved = JSON.parse(localStorage.getItem(SAVE_KEY)) || []; } catch (e) { saved = []; }
 
     document.querySelectorAll('.save-btn').forEach((btn) => {
         const id = btn.dataset.save;
-        if (saved.includes(id)) btn.setAttribute('aria-pressed', 'true');
+        if (saved.includes(id)) {
+            btn.setAttribute('aria-pressed', 'true');
+            btn.setAttribute('aria-label', 'Bỏ lưu bài viết');
+        }
 
         btn.addEventListener('click', () => {
             const on = btn.getAttribute('aria-pressed') !== 'true';
@@ -110,11 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.setAttribute('aria-label', on ? 'Bỏ lưu bài viết' : 'Lưu bài viết');
             saved = on ? [...new Set([...saved, id])] : saved.filter((x) => x !== id);
             try { localStorage.setItem(SAVE_KEY, JSON.stringify(saved)); } catch (e) { /* bỏ qua */ }
-            if (window.showToast) window.showToast(on ? '🔖 Đã lưu bài viết' : 'Đã bỏ lưu bài viết');
+            if (window.showToast) window.showToast(on ? '🔖 Đã lưu bài viết vào mục yêu thích' : 'Đã bỏ lưu bài viết');
         });
     });
 
-    /* ---------- 4. Bộ đếm số liệu ---------- */
+    /* ---------- 5. BỘ ĐẾM SỐ LIỆU TỰ ĐỘNG CHẠY KHI CUỘN TỚI ---------- */
     const counters = document.querySelectorAll('[data-count]');
     const countUp = (el) => {
         const target = parseInt(el.dataset.count, 10) || 0;
@@ -144,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         counters.forEach((c) => { c.textContent = c.dataset.count; });
     }
 
-    /* ---------- 5. Thẻ lật: chạm (mobile) + Enter/Space ---------- */
+    /* ---------- 6. THẺ LẬT 3D (FLIP CARDS) ---------- */
     document.querySelectorAll('.flip').forEach((card) => {
         card.addEventListener('click', (e) => {
             if (e.target.closest('a')) return;
@@ -158,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ---------- 6. Scrollspy menu ---------- */
+    /* ---------- 7. SCROLLSPY TÔ SÁNG MENU THEO CHUYÊN MỤC ---------- */
     const navLinks = Array.from(document.querySelectorAll('.main-nav .nav-link[href^="#"]'));
     const sections = navLinks
         .map((a) => document.querySelector(a.getAttribute('href')))
@@ -176,8 +211,60 @@ document.addEventListener('DOMContentLoaded', () => {
                     else a.removeAttribute('aria-current');
                 });
             });
-        }, { rootMargin: '-45% 0px -50% 0px' });
+        }, { rootMargin: '-40% 0px -50% 0px' });
         sections.forEach((s) => spy.observe(s));
     }
-});
 
+    /* ---------- 8. THĂM DÒ Ý KIẾN BẠN ĐỌC (READER POLL) ---------- */
+    const pollCard = document.getElementById('reader-poll');
+    const btnVote = document.getElementById('btn-vote');
+    const pollMsg = document.getElementById('poll-msg');
+
+    if (pollCard && btnVote) {
+        const POLL_KEY = 'tm-poll-voted';
+        const hasVoted = localStorage.getItem(POLL_KEY);
+
+        const showResults = () => {
+            pollCard.classList.add('has-voted');
+            pollCard.querySelectorAll('.poll-bar').forEach((bar) => {
+                const pct = bar.dataset.pct || '0';
+                bar.style.width = `${pct}%`;
+            });
+            if (pollMsg) pollMsg.textContent = '✓ Cảm ơn bạn! Ý kiến của bạn đã được ghi nhận.';
+            btnVote.disabled = true;
+            btnVote.textContent = 'Đã bình chọn';
+        };
+
+        if (hasVoted) {
+            showResults();
+        }
+
+        btnVote.addEventListener('click', () => {
+            const selected = pollCard.querySelector('input[name="poll-choice"]:checked');
+            if (!selected) {
+                if (window.showToast) window.showToast('Vui lòng chọn một phương án bình chọn!');
+                return;
+            }
+            try { localStorage.setItem(POLL_KEY, selected.value); } catch (e) {}
+            showResults();
+            if (window.showToast) window.showToast('🎉 Cảm ơn bạn đã tham gia khảo sát ý kiến!');
+        });
+    }
+
+    /* ---------- 9. FORM ĐĂNG KÝ NHẬN BẢN TIN (NEWSLETTER) ---------- */
+    const newsletterForm = document.getElementById('newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('newsletter-email');
+            const email = emailInput ? emailInput.value.trim() : '';
+            if (!email || !email.includes('@')) {
+                if (window.showToast) window.showToast('Vui lòng nhập địa chỉ email hợp lệ!');
+                emailInput?.focus();
+                return;
+            }
+            if (window.showToast) window.showToast('✉️ Đăng ký thành công! Bạn sẽ nhận được bản tin vào sáng mai.');
+            if (emailInput) emailInput.value = '';
+        });
+    }
+});

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tin Mới — Tạp chí tin tức điện tử với các chuyên mục Thời sự, Kinh doanh, Công nghệ, Văn hóa và Đời sống. Sản phẩm môn Thiết kế Web của Nhóm 2 — Đại học Lạc Hồng.">
+    <meta name="description" content="Tin Mới — Tạp chí tin tức điện tử với các chuyên mục Thời sự, Kinh doanh, Công nghệ, Văn hóa, Đời sống và Thể thao. Sản phẩm đồ án môn Thiết kế Web của Nhóm 2 — Trường Đại học Lạc Hồng.">
     <meta name="theme-color" content="#0f766e">
     <title>Tin Mới — Góc nhìn mỗi ngày</title>
 
-    <!-- Áp dụng theme trước khi vẽ trang để tránh nháy màu -->
+    <!-- Áp dụng theme trước khi render trang để tránh hiện tượng nhấp nháy sáng/tối -->
     <script>
         (function () {
             try {
@@ -18,11 +18,15 @@
         })();
     </script>
 
+    <!-- Google Fonts: Be Vietnam Pro (chữ đọc) + Playfair Display (tiêu đề serif trang nhã) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    
     <!-- Thư viện AOS (Animate On Scroll) -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    
+    <!-- CSS Hệ thống -->
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -34,18 +38,19 @@
     <div class="topbar intro-fade">
         <div class="container topbar-inner">
             <div class="topbar-left">
-                <span class="topbar-pill"><span class="live-dot" aria-hidden="true"></span><time data-today>Thứ Tư, 07/10/2026</time></span>
-                <span class="hide-sm">☀️ Biên Hòa 31°C</span>
+                <span class="topbar-pill"><span class="live-dot" aria-hidden="true"></span><time data-today>Thứ Sáu, 09/10/2026</time></span>
+                <span class="hide-sm">☀️ Biên Hòa 31°C · TP.HCM 32°C</span>
+                <span class="hide-sm">📈 VN-Index: 1.285,4 (+4.2)</span>
             </div>
             <div class="topbar-right">
                 <a class="hide-sm" href="#ban-tin">Nhận bản tin</a>
-                <a class="hide-sm" href="#lien-he">Liên hệ tòa soạn</a>
+                <a class="hide-sm" href="#tham-do">Thăm dò ý kiến</a>
                 <a href="portfolio.html">Về Nhóm 2 →</a>
             </div>
         </div>
     </div>
 
-    <!-- ================= HEADER (Intro: trượt từ trên xuống) ================= -->
+    <!-- ================= HEADER CHÍNH ================= -->
     <header class="site-header intro-down" style="--d: .1s">
         <div class="container header-inner">
             <a class="brand" href="index.html" aria-label="Tin Mới — Trang chủ">
@@ -56,14 +61,17 @@
                 </span>
             </a>
 
-            <nav class="main-nav" id="main-nav" aria-label="Chuyên mục">
+            <nav class="main-nav" id="main-nav" aria-label="Chuyên mục chính">
                 <a class="nav-link is-active" href="#trang-chu" aria-current="page">Trang chủ</a>
                 <a class="nav-link" href="#thoi-su">Thời sự</a>
                 <a class="nav-link" href="#kinh-doanh">Kinh doanh</a>
                 <a class="nav-link" href="#cong-nghe">Công nghệ</a>
                 <a class="nav-link" href="#van-hoa">Văn hóa</a>
                 <a class="nav-link" href="#doi-song">Đời sống</a>
-                <a class="nav-link nav-link-about" href="portfolio.html">Giới thiệu</a>
+                <a class="nav-link" href="#the-thao">Thể thao</a>
+                <a class="nav-link" href="#goc-nhin">Góc nhìn</a>
+                <!-- <a class="nav-link" href="#video">Video</a> -->
+                <a class="nav-link nav-link-about" href="portfolio.html">Nhóm 2</a>
             </nav>
 
             <div class="header-actions">
@@ -80,43 +88,47 @@
             </div>
         </div>
 
+        <!-- Ô tìm kiếm trượt xuống -->
         <div class="search-panel" id="search-panel">
             <div class="container">
                 <form class="search-form" id="search-form" role="search" action="#tin-moi" method="get">
                     <label class="visually-hidden" for="site-search">Tìm kiếm bài viết</label>
-                    <input id="site-search" type="search" name="q" placeholder="Nhập từ khóa: đô thị, doanh nghiệp, AI…" autocomplete="off">
+                    <input id="site-search" type="search" name="q" placeholder="Nhập từ khóa: đô thị, doanh nghiệp, AI, sống xanh, thể thao…" autocomplete="off">
                     <button class="btn btn-primary" type="submit">Tìm kiếm</button>
                 </form>
                 <div class="search-hint">
-                    Gợi ý:
+                    Gợi ý nhanh:
                     <button type="button" data-keyword="đô thị">đô thị</button>
                     <button type="button" data-keyword="doanh nghiệp">doanh nghiệp</button>
                     <button type="button" data-keyword="AI">AI</button>
-                    <button type="button" data-keyword="đọc sách">đọc sách</button>
-                    <span class="hide-sm"> · Mẹo: nhấn phím <kbd>/</kbd> để mở nhanh</span>
+                    <button type="button" data-keyword="sống xanh">sống xanh</button>
+                    <button type="button" data-keyword="chạy bộ">chạy bộ</button>
+                    <span class="hide-sm"> · Mẹo: nhấn phím <kbd>/</kbd> để mở nhanh ô tìm kiếm</span>
                 </div>
             </div>
         </div>
         <div class="nav-backdrop" aria-hidden="true"></div>
     </header>
 
-    <!-- ================= TICKER TIN NÓNG ================= -->
-    <section class="ticker intro-fade" style="--d: .35s" aria-label="Tin nóng">
+    <!-- ================= TICKER TIN NÓNG 24/7 ================= -->
+    <section class="ticker intro-fade" style="--d: .35s" aria-label="Dải tin nóng">
         <div class="container ticker-inner">
             <span class="ticker-label"><span class="live-dot" aria-hidden="true"></span>TIN NÓNG</span>
             <div class="ticker-track-wrap">
                 <div class="ticker-track">
-                    <a href="article.html">Đô thị xanh: thêm nhiều tuyến phố đi bộ được mở vào cuối tuần</a>
-                    <a href="#kinh-doanh">Doanh nghiệp nhỏ đẩy mạnh bán hàng đa kênh trong quý IV</a>
-                    <a href="#cong-nghe">Kỹ năng số trở thành môn học được quan tâm tại nhiều trường</a>
-                    <a href="#van-hoa">Mô hình "tủ sách cộng đồng" lan tỏa tại các khu dân cư</a>
-                    <a href="#doi-song">Xu hướng sống chậm: người trẻ ưu tiên sức khỏe tinh thần</a>
-                    <!-- nhân bản để chạy vòng lặp liền mạch -->
-                    <a href="article.html" aria-hidden="true" tabindex="-1">Đô thị xanh: thêm nhiều tuyến phố đi bộ được mở vào cuối tuần</a>
-                    <a href="#kinh-doanh" aria-hidden="true" tabindex="-1">Doanh nghiệp nhỏ đẩy mạnh bán hàng đa kênh trong quý IV</a>
-                    <a href="#cong-nghe" aria-hidden="true" tabindex="-1">Kỹ năng số trở thành môn học được quan tâm tại nhiều trường</a>
-                    <a href="#van-hoa" aria-hidden="true" tabindex="-1">Mô hình "tủ sách cộng đồng" lan tỏa tại các khu dân cư</a>
-                    <a href="#doi-song" aria-hidden="true" tabindex="-1">Xu hướng sống chậm: người trẻ ưu tiên sức khỏe tinh thần</a>
+                    <a href="article.html">Đô thị xanh: Thêm nhiều tuyến phố đi bộ kết nối không gian công cộng cuối tuần</a>
+                    <a href="#kinh-doanh">Doanh nghiệp vừa và nhỏ đẩy mạnh bán hàng đa kênh trong quý IV</a>
+                    <a href="#cong-nghe">Trí tuệ nhân tạo GenAI hỗ trợ đắc lực công tác học tập và nghiên cứu của sinh viên</a>
+                    <a href="#van-hoa">Tủ sách cộng đồng và không gian đọc miễn phí lan tỏa tại nhiều khu dân cư</a>
+                    <a href="#doi-song">Xu hướng sống xanh: Người tiêu dùng trẻ ưu tiên các sản phẩm thân thiện môi trường</a>
+                    <a href="#the-thao">Giải marathon sinh viên thu hút hơn 2.000 vận động viên tham gia chạy vì cộng đồng</a>
+                    <!-- Nhân bản dải tin để chạy vô tận mượt mà -->
+                    <a href="article.html" aria-hidden="true" tabindex="-1">Đô thị xanh: Thêm nhiều tuyến phố đi bộ kết nối không gian công cộng cuối tuần</a>
+                    <a href="#kinh-doanh" aria-hidden="true" tabindex="-1">Doanh nghiệp vừa và nhỏ đẩy mạnh bán hàng đa kênh trong quý IV</a>
+                    <a href="#cong-nghe" aria-hidden="true" tabindex="-1">Trí tuệ nhân tạo GenAI hỗ trợ đắc lực công tác học tập và nghiên cứu của sinh viên</a>
+                    <a href="#van-hoa" aria-hidden="true" tabindex="-1">Tủ sách cộng đồng và không gian đọc miễn phí lan tỏa tại nhiều khu dân cư</a>
+                    <a href="#doi-song" aria-hidden="true" tabindex="-1">Xu hướng sống xanh: Người tiêu dùng trẻ ưu tiên các sản phẩm thân thiện môi trường</a>
+                    <a href="#the-thao" aria-hidden="true" tabindex="-1">Giải marathon sinh viên thu hút hơn 2.000 vận động viên tham gia chạy vì cộng đồng</a>
                 </div>
             </div>
         </div>
@@ -124,21 +136,21 @@
 
     <main id="noi-dung-chinh">
 
-        <!-- ================= HERO (Intro: nhiều hướng) ================= -->
+        <!-- ================= HERO SECTION (TIÊU ĐIỂM) ================= -->
         <section class="hero" id="trang-chu" aria-labelledby="hero-title">
             <div class="container">
                 <div class="hero-heading">
                     <div class="intro-left" style="--d: .45s">
                         <p class="eyebrow">Điểm tin hôm nay</p>
-                        <h1 class="hero-heading-title" id="hero-title">Tin nổi bật</h1>
+                        <h1 class="hero-heading-title" id="hero-title">Tin nổi bật trong ngày</h1>
                     </div>
-                    <p class="hero-heading-note intro-fade" style="--d: .7s">Tuyển chọn bởi Ban Biên tập · Cập nhật lúc <time datetime="09:30">09:30</time></p>
+                    <p class="hero-heading-note intro-fade" style="--d: .7s">Tuyển chọn bởi Ban Biên tập · Cập nhật liên tục 24/7</p>
                 </div>
 
                 <div class="hero-grid">
-                    <!-- Bài chính -->
+                    <!-- Bài đinh tiêu điểm chính -->
                     <article class="hero-lead intro-up" style="--d: .55s">
-                        <a class="hero-lead-link" href="article.html" aria-label="Đọc bài: Những chuyển động mới đang định hình nhịp sống đô thị">
+                        <a class="hero-lead-link" href="article.html" aria-label="Đọc bài: Những chuyển động mới đang định hình nhịp sống đô thị xanh">
                             <div class="media hero-lead-media">
                                 <img src="images/hero-city.jpg" alt="Phố đi bộ rợp bóng cây trong một thành phố Việt Nam lúc hoàng hôn" width="1200" height="760">
                             </div>
@@ -147,40 +159,42 @@
                                     <span class="tag tag-accent">Tiêu điểm</span>
                                     <span class="tag tag-glass">Thời sự</span>
                                 </div>
-                                <h2 class="hero-lead-title">Những chuyển động mới đang định hình nhịp sống đô thị</h2>
-                                <p class="hero-lead-summary">Phố đi bộ, công viên nhỏ và các tuyến giao thông xanh đang thay đổi cách cư dân gặp gỡ, di chuyển và tận hưởng thành phố mỗi ngày.</p>
-                                <p class="meta meta-light"><span>Ban Biên tập</span><span aria-hidden="true">•</span><time datetime="2026-10-07">07/10/2026</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
+                                <h2 class="hero-lead-title">Những chuyển động mới đang định hình nhịp sống đô thị xanh</h2>
+                                <p class="hero-lead-summary">Từ các tuyến phố đi bộ cuối tuần, công viên ven sông đến mạng lưới xe đạp công cộng, không gian sống đô thị đang ngày càng thân thiện, gắn kết cộng đồng và khuyến khích lối sống bền vững.</p>
+                                <p class="meta meta-light"><span>Ban Biên tập</span><span aria-hidden="true">•</span><time datetime="2026-10-09">09/10/2026</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
                             </div>
                         </a>
                     </article>
 
-                    <!-- Bài phụ -->
+                    <!-- 3 Bài tiêu điểm phụ bên cạnh -->
                     <div class="hero-side">
                         <article class="side-story intro-right" style="--d: .65s">
-                            <a class="media side-story-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
-                                <img src="images/business.jpg" alt="" width="400" height="260" loading="lazy">
+                            <a class="side-story-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
+                                <img src="images/business.jpg" alt="Doanh nghiệp kinh doanh bán hàng đa kênh" width="400" height="260" loading="lazy">
                             </a>
-                            <div>
-                                <p class="meta"><a class="meta-cat" href="#kinh-doanh">Kinh doanh</a><span aria-hidden="true">•</span><time datetime="2026-10-07">2 giờ trước</time></p>
-                                <h3 class="side-story-title"><a href="#kinh-doanh">Xu hướng bán hàng đa kênh mở cơ hội cho doanh nghiệp địa phương</a></h3>
+                            <div class="side-story-body">
+                                <p class="meta"><a class="meta-cat" href="#kinh-doanh">Kinh doanh</a><span aria-hidden="true">•</span><time datetime="2026-10-09">2 giờ trước</time></p>
+                                <h3 class="side-story-title"><a href="#kinh-doanh">Xu hướng bán hàng đa kênh O2O mở cơ hội bứt phá cho doanh nghiệp địa phương</a></h3>
                             </div>
                         </article>
+                        
                         <article class="side-story intro-right" style="--d: .78s">
-                            <a class="media side-story-media" href="#cong-nghe" tabindex="-1" aria-hidden="true">
-                                <img src="images/tech.jpg" alt="" width="400" height="260" loading="lazy">
+                            <a class="side-story-media" href="#cong-nghe" tabindex="-1" aria-hidden="true">
+                                <img src="images/tech.jpg" alt="Công nghệ và thiết bị số" width="400" height="260" loading="lazy">
                             </a>
-                            <div>
-                                <p class="meta"><a class="meta-cat" href="#cong-nghe">Công nghệ</a><span aria-hidden="true">•</span><time datetime="2026-10-07">3 giờ trước</time></p>
-                                <h3 class="side-story-title"><a href="#cong-nghe">Khi công nghệ hữu ích bắt đầu từ những nhu cầu giản dị</a></h3>
+                            <div class="side-story-body">
+                                <p class="meta"><a class="meta-cat" href="#cong-nghe">Công nghệ</a><span aria-hidden="true">•</span><time datetime="2026-10-09">3 giờ trước</time></p>
+                                <h3 class="side-story-title"><a href="#cong-nghe">Khi công nghệ trí tuệ nhân tạo bắt đầu từ những bài toán thiết thực của đời sống</a></h3>
                             </div>
                         </article>
+
                         <article class="side-story intro-right" style="--d: .91s">
-                            <a class="media side-story-media" href="#van-hoa" tabindex="-1" aria-hidden="true">
-                                <img src="images/culture.jpg" alt="" width="400" height="260" loading="lazy">
+                            <a class="side-story-media" href="#van-hoa" tabindex="-1" aria-hidden="true">
+                                <img src="images/culture.jpg" alt="Không gian đọc sách ấm cúng" width="400" height="260" loading="lazy">
                             </a>
-                            <div>
-                                <p class="meta"><a class="meta-cat" href="#van-hoa">Văn hóa</a><span aria-hidden="true">•</span><time datetime="2026-10-06">Hôm qua</time></p>
-                                <h3 class="side-story-title"><a href="#van-hoa">Những không gian đọc nhỏ đang nuôi dưỡng thói quen đọc sách</a></h3>
+                            <div class="side-story-body">
+                                <p class="meta"><a class="meta-cat" href="#van-hoa">Văn hóa</a><span aria-hidden="true">•</span><time datetime="2026-10-08">Hôm qua</time></p>
+                                <h3 class="side-story-title"><a href="#van-hoa">Những không gian đọc sách nhỏ đang bền bỉ nuôi dưỡng thói quen đọc của người trẻ</a></h3>
                             </div>
                         </article>
                     </div>
@@ -188,7 +202,7 @@
 
                 <!-- Chủ đề nóng -->
                 <div class="trending intro-up" style="--d: 1s">
-                    <span class="trending-label">🔥 Chủ đề nóng</span>
+                    <span class="trending-label">🔥 Chủ đề nóng:</span>
                     <div class="trending-chips">
                         <a class="chip" href="#thoi-su">#ĐôThịXanh</a>
                         <a class="chip" href="#kinh-doanh">#KinhTếSố</a>
@@ -196,6 +210,8 @@
                         <a class="chip" href="#cong-nghe">#AnToànMạng</a>
                         <a class="chip" href="#van-hoa">#VănHóaĐọc</a>
                         <a class="chip" href="#doi-song">#SốngXanh</a>
+                        <a class="chip" href="#kinh-doanh">#KhởiNghiệp</a>
+                        <a class="chip" href="#the-thao">#ChạyBộCộngĐồng</a>
                     </div>
                 </div>
             </div>
@@ -209,11 +225,11 @@
                     <p>Bài viết đã xuất bản</p>
                 </div>
                 <div class="stat" data-aos="fade-up" data-aos-delay="100">
-                    <strong class="stat-num" data-count="6">0</strong>
-                    <p>Chuyên mục nội dung</p>
+                    <strong class="stat-num" data-count="8">0</strong>
+                    <p>Chuyên mục chuyên sâu</p>
                 </div>
                 <div class="stat" data-aos="fade-up" data-aos-delay="200">
-                    <strong class="stat-num" data-count="48">0</strong><span class="stat-suffix">K</span>
+                    <strong class="stat-num" data-count="65">0</strong><span class="stat-suffix">K</span>
                     <p>Lượt đọc mỗi tháng</p>
                 </div>
                 <div class="stat" data-aos="fade-up" data-aos-delay="300">
@@ -229,7 +245,7 @@
                 <div class="section-head" data-aos="fade-up">
                     <div>
                         <p class="eyebrow">Mới cập nhật</p>
-                        <h2 class="section-title" id="latest-title">Tin mới nhất</h2>
+                        <h2 class="section-title" id="latest-title">Dòng sự kiện mới nhất</h2>
                     </div>
                     <div class="filter-tabs" role="tablist" aria-label="Lọc theo chuyên mục">
                         <button class="filter-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">Tất cả</button>
@@ -238,21 +254,25 @@
                         <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="cong-nghe">Công nghệ</button>
                         <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="van-hoa">Văn hóa</button>
                         <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="doi-song">Đời sống</button>
+                        <button class="filter-tab" type="button" role="tab" aria-selected="false" data-filter="the-thao">Thể thao</button>
                     </div>
                 </div>
 
                 <p class="search-result" id="search-result" role="status" aria-live="polite"></p>
 
+                <!-- LƯỚI 12 BÀI BÁO PHONG PHÚ, CHI TIẾT -->
                 <div class="card-grid" id="news-grid">
+                    
+                    <!-- Bài 1: Thời sự -->
                     <article class="news-card" data-category="thoi-su" data-aos="fade-up" data-aos-delay="0">
-                        <a class="media news-card-media" href="article.html" tabindex="-1" aria-hidden="true">
-                            <img src="images/community.jpg" alt="" width="600" height="380" loading="lazy">
+                        <a class="news-card-media" href="article.html" tabindex="-1" aria-hidden="true">
+                            <img src="images/community.jpg" alt="Cộng đồng dân cư tham gia xây dựng khu phố" width="600" height="380" loading="lazy">
                             <span class="tag tag-float">Thời sự</span>
                         </a>
                         <div class="news-card-body">
-                            <p class="meta"><time datetime="2026-10-07T09:30">09:30 hôm nay</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
-                            <h3 class="news-card-title"><a href="article.html">Cộng đồng cùng tham gia xây dựng những khu phố đáng sống</a></h3>
-                            <p class="news-card-summary">Từ trồng cây, dọn dẹp công viên đến góp ý quy hoạch, người dân đang trở thành "đồng tác giả" của không gian sống.</p>
+                            <p class="meta"><time datetime="2026-10-09T09:30">09:30 hôm nay</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="article.html">Cộng đồng cùng chung tay xây dựng những khu phố đáng sống và thân thiện</a></h3>
+                            <p class="news-card-summary">Từ việc phủ xanh góc phố, cải tạo vỉa hè đến hiến kế quy hoạch, người dân đang trở thành những đồng tác giả kiến tạo diện mạo đô thị văn minh.</p>
                             <div class="news-card-foot">
                                 <a class="text-link" href="article.html">Đọc tiếp <span aria-hidden="true">→</span></a>
                                 <button class="save-btn" type="button" aria-pressed="false" data-save="cong-dong-khu-pho" aria-label="Lưu bài viết">
@@ -262,15 +282,16 @@
                         </div>
                     </article>
 
+                    <!-- Bài 2: Kinh doanh -->
                     <article class="news-card" data-category="kinh-doanh" data-aos="fade-up" data-aos-delay="100">
-                        <a class="media news-card-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
-                            <img src="images/business.jpg" alt="" width="600" height="380" loading="lazy">
+                        <a class="news-card-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
+                            <img src="images/business.jpg" alt="Doanh nghiệp kinh doanh bán lẻ" width="600" height="380" loading="lazy">
                             <span class="tag tag-float">Kinh doanh</span>
                         </a>
                         <div class="news-card-body">
-                            <p class="meta"><time datetime="2026-10-07T08:45">08:45 hôm nay</time><span aria-hidden="true">•</span><span>6 phút đọc</span></p>
-                            <h3 class="news-card-title"><a href="#kinh-doanh">Doanh nghiệp nhỏ tìm hướng phát triển bền vững trong quý cuối năm</a></h3>
-                            <p class="news-card-summary">Tối ưu chi phí, chuyển đổi số và lắng nghe khách hàng là ba ưu tiên được nhiều chủ cửa hàng nhắc đến.</p>
+                            <p class="meta"><time datetime="2026-10-09T08:45">08:45 hôm nay</time><span aria-hidden="true">•</span><span>6 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#kinh-doanh">Doanh nghiệp vừa và nhỏ chuyển mình mạnh mẽ với mô hình kinh tế số</a></h3>
+                            <p class="news-card-summary">Tối ưu chi phí vận hành, ứng dụng thanh toán không tiền mặt và đa dạng hóa kênh phân phối giúp các chủ cửa hàng tăng trưởng ổn định trong quý cuối năm.</p>
                             <div class="news-card-foot">
                                 <a class="text-link" href="#kinh-doanh">Đọc tiếp <span aria-hidden="true">→</span></a>
                                 <button class="save-btn" type="button" aria-pressed="false" data-save="doanh-nghiep-nho" aria-label="Lưu bài viết">
@@ -280,15 +301,16 @@
                         </div>
                     </article>
 
+                    <!-- Bài 3: Công nghệ -->
                     <article class="news-card" data-category="cong-nghe" data-aos="fade-up" data-aos-delay="200">
-                        <a class="media news-card-media" href="#cong-nghe" tabindex="-1" aria-hidden="true">
-                            <img src="images/tech.jpg" alt="" width="600" height="380" loading="lazy">
+                        <a class="news-card-media" href="#cong-nghe" tabindex="-1" aria-hidden="true">
+                            <img src="images/tech.jpg" alt="Thiết kế giao diện ứng dụng công nghệ" width="600" height="380" loading="lazy">
                             <span class="tag tag-float">Công nghệ</span>
                         </a>
                         <div class="news-card-body">
-                            <p class="meta"><time datetime="2026-10-06T16:20">Hôm qua</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
-                            <h3 class="news-card-title"><a href="#cong-nghe">Thiết kế số lấy trải nghiệm người dùng làm trung tâm</a></h3>
-                            <p class="news-card-summary">Một sản phẩm tốt cần dễ dùng với cả người cao tuổi, người khiếm thị và người lần đầu tiếp cận công nghệ.</p>
+                            <p class="meta"><time datetime="2026-10-08T16:20">Hôm qua</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#cong-nghe">Thiết kế trải nghiệm số lấy người dùng làm trung tâm (Human-Centered Design)</a></h3>
+                            <p class="news-card-summary">Một sản phẩm web chất lượng không chỉ đẹp ở phần nhìn mà phải đảm bảo khả năng tiếp cận thuận tiện cho cả người lớn tuổi và người khuyết tật.</p>
                             <div class="news-card-foot">
                                 <a class="text-link" href="#cong-nghe">Đọc tiếp <span aria-hidden="true">→</span></a>
                                 <button class="save-btn" type="button" aria-pressed="false" data-save="thiet-ke-so" aria-label="Lưu bài viết">
@@ -298,15 +320,16 @@
                         </div>
                     </article>
 
+                    <!-- Bài 4: Văn hóa -->
                     <article class="news-card" data-category="van-hoa" data-aos="fade-up" data-aos-delay="0">
-                        <a class="media news-card-media" href="#van-hoa" tabindex="-1" aria-hidden="true">
-                            <img src="images/culture.jpg" alt="" width="600" height="380" loading="lazy">
+                        <a class="news-card-media" href="#van-hoa" tabindex="-1" aria-hidden="true">
+                            <img src="images/culture.jpg" alt="Góc đọc sách cộng đồng cho mọi người" width="600" height="380" loading="lazy">
                             <span class="tag tag-float">Văn hóa</span>
                         </a>
                         <div class="news-card-body">
-                            <p class="meta"><time datetime="2026-10-06T10:00">Hôm qua</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
-                            <h3 class="news-card-title"><a href="#van-hoa">Tủ sách cộng đồng: nơi đọc sách trở thành thói quen chung</a></h3>
-                            <p class="news-card-summary">Những góc đọc nhỏ ở quán cà phê, nhà văn hóa khu phố đang thu hút cả trẻ em lẫn người lớn tuổi.</p>
+                            <p class="meta"><time datetime="2026-10-08T10:00">Hôm qua</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#van-hoa">Tủ sách cộng đồng: Nơi đọc sách trở thành niềm vui sẻ chia của mọi thế hệ</a></h3>
+                            <p class="news-card-summary">Mô hình tủ sách mở tại các quán cà phê, nhà văn hóa và sảnh chung cư đang tạo không gian đọc văn minh, gắn kết tình làng nghĩa xóm.</p>
                             <div class="news-card-foot">
                                 <a class="text-link" href="#van-hoa">Đọc tiếp <span aria-hidden="true">→</span></a>
                                 <button class="save-btn" type="button" aria-pressed="false" data-save="tu-sach" aria-label="Lưu bài viết">
@@ -316,15 +339,16 @@
                         </div>
                     </article>
 
+                    <!-- Bài 5: Đời sống -->
                     <article class="news-card" data-category="doi-song" data-aos="fade-up" data-aos-delay="100">
-                        <a class="media news-card-media" href="#doi-song" tabindex="-1" aria-hidden="true">
-                            <img src="images/lifestyle.jpg" alt="" width="600" height="380" loading="lazy">
+                        <a class="news-card-media" href="#doi-song" tabindex="-1" aria-hidden="true">
+                            <img src="images/lifestyle.jpg" alt="Lối sống cân bằng thư thái" width="600" height="380" loading="lazy">
                             <span class="tag tag-float">Đời sống</span>
                         </a>
                         <div class="news-card-body">
-                            <p class="meta"><time datetime="2026-10-05T19:00">2 ngày trước</time><span aria-hidden="true">•</span><span>3 phút đọc</span></p>
-                            <h3 class="news-card-title"><a href="#doi-song">Chọn sống chậm giữa lịch trình bận rộn của người trẻ</a></h3>
-                            <p class="news-card-summary">Một tách trà buổi sáng, vài phút không điện thoại — những thói quen nhỏ giúp cân bằng tinh thần.</p>
+                            <p class="meta"><time datetime="2026-10-07T19:00">2 ngày trước</time><span aria-hidden="true">•</span><span>3 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#doi-song">Chọn sống chậm giữa lịch trình bận rộn: Nghệ thuật tìm lại cân bằng nội tâm</a></h3>
+                            <p class="news-card-summary">Vài phút tập hít thở sâu mỗi sáng, hạn chế màn hình điện tử trước giờ ngủ giúp nhiều người trẻ phục hồi năng lượng và sự tập trung.</p>
                             <div class="news-card-foot">
                                 <a class="text-link" href="#doi-song">Đọc tiếp <span aria-hidden="true">→</span></a>
                                 <button class="save-btn" type="button" aria-pressed="false" data-save="song-cham" aria-label="Lưu bài viết">
@@ -334,15 +358,16 @@
                         </div>
                     </article>
 
+                    <!-- Bài 6: Thời sự -->
                     <article class="news-card" data-category="thoi-su" data-aos="fade-up" data-aos-delay="200">
-                        <a class="media news-card-media" href="article.html" tabindex="-1" aria-hidden="true">
-                            <img src="images/article-hero.jpg" alt="" width="600" height="380" loading="lazy">
+                        <a class="news-card-media" href="article.html" tabindex="-1" aria-hidden="true">
+                            <img src="images/article-hero.jpg" alt="Công viên ven sông rợp bóng mát" width="600" height="380" loading="lazy">
                             <span class="tag tag-float">Thời sự</span>
                         </a>
                         <div class="news-card-body">
-                            <p class="meta"><time datetime="2026-10-05T07:15">2 ngày trước</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
-                            <h3 class="news-card-title"><a href="article.html">Công viên ven sông: "lá phổi xanh" mới cho cư dân thành phố</a></h3>
-                            <p class="news-card-summary">Lối đi bộ, làn xe đạp và các khu vui chơi ven sông giúp người dân có thêm lựa chọn vận động mỗi sáng.</p>
+                            <p class="meta"><time datetime="2026-10-07T07:15">2 ngày trước</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="article.html">Công viên ven sông: "Lá phổi xanh" mới nâng cao chất lượng sống cư dân</a></h3>
+                            <p class="news-card-summary">Lối đi bộ thảm cỏ, làn xe đạp riêng và các sân chơi thể thao ngoài trời bên bờ sông mang đến không gian tập luyện lý tưởng mỗi sớm mai.</p>
                             <div class="news-card-foot">
                                 <a class="text-link" href="article.html">Đọc tiếp <span aria-hidden="true">→</span></a>
                                 <button class="save-btn" type="button" aria-pressed="false" data-save="cong-vien-ven-song" aria-label="Lưu bài viết">
@@ -351,93 +376,232 @@
                             </div>
                         </div>
                     </article>
+
+                    <!-- Bài 7: Thời sự (Đồng Nai) -->
+                    <article class="news-card" data-category="thoi-su" data-aos="fade-up" data-aos-delay="0">
+                        <a class="news-card-media" href="article.html" tabindex="-1" aria-hidden="true">
+                            <img src="images/hero-city.jpg" alt="Công trình giao thông hạ tầng đô thị" width="600" height="380" loading="lazy">
+                            <span class="tag tag-float">Thời sự</span>
+                        </a>
+                        <div class="news-card-body">
+                            <p class="meta"><time datetime="2026-10-06T14:30">3 ngày trước</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="article.html">Đồng Nai đẩy nhanh tiến độ hạ tầng giao thông kết nối liên vùng kinh tế</a></h3>
+                            <p class="news-card-summary">Các tuyến vành đai và cầu kết nối trọng điểm đang được hoàn thiện thần tốc, tạo đòn bẩy phát triển kinh tế mạnh mẽ cho toàn khu vực Đông Nam Bộ.</p>
+                            <div class="news-card-foot">
+                                <a class="text-link" href="article.html">Đọc tiếp <span aria-hidden="true">→</span></a>
+                                <button class="save-btn" type="button" aria-pressed="false" data-save="ha-tang-dong-nai" aria-label="Lưu bài viết">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bài 8: Kinh doanh -->
+                    <article class="news-card" data-category="kinh-doanh" data-aos="fade-up" data-aos-delay="100">
+                        <a class="news-card-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
+                            <img src="images/business.jpg" alt="Nông sản đặc sản địa phương trên sàn số" width="600" height="380" loading="lazy">
+                            <span class="tag tag-float">Kinh doanh</span>
+                        </a>
+                        <div class="news-card-body">
+                            <p class="meta"><time datetime="2026-10-06T11:20">3 ngày trước</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#kinh-doanh">Thương mại điện tử nông sản: Cơ hội vàng cho đặc sản vùng miền vươn xa</a></h3>
+                            <p class="news-card-summary">Các hợp tác xã địa phương đang tích cực đưa sản phẩm OCOP lên sàn số, ứng dụng livestream bán hàng để tiếp cận trực tiếp người tiêu dùng cả nước.</p>
+                            <div class="news-card-foot">
+                                <a class="text-link" href="#kinh-doanh">Đọc tiếp <span aria-hidden="true">→</span></a>
+                                <button class="save-btn" type="button" aria-pressed="false" data-save="ocop-thuong-mai-dien-tu" aria-label="Lưu bài viết">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bài 9: Công nghệ -->
+                    <article class="news-card" data-category="cong-nghe" data-aos="fade-up" data-aos-delay="200">
+                        <a class="news-card-media" href="#cong-nghe" tabindex="-1" aria-hidden="true">
+                            <img src="images/tech.jpg" alt="Bảo vệ dữ liệu cá nhân trên mạng" width="600" height="380" loading="lazy">
+                            <span class="tag tag-float">Công nghệ</span>
+                        </a>
+                        <div class="news-card-body">
+                            <p class="meta"><time datetime="2026-10-05T15:45">4 ngày trước</time><span aria-hidden="true">•</span><span>5 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#cong-nghe">Bảo vệ danh tính số và dữ liệu cá nhân trước các chiêu thức lừa đảo mạng</a></h3>
+                            <p class="news-card-summary">Kích hoạt xác thực 2 bước (2FA), kiểm tra kỹ liên kết lạ và không cài đặt ứng dụng ngoài kho chính thức là các lá chắn căn bản bảo vệ ví tiền của bạn.</p>
+                            <div class="news-card-foot">
+                                <a class="text-link" href="#cong-nghe">Đọc tiếp <span aria-hidden="true">→</span></a>
+                                <button class="save-btn" type="button" aria-pressed="false" data-save="bao-ve-danh-tinh-so" aria-label="Lưu bài viết">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bài 10: Văn hóa -->
+                    <article class="news-card" data-category="van-hoa" data-aos="fade-up" data-aos-delay="0">
+                        <a class="news-card-media" href="#van-hoa" tabindex="-1" aria-hidden="true">
+                            <img src="images/culture.jpg" alt="Bảo tồn di sản kiến trúc phố xưa" width="600" height="380" loading="lazy">
+                            <span class="tag tag-float">Văn hóa</span>
+                        </a>
+                        <div class="news-card-body">
+                            <p class="meta"><time datetime="2026-10-05T09:10">4 ngày trước</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#van-hoa">Gìn giữ không gian di sản kiến trúc trong lòng các đô thị đang chuyển mình</a></h3>
+                            <p class="news-card-summary">Làm sao để hiện đại hóa đô thị mà không đánh mất đi những công trình ký ức, những mái ngói rêu phong và dấu ấn lịch sử của vùng đất phương Nam?</p>
+                            <div class="news-card-foot">
+                                <a class="text-link" href="#van-hoa">Đọc tiếp <span aria-hidden="true">→</span></a>
+                                <button class="save-btn" type="button" aria-pressed="false" data-save="di-san-kien-truc" aria-label="Lưu bài viết">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bài 11: Đời sống -->
+                    <article class="news-card" data-category="doi-song" data-aos="fade-up" data-aos-delay="100">
+                        <a class="news-card-media" href="#doi-song" tabindex="-1" aria-hidden="true">
+                            <img src="images/lifestyle.jpg" alt="Lối sống xanh giảm rác thải" width="600" height="380" loading="lazy">
+                            <span class="tag tag-float">Đời sống</span>
+                        </a>
+                        <div class="news-card-body">
+                            <p class="meta"><time datetime="2026-10-04T18:20">5 ngày trước</time><span aria-hidden="true">•</span><span>4 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#doi-song">Thực hành lối sống xanh (Zero Waste) từ những thay đổi nhỏ nơi gian bếp</a></h3>
+                            <p class="news-card-summary">Mang túi vải khi đi chợ, phân loại rác hữu cơ tại nguồn và dùng hộp thủy tinh đựng thực phẩm là những hành động thiết thực giảm tải cho môi trường.</p>
+                            <div class="news-card-foot">
+                                <a class="text-link" href="#doi-song">Đọc tiếp <span aria-hidden="true">→</span></a>
+                                <button class="save-btn" type="button" aria-pressed="false" data-save="song-xanh-zero-waste" aria-label="Lưu bài viết">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bài 12: Thể thao -->
+                    <article class="news-card" data-category="the-thao" data-aos="fade-up" data-aos-delay="200">
+                        <a class="news-card-media" href="#the-thao" tabindex="-1" aria-hidden="true">
+                            <img src="images/community.jpg" alt="Phong trào chạy bộ rèn luyện sức khỏe" width="600" height="380" loading="lazy">
+                            <span class="tag tag-float">Thể thao</span>
+                        </a>
+                        <div class="news-card-body">
+                            <p class="meta"><time datetime="2026-10-04T06:30">5 ngày trước</time><span aria-hidden="true">•</span><span>3 phút đọc</span></p>
+                            <h3 class="news-card-title"><a href="#the-thao">Lan tỏa phong trào chạy bộ rèn luyện sức khỏe trong học đường và giới trẻ</a></h3>
+                            <p class="news-card-summary">Những câu lạc bộ chạy bộ sinh viên nở rộ vào sáng sớm không chỉ rèn luyện thể lực bền bỉ mà còn lan tỏa tinh thần kỷ luật và kết nối bạn bè tích cực.</p>
+                            <div class="news-card-foot">
+                                <a class="text-link" href="#the-thao">Đọc tiếp <span aria-hidden="true">→</span></a>
+                                <button class="save-btn" type="button" aria-pressed="false" data-save="chay-bo-hoc-duong" aria-label="Lưu bài viết">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+
                 </div>
-                <p class="empty-state" id="empty-state" hidden>Không tìm thấy bài viết phù hợp. Hãy thử từ khóa khác nhé!</p>
+
+                <p class="empty-state" id="empty-state" hidden>Không tìm thấy bài viết phù hợp với từ khóa của bạn. Hãy thử từ khóa khác nhé!</p>
             </div>
         </section>
 
-        <!-- ================= NỘI DUNG CHÍNH + SIDEBAR ================= -->
+        <!-- ================= NỘI DUNG CHUYÊN MỤC CHÍNH + SIDEBAR ================= -->
         <div class="container layout-main">
+            
+            <!-- CỘT NỘI DUNG CHÍNH (MAIN COLUMN) -->
             <div class="layout-content">
 
-                <!-- THỜI SỰ -->
+                <!-- 1. CHUYÊN MỤC THỜI SỰ -->
                 <section class="cat-block" id="thoi-su" aria-labelledby="ts-title" data-aos="fade-up">
                     <div class="cat-block-head">
                         <h2 class="cat-block-title" id="ts-title"><span class="cat-dot" aria-hidden="true"></span>Thời sự</h2>
                         <a class="text-link" href="article.html">Xem tất cả <span aria-hidden="true">→</span></a>
                     </div>
+                    
                     <div class="cat-block-body">
+                        <!-- Bài nổi bật Thời sự -->
                         <article class="cat-feature">
-                            <a class="media cat-feature-media" href="article.html" tabindex="-1" aria-hidden="true">
-                                <img src="images/hero-city.jpg" alt="" width="640" height="400" loading="lazy">
+                            <a class="cat-feature-media" href="article.html" tabindex="-1" aria-hidden="true">
+                                <img src="images/hero-city.jpg" alt="Phố đi bộ cuối tuần nhộn nhịp" width="640" height="400" loading="lazy">
                             </a>
-                            <p class="meta"><time datetime="2026-10-07">07/10/2026</time><span aria-hidden="true">•</span><span>Đô thị</span></p>
-                            <h3 class="cat-feature-title"><a href="article.html">Phố đi bộ cuối tuần: không gian mới để gia đình gặp gỡ</a></h3>
-                            <p class="cat-feature-summary">Các tuyến phố được ưu tiên cho người đi bộ vào tối thứ Sáu đến Chủ nhật, kết hợp biểu diễn nghệ thuật đường phố và chợ phiên.</p>
+                            <p class="meta"><time datetime="2026-10-09">09/10/2026</time><span aria-hidden="true">•</span><span>Đô thị &amp; Đời sống</span></p>
+                            <h3 class="cat-feature-title"><a href="article.html">Phố đi bộ cuối tuần: Không gian mới để gia đình gặp gỡ và phát triển kinh tế đêm</a></h3>
+                            <p class="cat-feature-summary">Các tuyến phố được ưu tiên cho người đi bộ vào tối thứ Sáu đến Chủ nhật kết hợp biểu diễn nghệ thuật dân gian, âm nhạc đường phố và chợ phiên sáng tạo, tạo nên điểm hẹn văn hóa hấp dẫn cho mọi lứa tuổi.</p>
                         </article>
+
+                        <!-- Danh sách tin vắn Thời sự -->
                         <ul class="headline-list">
-                            <li><a href="article.html">Điều gì làm nên một khu phố thân thiện với mọi thế hệ?</a></li>
-                            <li><a href="article.html">Thêm nhiều điểm trông giữ xe đạp công cộng gần trạm xe buýt</a></li>
-                            <li><a href="article.html">Người dân góp ý cải tạo vỉa hè qua ứng dụng trực tuyến</a></li>
-                            <li><a href="article.html">Mùa mưa: những lưu ý khi di chuyển trong nội đô</a></li>
+                            <li><a href="article.html">Điều gì làm nên một khu phố thân thiện với mọi thế hệ cư dân?</a></li>
+                            <li><a href="article.html">Thêm 30 điểm trông giữ xe đạp công cộng gần các trạm xe buýt lớn</a></li>
+                            <li><a href="article.html">Người dân tích cực góp ý cải tạo vỉa hè và cây xanh qua ứng dụng trực tuyến</a></li>
+                            <li><a href="article.html">Mùa mưa đô thị: Những lưu ý an toàn khi di chuyển trong khu vực nội thành</a></li>
+                            <li><a href="article.html">Quy hoạch mạng lưới không gian công cộng đa tầng tại các đô thị mới</a></li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- KINH DOANH -->
+                <!-- 2. CHUYÊN MỤC KINH DOANH -->
                 <section class="cat-block" id="kinh-doanh" aria-labelledby="kd-title" data-aos="fade-up">
                     <div class="cat-block-head">
                         <h2 class="cat-block-title" id="kd-title"><span class="cat-dot cat-dot-amber" aria-hidden="true"></span>Kinh doanh</h2>
                         <a class="text-link" href="#kinh-doanh">Xem tất cả <span aria-hidden="true">→</span></a>
                     </div>
+                    
                     <div class="cat-block-body">
+                        <!-- Bài nổi bật Kinh doanh -->
                         <article class="cat-feature">
-                            <a class="media cat-feature-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
-                                <img src="images/business.jpg" alt="" width="640" height="400" loading="lazy">
+                            <a class="cat-feature-media" href="#kinh-doanh" tabindex="-1" aria-hidden="true">
+                                <img src="images/business.jpg" alt="Kinh doanh nhỏ và quản lý dòng tiền" width="640" height="400" loading="lazy">
                             </a>
-                            <p class="meta"><time datetime="2026-10-07">07/10/2026</time><span aria-hidden="true">•</span><span>Khởi nghiệp</span></p>
-                            <h3 class="cat-feature-title"><a href="#kinh-doanh">Bắt đầu kinh doanh nhỏ: 5 điều cần chuẩn bị trước khi mở cửa hàng</a></h3>
-                            <p class="cat-feature-summary">Từ khảo sát khách hàng, tính toán dòng tiền đến chọn kênh bán hàng phù hợp — những bước nền tảng giúp hạn chế rủi ro.</p>
+                            <p class="meta"><time datetime="2026-10-09">09/10/2026</time><span aria-hidden="true">•</span><span>Khởi nghiệp &amp; Thị trường</span></p>
+                            <h3 class="cat-feature-title"><a href="#kinh-doanh">Bắt đầu kinh doanh nhỏ: 5 điều cốt lõi cần chuẩn bị trước khi mở cửa hàng</a></h3>
+                            <p class="cat-feature-summary">Từ nghiên cứu hành vi khách hàng, quản lý dòng tiền dự phòng đến tối ưu hóa chi phí mặt bằng và tiếp thị số — những kinh nghiệm thực chiến giúp các nhà khởi nghiệp hạn chế tối đa rủi ro ban đầu.</p>
                         </article>
+
+                        <!-- Danh sách tin vắn Kinh doanh -->
                         <ul class="headline-list">
-                            <li><a href="#kinh-doanh">Thanh toán không tiền mặt phổ biến tại chợ truyền thống</a></li>
-                            <li><a href="#kinh-doanh">Sản phẩm OCOP địa phương tìm đường lên sàn thương mại điện tử</a></li>
-                            <li><a href="#kinh-doanh">Quản lý chi tiêu cá nhân: phương pháp chia "6 chiếc hũ"</a></li>
-                            <li><a href="#kinh-doanh">Du lịch nội địa dự kiến sôi động dịp cuối năm</a></li>
+                            <li><a href="#kinh-doanh">Thanh toán không tiền mặt trở thành thói quen tại các khu chợ truyền thống</a></li>
+                            <li><a href="#kinh-doanh">Sản phẩm OCOP địa phương tìm đường lên sàn thương mại điện tử quốc tế</a></li>
+                            <li><a href="#kinh-doanh">Quản lý chi tiêu cá nhân hiệu quả với phương pháp 6 chiếc hũ tài chính</a></li>
+                            <li><a href="#kinh-doanh">Du lịch nội địa và thị trường bán lẻ dự báo tăng trưởng sôi động dịp cuối năm</a></li>
+                            <li><a href="#kinh-doanh">Khởi nghiệp bền vững: Lợi thế cạnh tranh từ nguyên liệu tái chế bản địa</a></li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- CÔNG NGHỆ (nền tối nổi bật) -->
+                <!-- 3. CHUYÊN MỤC CÔNG NGHỆ (NỀN TỐI NỔI BẬT) -->
                 <section class="cat-block cat-block-dark" id="cong-nghe" aria-labelledby="cn-title" data-aos="zoom-in-up">
                     <div class="cat-block-head">
-                        <h2 class="cat-block-title" id="cn-title"><span class="cat-dot" aria-hidden="true"></span>Công nghệ</h2>
+                        <h2 class="cat-block-title" id="cn-title"><span class="cat-dot" aria-hidden="true"></span>Công nghệ số &amp; Đổi mới sáng tạo</h2>
                         <a class="text-link" href="#cong-nghe">Xem tất cả <span aria-hidden="true">→</span></a>
                     </div>
+                    
                     <div class="tech-grid">
                         <article class="tech-card">
                             <span class="tech-icon" aria-hidden="true">🤖</span>
-                            <h3><a href="#cong-nghe">Trí tuệ nhân tạo hỗ trợ học tập: dùng sao cho đúng?</a></h3>
-                            <p>AI giúp tóm tắt, gợi ý ý tưởng — nhưng tư duy phản biện vẫn là kỹ năng không thể thay thế.</p>
+                            <h3><a href="#cong-nghe">Trí tuệ nhân tạo hỗ trợ học tập: Dùng sao cho đúng và hiệu quả?</a></h3>
+                            <p>GenAI giúp tổng hợp kiến thức và gợi mở ý tưởng, nhưng tư duy phản biện và khả năng kiểm chứng nguồn dữ liệu vẫn là năng lực cốt lõi của sinh viên.</p>
                         </article>
+                        
                         <article class="tech-card">
                             <span class="tech-icon" aria-hidden="true">🔐</span>
-                            <h3><a href="#cong-nghe">5 mẹo sử dụng công nghệ số an toàn mỗi ngày</a></h3>
-                            <p>Bật xác thực hai lớp, cảnh giác đường link lạ và cập nhật phần mềm thường xuyên.</p>
+                            <h3><a href="#cong-nghe">5 mẹo sử dụng công nghệ số và bảo vệ tài khoản an toàn mỗi ngày</a></h3>
+                            <p>Kích hoạt bảo mật 2 lớp, cảnh giác trước các thông báo mạo danh ngân hàng và định kỳ sao lưu dữ liệu cá nhân lên nền tảng đám mây an toàn.</p>
                         </article>
+
                         <article class="tech-card">
                             <span class="tech-icon" aria-hidden="true">📱</span>
-                            <h3><a href="#cong-nghe">Ứng dụng dịch vụ công giúp tiết kiệm thời gian đi lại</a></h3>
-                            <p>Nhiều thủ tục hành chính có thể thực hiện trực tuyến chỉ với điện thoại thông minh.</p>
+                            <h3><a href="#cong-nghe">Ứng dụng dịch vụ công trực tuyến giúp người dân tiết kiệm thời gian</a></h3>
+                            <p>Hàng trăm thủ tục hành chính, nộp hồ sơ và thanh toán lệ phí hiện nay đã có thể hoàn thành chỉ trong vài phút ngay trên chiếc điện thoại thông minh.</p>
+                        </article>
+
+                        <article class="tech-card">
+                            <span class="tech-icon" aria-hidden="true">☁️</span>
+                            <h3><a href="#cong-nghe">Điện toán đám mây và xu hướng văn phòng số không giấy tờ</a></h3>
+                            <p>Cộng tác tài liệu theo thời gian thực và quản lý quy trình công việc tinh gọn giúp các nhóm làm việc từ xa tăng tốc độ xử lý gấp nhiều lần.</p>
                         </article>
                     </div>
                 </section>
 
-                <!-- VĂN HÓA & ĐỜI SỐNG -->
+                <!-- 4. CHUYÊN MỤC VĂN HÓA & ĐỜI SỐNG -->
                 <section class="cat-block" id="van-hoa" aria-labelledby="vh-title">
                     <div class="cat-block-head" data-aos="fade-up">
                         <h2 class="cat-block-title" id="vh-title"><span class="cat-dot cat-dot-amber" aria-hidden="true"></span>Văn hóa &amp; Đời sống</h2>
+                        <a class="text-link" href="#van-hoa">Xem tất cả <span aria-hidden="true">→</span></a>
                     </div>
+                    
                     <div class="overlay-grid">
                         <article class="overlay-card" data-aos="fade-right">
                             <a href="#van-hoa" class="overlay-link">
@@ -445,68 +609,209 @@
                                 <div class="overlay-body">
                                     <span class="tag tag-glass">Văn hóa</span>
                                     <h3>Những không gian nhỏ nuôi dưỡng thói quen đọc</h3>
-                                    <p>Góc sách miễn phí tại quán cà phê và nhà văn hóa đang kết nối nhiều thế hệ.</p>
+                                    <p>Góc sách miễn phí tại quán cà phê và nhà văn hóa đang bền bỉ kết nối tri thức giữa các thế hệ cư dân đô thị.</p>
                                 </div>
                             </a>
                         </article>
+                        
                         <article class="overlay-card" id="doi-song" data-aos="fade-left">
                             <a href="#doi-song" class="overlay-link">
                                 <div class="media"><img src="images/lifestyle.jpg" alt="Tách trà buổi sáng bên ban công nhiều cây xanh" width="600" height="420" loading="lazy"></div>
                                 <div class="overlay-body">
                                     <span class="tag tag-glass">Đời sống</span>
                                     <h3>Chọn sống chậm giữa lịch trình bận rộn</h3>
-                                    <p>Những thói quen nhỏ mỗi sáng giúp người trẻ cân bằng công việc và sức khỏe tinh thần.</p>
+                                    <p>Những khoảng lặng nhỏ buổi sáng và một tách trà ấm giúp người trẻ tái tạo năng lượng tích cực cho cả ngày làm việc.</p>
                                 </div>
                             </a>
                         </article>
                     </div>
                 </section>
 
-                <!-- GÓC NHÌN / Ý KIẾN -->
-                <section class="cat-block" aria-labelledby="op-title">
-                    <div class="cat-block-head" data-aos="fade-up">
-                        <h2 class="cat-block-title" id="op-title"><span class="cat-dot" aria-hidden="true"></span>Góc nhìn</h2>
+                <!-- 5. CHUYÊN MỤC THỂ THAO (MỚI) -->
+                <section class="cat-block" id="the-thao" aria-labelledby="tt-title" data-aos="fade-up">
+                    <div class="cat-block-head">
+                        <h2 class="cat-block-title" id="tt-title"><span class="cat-dot" aria-hidden="true"></span>Thể thao &amp; Vận động</h2>
+                        <a class="text-link" href="#the-thao">Xem tất cả <span aria-hidden="true">→</span></a>
                     </div>
+                    
+                    <div class="sports-grid">
+                        <article class="sports-card">
+                            <a class="sports-card-media" href="#the-thao" tabindex="-1" aria-hidden="true">
+                                <img src="images/community.jpg" alt="Giải chạy bộ sinh viên" width="600" height="340" loading="lazy">
+                            </a>
+                            <div class="sports-card-body">
+                                <p class="meta"><span class="meta-cat">Phong trào</span><span aria-hidden="true">•</span><time datetime="2026-10-09">Hôm nay</time></p>
+                                <h3><a href="#the-thao">Giải chạy marathon sinh viên ĐH Lạc Hồng thu hút hơn 2.000 vận động viên</a></h3>
+                                <p>Sự kiện thể thao thường niên không chỉ khuyến khích tinh thần rèn luyện sức khỏe mà còn gây quỹ học bổng cho các bạn sinh viên vượt khó hiếu học.</p>
+                            </div>
+                        </article>
+
+                        <article class="sports-card">
+                            <a class="sports-card-media" href="#the-thao" tabindex="-1" aria-hidden="true">
+                                <img src="images/hero-city.jpg" alt="Đạp xe rèn luyện thể thao" width="600" height="340" loading="lazy">
+                            </a>
+                            <div class="sports-card-body">
+                                <p class="meta"><span class="meta-cat">Lối sống</span><span aria-hidden="true">•</span><time datetime="2026-10-08">Hôm qua</time></p>
+                                <h3><a href="#the-thao">Xu hướng đạp xe thể thao cuối tuần: Vừa rèn thể lực vừa khám phá ngoại ô</a></h3>
+                                <p>Những cung đường ven sông rợp bóng mát trở thành lộ trình yêu thích của nhiều nhóm đạp xe phong trào vào các buổi sáng sớm cuối tuần.</p>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- 6. GÓC NHÌN / BÌNH LUẬN CHUYÊN GIA -->
+                <section class="cat-block" id="goc-nhin" aria-labelledby="op-title">
+                    <div class="cat-block-head" data-aos="fade-up">
+                        <h2 class="cat-block-title" id="op-title"><span class="cat-dot" aria-hidden="true"></span>Góc nhìn &amp; Bình luận</h2>
+                    </div>
+                    
                     <div class="opinion-grid">
                         <blockquote class="opinion" data-aos="fade-up" data-aos-delay="0">
-                            <p>"Một thành phố đáng sống là nơi trẻ em có thể tự đi bộ đến trường một cách an toàn."</p>
-                            <footer><span class="op-avatar" aria-hidden="true">MA</span><span><strong>Minh Anh</strong><small>Cây bút chuyên mục Đô thị</small></span></footer>
+                            <p>"Một thành phố thực sự đáng sống không chỉ đo bằng những tòa nhà chọc trời, mà là nơi trẻ em có thể tự tin đi bộ an toàn đến trường mỗi ngày."</p>
+                            <footer>
+                                <span class="op-avatar" aria-hidden="true">MA</span>
+                                <span><strong>Minh Anh</strong><small>Cây bút chuyên mục Đô thị</small></span>
+                            </footer>
                         </blockquote>
-                        <blockquote class="opinion" data-aos="fade-up" data-aos-delay="120">
-                            <p>"Chuyển đổi số không bắt đầu từ công nghệ đắt tiền, mà từ việc hiểu khách hàng của mình."</p>
-                            <footer><span class="op-avatar op-avatar-amber" aria-hidden="true">QH</span><span><strong>Quốc Huy</strong><small>Cây bút chuyên mục Kinh doanh</small></span></footer>
+
+                        <blockquote class="opinion" data-aos="fade-up" data-aos-delay="100">
+                            <p>"Chuyển đổi số không bắt đầu từ những phần mềm đắt đỏ, mà bắt đầu từ việc thấu hiểu nỗi đau và sự tiện lợi của từng khách hàng."</p>
+                            <footer>
+                                <span class="op-avatar op-avatar-amber" aria-hidden="true">QH</span>
+                                <span><strong>Quốc Huy</strong><small>Chuyên gia Kinh tế số</small></span>
+                            </footer>
+                        </blockquote>
+
+                        <blockquote class="opinion" data-aos="fade-up" data-aos-delay="200">
+                            <p>"Công nghệ là công cụ tuyệt vời của tương lai, nhưng trái tim và sự đồng cảm của con người mới là thứ dẫn dắt mọi giá trị nhân văn."</p>
+                            <footer>
+                                <span class="op-avatar" aria-hidden="true">TN</span>
+                                <span><strong>Thanh Nga</strong><small>Nhà nghiên cứu Giáo dục</small></span>
+                            </footer>
                         </blockquote>
                     </div>
                 </section>
+
+                <!-- 7. THĂM DÒ Ý KIẾN BẠN ĐỌC (POLL TƯƠNG TÁC) -->
+                <section class="cat-block" id="tham-do" aria-labelledby="poll-heading" data-aos="fade-up">
+                    <div class="cat-block-head">
+                        <h2 class="cat-block-title" id="poll-heading"><span class="cat-dot cat-dot-amber" aria-hidden="true"></span>Thăm dò ý kiến độc giả</h2>
+                    </div>
+
+                    <div class="poll-card" id="reader-poll">
+                        <h3 class="poll-question">Theo bạn, giải pháp nào quan trọng nhất để xây dựng đô thị xanh và giảm ùn tắc giao thông?</h3>
+                        <div class="poll-options">
+                            <label class="poll-option-label">
+                                <span class="poll-bar" data-pct="48"></span>
+                                <input type="radio" name="poll-choice" value="opt1" checked>
+                                <span class="poll-option-text">Mở rộng mạng lưới xe buýt sạch &amp; tuyến metro ngầm</span>
+                                <span class="poll-option-percent">48%</span>
+                            </label>
+                            <label class="poll-option-label">
+                                <span class="poll-bar" data-pct="32"></span>
+                                <input type="radio" name="poll-choice" value="opt2">
+                                <span class="poll-option-text">Xây dựng làn đường riêng cho xe đạp công cộng &amp; đi bộ</span>
+                                <span class="poll-option-percent">32%</span>
+                            </label>
+                            <label class="poll-option-label">
+                                <span class="poll-bar" data-pct="20"></span>
+                                <input type="radio" name="poll-choice" value="opt3">
+                                <span class="poll-option-text">Ứng dụng AI phân luồng đèn giao thông thông minh thời gian thực</span>
+                                <span class="poll-option-percent">20%</span>
+                            </label>
+                        </div>
+                        <div class="poll-actions">
+                            <button class="btn btn-primary btn-sm" id="btn-vote" type="button">Gửi bình chọn</button>
+                            <span class="poll-msg" id="poll-msg">Đã có 1.842 lượt độc giả tham gia khảo sát</span>
+                        </div>
+                    </div>
+                </section>
+
             </div>
 
-            <!-- SIDEBAR -->
-            <aside class="layout-side" aria-label="Tin chọn lọc">
+            <!-- CỘT SIDEBAR (TIỆN ÍCH & TIN CHỌN LỌC) -->
+            <aside class="layout-side" aria-label="Tin chọn lọc và tiện ích">
+                
+                <!-- Hộp Đọc nhiều nhất -->
                 <section class="side-box" aria-labelledby="most-read-title" data-aos="fade-left">
-                    <p class="eyebrow">Được quan tâm</p>
-                    <h2 class="side-box-title" id="most-read-title">Đọc nhiều</h2>
+                    <p class="eyebrow">Được quan tâm nhất</p>
+                    <h2 class="side-box-title" id="most-read-title">Đọc nhiều 24h</h2>
                     <ol class="popular-list">
-                        <li><a href="article.html">Những chuyển động mới đang định hình nhịp sống đô thị</a><span>12.4K lượt đọc</span></li>
-                        <li><a href="#kinh-doanh">Bắt đầu kinh doanh nhỏ: những điều cần chuẩn bị</a><span>9.8K lượt đọc</span></li>
-                        <li><a href="#cong-nghe">Mẹo sử dụng công nghệ số an toàn mỗi ngày</a><span>8.1K lượt đọc</span></li>
-                        <li><a href="#van-hoa">Gợi ý hoạt động cuối tuần cho cả gia đình</a><span>6.5K lượt đọc</span></li>
-                        <li><a href="#doi-song">Chọn sống chậm giữa lịch trình bận rộn</a><span>5.2K lượt đọc</span></li>
+                        <li>
+                            <a href="article.html">Những chuyển động mới đang định hình nhịp sống đô thị xanh</a>
+                            <span>14.8K lượt đọc</span>
+                        </li>
+                        <li>
+                            <a href="#kinh-doanh">Bắt đầu kinh doanh nhỏ: 5 điều cốt lõi cần chuẩn bị</a>
+                            <span>11.2K lượt đọc</span>
+                        </li>
+                        <li>
+                            <a href="#cong-nghe">5 mẹo sử dụng công nghệ số và bảo mật thông tin an toàn</a>
+                            <span>9.5K lượt đọc</span>
+                        </li>
+                        <li>
+                            <a href="#the-thao">Giải chạy marathon sinh viên ĐH Lạc Hồng thu hút 2.000 vận động viên</a>
+                            <span>7.8K lượt đọc</span>
+                        </li>
+                        <li>
+                            <a href="#doi-song">Chọn sống chậm giữa lịch trình bận rộn: Tìm lại cân bằng nội tâm</a>
+                            <span>6.4K lượt đọc</span>
+                        </li>
                     </ol>
                 </section>
 
+                <!-- Hộp Đăng ký nhận bản tin sáng -->
                 <section class="side-box newsletter" id="ban-tin" aria-labelledby="newsletter-title" data-aos="fade-left" data-aos-delay="100">
                     <span class="newsletter-icon" aria-hidden="true">✉️</span>
-                    <p class="eyebrow">Bản tin</p>
-                    <h2 class="side-box-title" id="newsletter-title">Chuyện hay gửi đến bạn</h2>
-                    <p class="newsletter-text">Nhận 5 tin đáng đọc nhất mỗi sáng, miễn phí và có thể hủy bất cứ lúc nào.</p>
-                    <form class="newsletter-form js-newsletter" action="#" method="post" novalidate>
-                        <label class="visually-hidden" for="newsletter-email">Địa chỉ email</label>
-                        <input id="newsletter-email" type="email" placeholder="Email của bạn" autocomplete="email" required>
-                        <button class="btn btn-accent" type="submit">Đăng ký <span class="btn-arrow" aria-hidden="true">→</span></button>
+                    <p class="eyebrow">Bản tin sáng</p>
+                    <h2 class="side-box-title" id="newsletter-title">Điểm tin mỗi sớm mai</h2>
+                    <p class="newsletter-text">Nhận tóm tắt 5 câu chuyện truyền cảm hứng và thông tin thời sự quan trọng nhất lúc 07:00 sáng. Miễn phí và tiện lợi.</p>
+                    <form class="newsletter-form js-newsletter" id="newsletter-form" action="#" method="post" novalidate>
+                        <label class="visually-hidden" for="newsletter-email">Địa chỉ email của bạn</label>
+                        <input id="newsletter-email" type="email" placeholder="Nhập địa chỉ email của bạn..." autocomplete="email" required>
+                        <button class="btn btn-accent" type="submit">Đăng ký ngay <span class="btn-arrow" aria-hidden="true">→</span></button>
                     </form>
-                    <p class="form-note">Bản mẫu: chưa gửi dữ liệu thật.</p>
+                    <p class="form-note">🔒 Cam kết bảo mật, không spam, có thể hủy bất cứ lúc nào.</p>
                 </section>
 
+                <!-- Hộp Tiện ích Đời sống (Thời tiết & Tỷ giá) -->
+                <section class="side-box" aria-labelledby="utility-title" data-aos="fade-left" data-aos-delay="150">
+                    <p class="eyebrow">Tiện ích đời sống</p>
+                    <h2 class="side-box-title" id="utility-title">Thời tiết &amp; Thị trường</h2>
+                    <div class="widget-weather-grid">
+                        <div class="weather-item">
+                            <span class="weather-city">Biên Hòa</span>
+                            <div class="weather-temp">31°C</div>
+                            <span class="weather-status">☀️ Nắng đẹp</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-city">TP.HCM</span>
+                            <div class="weather-temp">32°C</div>
+                            <span class="weather-status">⛅ Mây rải rác</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-city">Hà Nội</span>
+                            <div class="weather-temp">28°C</div>
+                            <span class="weather-status">🌤️ Dịu mát</span>
+                        </div>
+                    </div>
+                    <div class="market-ticker">
+                        <div class="market-item">
+                            <span>VN-Index</span>
+                            <span class="market-up">1.285,42 (+0.35%)</span>
+                        </div>
+                        <div class="market-item">
+                            <span>USD / VND</span>
+                            <span>25.420 đ (0.00%)</span>
+                        </div>
+                        <div class="market-item">
+                            <span>Vàng SJC (lượng)</span>
+                            <span class="market-up">84.500.000 đ</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Hộp Giới thiệu Đội ngũ thực hiện -->
                 <section class="side-box about-mini" aria-labelledby="about-mini-title" data-aos="fade-left" data-aos-delay="200">
                     <p class="eyebrow">Đội ngũ thực hiện</p>
                     <h2 class="side-box-title" id="about-mini-title">Nhóm 2 · ĐH Lạc Hồng</h2>
@@ -514,49 +819,63 @@
                         <span><img src="images/DoQuocThinh_anhthe.jpg" alt="Đỗ Quốc Thịnh"></span>
                         <span><img src="images/Anh_The_Dinh_Nam.jpg" alt="Nguyễn Đình Nam"></span>
                     </div>
-                    <p>Tin Mới là đồ án môn Thiết kế Web do Đỗ Quốc Thịnh &amp; Nguyễn Đình Nam thực hiện.</p>
-                    <a class="btn btn-primary btn-sm" href="portfolio.html">Xem Portfolio <span class="btn-arrow" aria-hidden="true">→</span></a>
+                    <p>Tin Mới là sản phẩm đồ án môn Thiết kế Web do nhóm sinh viên Đỗ Quốc Thịnh (Nhóm trưởng) &amp; Nguyễn Đình Nam (Thành viên) nghiên cứu và phát triển.</p>
+                    <a class="btn btn-primary btn-sm" href="portfolio.html">Xem hồ sơ Portfolio <span class="btn-arrow" aria-hidden="true">→</span></a>
                 </section>
+
             </aside>
         </div>
 
-        <!-- ================= MULTIMEDIA ================= -->
-        <section class="video-band" aria-labelledby="video-title">
+        <!-- ================= MULTIMEDIA (VIDEO & PHÓNG SỰ ẢNH) ================= -->
+        <section class="video-band" id="video" aria-labelledby="video-title">
             <div class="container">
                 <div class="section-head" data-aos="fade-up">
                     <div>
-                        <p class="eyebrow eyebrow-light">Multimedia</p>
+                        <p class="eyebrow eyebrow-light">Truyền thông đa phương tiện</p>
                         <h2 class="section-title" id="video-title">Video &amp; Phóng sự ảnh</h2>
                     </div>
+                    <a class="text-link" href="#video" style="color: #5eead4">Xem tất cả video <span aria-hidden="true">→</span></a>
                 </div>
+
                 <div class="video-grid">
-                    <article class="video-card video-card-lg" data-aos="fade-up">
-                        <a href="article.html" class="video-link">
-                            <div class="media"><img src="images/article-hero.jpg" alt="Công viên ven sông buổi sáng" width="800" height="500" loading="lazy"></div>
-                            <span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+                    <!-- Video chính lớn -->
+                    <article class="video-card video-card-lg" data-aos="zoom-in" data-aos-delay="100">
+                        <a class="video-link" href="article.html" aria-label="Xem video: Một buổi sáng yên bình ở công viên ven sông Đồng Nai">
+                            <div class="media"><img src="images/hero-city.jpg" alt="Công viên ven sông lúc sớm mai" width="800" height="480" loading="lazy"></div>
+                            <span class="play-btn" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            </span>
                             <div class="video-info">
                                 <span class="duration">04:32</span>
-                                <h3>Một buổi sáng ở công viên ven sông</h3>
+                                <h3>Một buổi sáng yên bình ở công viên ven sông Đồng Nai: Nhịp sống mới thức giấc</h3>
                             </div>
                         </a>
                     </article>
-                    <article class="video-card" data-aos="fade-up" data-aos-delay="100">
-                        <a href="#van-hoa" class="video-link">
-                            <div class="media"><img src="images/community.jpg" alt="Người dân cùng trồng cây trong công viên" width="400" height="260" loading="lazy"></div>
-                            <span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+
+                    <!-- Video phụ 1 -->
+                    <article class="video-card" data-aos="fade-left" data-aos-delay="200">
+                        <a class="video-link" href="article.html" aria-label="Xem video: Nhịp sống chợ phiên nông sản sạch cuối tuần">
+                            <div class="media"><img src="images/community.jpg" alt="Chợ phiên nông sản cuối tuần" width="500" height="280" loading="lazy"></div>
+                            <span class="play-btn" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            </span>
                             <div class="video-info">
                                 <span class="duration">02:15</span>
-                                <h3>Ngày hội trồng cây của khu phố</h3>
+                                <h3>Nhịp sống rộn ràng tại chợ phiên nông sản sạch cuối tuần</h3>
                             </div>
                         </a>
                     </article>
-                    <article class="video-card" data-aos="fade-up" data-aos-delay="200">
-                        <a href="#cong-nghe" class="video-link">
-                            <div class="media"><img src="images/tech.jpg" alt="Các bạn trẻ làm việc trong không gian co-working" width="400" height="260" loading="lazy"></div>
-                            <span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+
+                    <!-- Video phụ 2 -->
+                    <article class="video-card" data-aos="fade-left" data-aos-delay="300">
+                        <a class="video-link" href="article.html" aria-label="Xem video: Toàn cảnh đô thị Biên Hòa chuyển mình từ góc nhìn flycam">
+                            <div class="media"><img src="images/article-hero.jpg" alt="Đô thị nhìn từ trên cao" width="500" height="280" loading="lazy"></div>
+                            <span class="play-btn" aria-hidden="true">
+                                <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                            </span>
                             <div class="video-info">
-                                <span class="duration">03:48</span>
-                                <h3>Người trẻ và không gian làm việc chung</h3>
+                                <span class="duration">03:45</span>
+                                <h3>Toàn cảnh đô thị Biên Hòa chuyển mình từ góc nhìn flycam trên cao</h3>
                             </div>
                         </a>
                     </article>
@@ -564,24 +883,28 @@
             </div>
         </section>
 
-        <!-- ================= GIỚI THIỆU NHÓM (Flip card) ================= -->
-        <section class="section about-team" id="gioi-thieu" aria-labelledby="team-title">
+        <!-- ================= GIỚI THIỆU ĐỒ ÁN NHÓM 2 ================= -->
+        <section class="section about-team" id="ve-nhom" aria-labelledby="team-title">
             <div class="container about-team-grid">
-                <div class="about-team-copy" data-aos="fade-right">
-                    <p class="eyebrow">Giới thiệu</p>
-                    <h2 class="section-title" id="team-title">Những người đứng sau <span class="text-grad">Tin Mới</span></h2>
-                    <p class="section-sub">Tin Mới là sản phẩm môn <strong>Thiết kế Web</strong> của Nhóm 2 — Trường Đại học Lạc Hồng. Chúng tôi xây dựng giao diện tạp chí điện tử hiện đại, có giao diện tối, hiệu ứng mượt 60 FPS và tương thích mọi thiết bị.</p>
+                <div data-aos="fade-right">
+                    <p class="eyebrow">Đồ án môn Thiết kế Web</p>
+                    <h2 class="section-title" id="team-title">Sản phẩm sáng tạo của Nhóm 2 — ĐH Lạc Hồng</h2>
+                    <p class="section-sub">Dự án "Tin Mới" được nhóm thiết kế với mục tiêu kết hợp chuẩn mực trải nghiệm người dùng hiện đại, giao diện song ngữ giao thoa Dark/Light Mode và mã nguồn tối ưu chuẩn W3C.</p>
+
                     <ul class="check-list">
-                        <li>HTML5 ngữ nghĩa &amp; chuẩn truy cập (ARIA)</li>
-                        <li>Hiệu ứng chỉ dùng <code>transform</code> &amp; <code>opacity</code></li>
-                        <li>AOS — Animate On Scroll, Dark mode, Responsive</li>
+                        <li>Giao diện hiện đại, tối ưu 100% chuẩn Semantic HTML5 &amp; CSS Grid</li>
+                        <li>Chuyển động mượt mà 60 FPS được xử lý hoàn toàn bằng GPU</li>
+                        <li>Trang bị đầy đủ Dark Mode thông minh ghi nhớ tùy chọn người dùng</li>
+                        <li>Tìm kiếm nhanh không cần tải lại trang và lọc theo chuyên mục mượt mà</li>
                     </ul>
+
                     <div class="cta-row">
-                        <a class="btn btn-primary" href="portfolio.html">Xem Portfolio nhóm <span class="btn-arrow" aria-hidden="true">→</span></a>
-                        <a class="btn btn-ghost" href="portfolio.html#du-an">Dự án đã làm</a>
+                        <a class="btn btn-primary" href="portfolio.html">Xem Portfolio chi tiết <span class="btn-arrow" aria-hidden="true">→</span></a>
+                        <a class="btn btn-ghost" href="portfolio.html#du-an">Danh sách dự án đã làm</a>
                     </div>
                 </div>
 
+                <!-- Thẻ lật 3D giới thiệu 2 thành viên -->
                 <div class="team-flip-grid">
                     <div class="flip" tabindex="0" data-aos="flip-left" data-aos-delay="100" aria-label="Thẻ thành viên Đỗ Quốc Thịnh, nhấn để lật">
                         <div class="flip-inner">
@@ -591,19 +914,21 @@
                                 </span>
                                 <h3>Đỗ Quốc Thịnh</h3>
                                 <p>Nhóm trưởng Nhóm 2</p>
-                                <span class="flip-hint">↻ Di chuột / chạm để lật</span>
+                                <span class="flip-hint">↻ Chạm / di chuột để lật thẻ</span>
                             </div>
                             <div class="flip-face flip-back">
                                 <h3>Đỗ Quốc Thịnh</h3>
                                 <ul>
-                                    <li>🎓 Đại học Lạc Hồng — CNTT</li>
+                                    <li>🎓 Đại học Lạc Hồng — Khoa CNTT</li>
                                     <li>📜 Chứng chỉ NV Sư phạm Nghề</li>
-                                    <li>💻 HTML, CSS, Vue.js, ASP.NET</li>
+                                    <li>💻 HTML5, CSS3, Vue.js, ASP.NET</li>
+                                    <li>⚡ Quản trị &amp; Kiến trúc Frontend</li>
                                 </ul>
-                                <a class="btn btn-accent btn-sm" href="portfolio.html#thanh-vien">Xem hồ sơ</a>
+                                <a class="btn btn-accent btn-sm" href="portfolio.html#thanh-vien">Xem hồ sơ CV</a>
                             </div>
                         </div>
                     </div>
+
                     <div class="flip" tabindex="0" data-aos="flip-right" data-aos-delay="200" aria-label="Thẻ thành viên Nguyễn Đình Nam, nhấn để lật">
                         <div class="flip-inner">
                             <div class="flip-face flip-front flip-front-alt">
@@ -612,22 +937,24 @@
                                 </span>
                                 <h3>Nguyễn Đình Nam</h3>
                                 <p>Thành viên Nhóm 2</p>
-                                <span class="flip-hint">↻ Di chuột / chạm để lật</span>
+                                <span class="flip-hint">↻ Chạm / di chuột để lật thẻ</span>
                             </div>
                             <div class="flip-face flip-back">
                                 <h3>Nguyễn Đình Nam</h3>
                                 <ul>
-                                    <li>🎓 Đại học Lạc Hồng — CNTT</li>
-                                    <li>⚡ JavaScript ES6+, DOM</li>
-                                    <li>🗄️ SQL Server, CSS Grid</li>
+                                    <li>🎓 Đại học Lạc Hồng — Khoa CNTT</li>
+                                    <li>⚡ JavaScript ES6+, DOM API</li>
+                                    <li>🗄️ SQL Server, CSS Grid &amp; Flexbox</li>
+                                    <li>🛠️ Kiểm thử &amp; Tối ưu Responsive</li>
                                 </ul>
-                                <a class="btn btn-accent btn-sm" href="portfolio.html#thanh-vien">Xem hồ sơ</a>
+                                <a class="btn btn-accent btn-sm" href="portfolio.html#thanh-vien">Xem hồ sơ CV</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- ================= FOOTER ================= -->
@@ -636,16 +963,20 @@
             <div>
                 <a class="brand" href="index.html" aria-label="Tin Mới — Trang chủ">
                     <span class="brand-mark" aria-hidden="true">T</span>
-                    <span class="brand-text"><span class="brand-name">TIN <span>MỚI</span></span><span class="brand-tagline">Góc nhìn mỗi ngày</span></span>
+                    <span class="brand-text">
+                        <span class="brand-name">TIN <span>MỚI</span></span>
+                        <span class="brand-tagline">Góc nhìn mỗi ngày</span>
+                    </span>
                 </a>
-                <p class="footer-about">Tạp chí tin tức điện tử — đồ án môn Thiết kế Web, Nhóm 2, Trường Đại học Lạc Hồng. Nội dung mang tính minh họa.</p>
+                <p class="footer-about">Tạp chí tin tức điện tử — Đồ án môn Thiết kế Web của Nhóm 2, Khoa Công nghệ Thông tin, Trường Đại học Lạc Hồng. Mọi nội dung bài viết mang tính chất học thuật và minh họa.</p>
                 <div class="socials">
-                    <a href="#" aria-label="Facebook">Fb</a>
-                    <a href="#" aria-label="YouTube">Yt</a>
-                    <a href="#" aria-label="TikTok">Tt</a>
-                    <a href="mailto:tdo5175@gmail.com" aria-label="Email">@</a>
+                    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">Fb</a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube">Yt</a>
+                    <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">Tt</a>
+                    <a href="mailto:tdo5175@gmail.com" aria-label="Email liên hệ">@</a>
                 </div>
             </div>
+
             <div>
                 <h2 class="footer-title">Chuyên mục</h2>
                 <ul class="footer-links">
@@ -654,36 +985,43 @@
                     <li><a href="#cong-nghe">Công nghệ</a></li>
                     <li><a href="#van-hoa">Văn hóa</a></li>
                     <li><a href="#doi-song">Đời sống</a></li>
+                    <li><a href="#the-thao">Thể thao</a></li>
                 </ul>
             </div>
+
             <div>
-                <h2 class="footer-title">Về chúng tôi</h2>
+                <h2 class="footer-title">Về đồ án</h2>
                 <ul class="footer-links">
                     <li><a href="portfolio.html">Giới thiệu Nhóm 2</a></li>
-                    <li><a href="portfolio.html#thanh-vien">Thành viên</a></li>
-                    <li><a href="portfolio.html#du-an">Dự án</a></li>
-                    <li><a href="article.html">Bài viết mẫu</a></li>
+                    <li><a href="portfolio.html#thanh-vien">Hồ sơ thành viên</a></li>
+                    <li><a href="portfolio.html#du-an">Dự án đã triển khai</a></li>
+                    <li><a href="article.html">Bài viết mẫu chi tiết</a></li>
                 </ul>
             </div>
+
             <div>
-                <h2 class="footer-title">Liên hệ</h2>
+                <h2 class="footer-title">Thông tin liên hệ</h2>
                 <ul class="footer-links">
-                    <li>📍 ĐH Lạc Hồng, Biên Hòa, Đồng Nai</li>
+                    <li>📍 Trường ĐH Lạc Hồng, Biên Hòa, Đồng Nai</li>
                     <li><a href="mailto:tdo5175@gmail.com">✉️ tdo5175@gmail.com</a></li>
                     <li><a href="tel:0981903400">📞 0981 903 400</a></li>
+                    <li>🌐 Lớp Thiết kế Web — Học kỳ 1 / 2026</li>
                 </ul>
             </div>
         </div>
+
         <div class="container footer-bottom">
-            <p>© <span data-year>2026</span> Tin Mới · Nhóm 2 — Đỗ Quốc Thịnh &amp; Nguyễn Đình Nam</p>
-            <p>Môn Thiết kế Web · Trường Đại học Lạc Hồng</p>
+            <p>© <span data-year>2026</span> Tin Mới · Bản quyền đồ án thuộc về Nhóm 2 (Đỗ Quốc Thịnh &amp; Nguyễn Đình Nam)</p>
+            <p>Môn Thiết kế Web · Khoa Công nghệ Thông tin · Trường Đại học Lạc Hồng</p>
         </div>
     </footer>
 
+    <!-- Nút Lên đầu trang -->
     <button class="back-to-top" type="button" aria-label="Lên đầu trang">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
     </button>
 
+    <!-- Thư viện nạp defer -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/index.js" defer></script>
