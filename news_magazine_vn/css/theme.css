@@ -987,14 +987,26 @@ p {
     to   { opacity: 1; transform: scale(1); }
 }
 
-/* Dự phòng nếu thư viện AOS không tải được: hiện toàn bộ nội dung */
-.no-aos [data-aos] {
+/* Dự phòng & Đảm bảo 100% hiển thị giao diện: nếu AOS chưa kích hoạt hoặc không tải được script, toàn bộ nội dung vẫn hiện đầy đủ */
+[data-aos] {
     opacity: 1 !important;
     transform: none !important;
+    visibility: visible !important;
 }
 
-/* Sau khi AOS chạy xong: trả lại transition ngắn, bỏ delay
-   để hiệu ứng hover phản hồi tức thì */
+/* Khi thư viện AOS JS đã tải và khởi tạo thành công (gắn class .aos-init vào html) */
+html.aos-init [data-aos]:not(.aos-animate) {
+    opacity: 0 !important;
+    transform: translateY(30px) !important;
+}
+
+html.aos-init [data-aos].aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    transition-property: transform, opacity !important;
+}
+
+/* Sau khi AOS chạy xong: trả lại transition ngắn, bỏ delay để hiệu ứng hover phản hồi tức thì */
 [data-aos].aos-done {
     transition-property: transform, opacity, box-shadow, border-color, background-color !important;
     transition-duration: 0.4s !important;

@@ -10,16 +10,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Nạp script bất đồng bộ với defer để không block render DOM -->
-    <script defer src="script.js"></script>
 </head>
 <body>
     <!-- ========================================================
-         HIỆU ỨNG MỞ ĐẦU (WELCOME ENTRANCE SCREEN)
-         Màn hình chào đón công nghệ xuất hiện khi bắt đầu vào trang web,
-         tải nhanh mượt mà (0.85s) sau đó trượt mờ hé lộ giao diện chính
+         PURE CSS MODAL ENGINE CONTROLLERS (KHÔNG DÙNG JAVASCRIPT)
+         Điều khiển mở / đóng và chuyển tab Modal CV bằng CSS thuần túy
          ======================================================== -->
-    <div id="welcome-screen" class="welcome-screen" aria-hidden="true">
+    <input type="radio" name="cv-modal-state" id="modal-closed" class="modal-state-input" checked aria-hidden="true">
+    <input type="radio" name="cv-modal-state" id="modal-open-thinh" class="modal-state-input" aria-hidden="true">
+    <input type="radio" name="cv-modal-state" id="modal-open-nam" class="modal-state-input" aria-hidden="true">
+
+    <!-- ========================================================
+         HIỆU ỨNG MỞ ĐẦU (WELCOME ENTRANCE SCREEN - PURE CSS)
+         Màn hình chào đón công nghệ xuất hiện khi bắt đầu vào trang web,
+         tải nhanh mượt mà (0.85s) sau đó tự động trượt mờ hé lộ giao diện chính
+         ======================================================== -->
+    <!-- <div id="welcome-screen" class="welcome-screen" aria-hidden="true">
         <div class="welcome-content">
             <div class="welcome-logo-badge">
                 <span class="welcome-dot"></span>
@@ -31,7 +37,7 @@
                 <div class="welcome-progress-bar"></div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- ========================================================
          BÀI 1: FLOATING ACTION BUTTON (FAB)
@@ -52,14 +58,15 @@
             </a>
             
             <!-- ====================================================
-                 BÀI 5: MODERN HAMBURGER MENU
+                 BÀI 5: MODERN HAMBURGER MENU (PURE CSS TOGGLE)
                  Biểu tượng 3 gạch chuyển đổi thành dấu 'X' bằng CSS Transitions
                  ==================================================== -->
-            <button class="hamburger-menu" id="hamburger-menu" aria-label="Mở/Đóng menu điều hướng" aria-expanded="false">
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Mở/Đóng menu điều hướng">
+            <label for="nav-toggle" class="hamburger-menu" aria-label="Mở/Đóng menu điều hướng">
                 <span class="bar bar1"></span>
                 <span class="bar bar2"></span>
                 <span class="bar bar3"></span>
-            </button>
+            </label>
 
             <nav class="header-nav" id="header-nav" aria-label="Điều hướng chính">
                 <a href="#gioi-thieu" class="nav-link">Giới thiệu</a>
@@ -80,11 +87,11 @@
             <div class="sidebar-box team-summary-box">
                 <div class="team-badge">ĐH Lạc Hồng • Lớp Thiết Kế Web</div>
                 <div class="team-avatar-group">
-                    <img src="images/DoQuocThinh.jpg" alt="Đỗ Quốc Thịnh" class="mini-avatar-img" title="Đỗ Quốc Thịnh" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
-                    <img src="images/Anh-the-Dinh-Nam.jpg" alt="Nguyễn Đình Nam" class="mini-avatar-img" title="Nguyễn Đình Nam" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
+                    <img src="images/DoQuocThinh.jpg" alt="Đỗ Quốc Thịnh" class="mini-avatar-img" title="Đỗ Quốc Thịnh">
+                    <img src="images/Anh-the-Dinh-Nam.jpg" alt="Nguyễn Đình Nam" class="mini-avatar-img" title="Nguyễn Đình Nam">
                 </div>
                 <h2 class="sidebar-team-name">Dự Án Nhóm 2</h2>
-                <p class="sidebar-team-role">CNTT & Sư Phạm Tin Học</p>
+                <p class="sidebar-team-role">CNTT & Phát triển phần mềm</p>
                 
                 <div class="sidebar-stats-row">
                     <div class="stat-pill">
@@ -93,7 +100,7 @@
                     </div>
                     <div class="stat-pill">
                         <span class="stat-pill-num">06+</span>
-                        <span class="stat-pill-text">Kỹ thuật đỉnh</span>
+                        <span class="stat-pill-text">Kỹ thuật phát triển</span>
                     </div>
                 </div>
             </div>
@@ -101,7 +108,7 @@
             <!-- ====================================================
                  BÀI 6: SKILL BAR ANIMATION (ĐÃ CHUYỂN SANG THANH TRÁI)
                  NĂNG LỰC CHUYÊN MÔN - KỸ NĂNG & CÔNG NGHỆ
-                 Con số % và thanh tiến trình chạy với tốc độ vừa phải (~1.1s)
+                 Con số % và thanh tiến trình chạy với tốc độ vừa phải (~1.1s) THUẦN CSS
                  ==================================================== -->
             <div class="sidebar-box skills-sidebar-box" id="sidebar-skills">
                 <div class="sidebar-box-header">
@@ -115,49 +122,62 @@
                     <div class="sidebar-skill-item">
                         <div class="sidebar-skill-info">
                             <span class="skill-name-with-icon">
-                                <span class="skill-icon">🌐</span> HTML5, CSS3 & Vue.js
+                                <span class="skill-icon">🌐</span> HTML5 Semantic
                             </span>
-                            <!-- Con số chạy từ 0% lên đích với tốc độ vừa phải -->
-                            <span class="skill-badge-num" data-target="95">0%</span>
+                            <!-- Con số chạy từ 0% lên 90% theo đề bài -->
+                            <span class="skill-badge-num count-html"></span>
                         </div>
                         <div class="skill-track">
-                            <div class="skill-progress bar-html" data-target="95" style="width: 0;"></div>
+                            <div class="skill-progress bar-html"></div>
                         </div>
                     </div>
 
                     <div class="sidebar-skill-item">
                         <div class="sidebar-skill-info">
                             <span class="skill-name-with-icon">
-                                <span class="skill-icon">💻</span> C#, .NET & ASP.NET MVC
+                                <span class="skill-icon">🎨</span> CSS3 &amp; Flexbox/Grid
                             </span>
-                            <span class="skill-badge-num" data-target="88">0%</span>
+                            <!-- Con số chạy từ 0% lên 85% theo đề bài -->
+                            <span class="skill-badge-num count-css"></span>
                         </div>
                         <div class="skill-track">
-                            <div class="skill-progress bar-css" data-target="88" style="width: 0;"></div>
+                            <div class="skill-progress bar-css"></div>
                         </div>
                     </div>
 
-                    <div class="sidebar-skill-item">
+                    <!-- <div class="sidebar-skill-item">
                         <div class="sidebar-skill-info">
                             <span class="skill-name-with-icon">
-                                <span class="skill-icon">⚡</span> JavaScript ES6+ & DOM
+                                <span class="skill-icon">⚡</span> JavaScript ES6+ &amp; DOM
                             </span>
-                            <span class="skill-badge-num" data-target="90">0%</span>
+                            <span class="skill-badge-num count-js"></span>
                         </div>
                         <div class="skill-track">
-                            <div class="skill-progress bar-js" data-target="90" style="width: 0;"></div>
+                            <div class="skill-progress bar-js"></div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="sidebar-skill-item">
+                    <!-- <div class="sidebar-skill-item">
+                        <div class="sidebar-skill-info">
+                            <span class="skill-name-with-icon">
+                                <span class="skill-icon">💻</span> C#, .NET &amp; ASP.NET MVC
+                            </span>
+                            <span class="skill-badge-num count-net"></span>
+                        </div>
+                        <div class="skill-track">
+                            <div class="skill-progress bar-net"></div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="sidebar-skill-item">
                         <div class="sidebar-skill-info">
                             <span class="skill-name-with-icon">
                                 <span class="skill-icon">🗄️</span> SQL Server Cơ Bản
                             </span>
-                            <span class="skill-badge-num" data-target="82">0%</span>
+                            <span class="skill-badge-num count-sql"></span>
                         </div>
                         <div class="skill-track">
-                            <div class="skill-progress bar-sql" data-target="82" style="width: 0;"></div>
+                            <div class="skill-progress bar-sql"></div>
                         </div>
                     </div>
 
@@ -166,12 +186,12 @@
                             <span class="skill-name-with-icon">
                                 <span class="skill-icon">📚</span> Nghiệp Vụ Sư Phạm Tin Học
                             </span>
-                            <span class="skill-badge-num" data-target="92">0%</span>
+                            <span class="skill-badge-num count-edu"></span>
                         </div>
                         <div class="skill-track">
-                            <div class="skill-progress bar-anim" data-target="92" style="width: 0;"></div>
+                            <div class="skill-progress bar-edu"></div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -189,6 +209,24 @@
                     </div>
                 </div>
 
+                <!-- WIDGET GITHUB REPOSITORY CHÍNH THỨC NHÓM 2 -->
+                <div class="sidebar-github-card" aria-label="Kho mã nguồn GitHub của Nhóm 2">
+                    <div class="github-card-header">
+                        <div class="github-icon-box" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                        </div>
+                        <div>
+                            <span class="github-badge">OFFICIAL REPO</span>
+                            <h4 class="github-repo-title">Project_Nhom2</h4>
+                        </div>
+                    </div>
+                    <p class="github-repo-desc">Kho mã nguồn chính thức đồ án Tạp chí Tin Mới & Portfolio Nhóm 2 — ĐH Lạc Hồng.</p>
+                    <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="btn-github-sidebar" title="Truy cập GitHub Nhóm 2">
+                        <span>github.com/tdo5175-hue/Project_Nhom2</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+
                 <a href="#thanh-vien" class="sidebar-action-btn">Xem hồ sơ nhân sự & CV ↓</a>
             </div>
         </aside>
@@ -204,9 +242,16 @@
             <section class="parallax-banner" role="banner" aria-label="Banner công nghệ">
                 <div class="parallax-overlay"></div>
                 <div class="parallax-content glass-card">
-                    <span class="banner-tag">🌟 CREATIVE DEVELOPERS & EDUCATORS</span>
-                    <h1 class="banner-title">Khám Phá Sáng Tạo Công Nghệ Web & Giảng Dạy</h1>
+                    <span class="banner-tag">🌟 CREATIVE DEVELOPERS &amp; EDUCATORS</span>
+                    <h1 class="banner-title">Khám Phá Sáng Tạo Công Nghệ Web &amp; Giảng Dạy</h1>
                     <p class="banner-subtitle">Trang giới thiệu năng lực thực chiến, hồ sơ CV chuẩn xác và các giải pháp phần mềm tối ưu.</p>
+                    <div class="banner-quick-links">
+                        <label for="modal-open-thinh" class="banner-btn-primary">Xem Hồ Sơ CV Chi Tiết ↓</label>
+                        <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="banner-btn-github" title="Mở GitHub Repo Nhóm 2">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                            <span>GitHub Nhóm 2</span>
+                        </a>
+                    </div>
                 </div>
             </section>
 
@@ -238,22 +283,24 @@
             </section>
 
             <!-- ====================================================
-                 BÀI 2: CARD FLIP EFFECT CHO 2 THÀNH VIÊN
+                 BÀI 2: CARD FLIP EFFECT CHO 2 THÀNH VIÊN (PURE CSS TOGGLE)
                  ĐỖ QUỐC THỊNH & NGUYỄN ĐÌNH NAM
                  TÍCH HỢP HỒ SƠ CHỨC NĂNG CV THỰC TẾ (HỌC VẤN, KINH NGHIỆM, CHỨNG CHỈ SƯ PHẠM)
                  VÀ CÓ NÚT MỞ BẢN CV ĐẦY ĐỦ CHI TIẾT
                  ==================================================== -->
             <section class="section-card team-section" id="thanh-vien">
                 <div class="section-header text-center">
-                    <span class="eyebrow">HỒ SƠ NHÂN SỰ & CHUYÊN MÔN</span>
-                    <h2 class="section-title">Thành Viên Nhóm & Hồ Sơ Năng Lực (CV)</h2>
-                    <p class="section-subtitle">Di chuột để lật thẻ 3D xem nhanh liên hệ, hoặc bấm <strong>"Xem CV Chi Tiết"</strong> để mở toàn bộ hồ sơ nghiệp vụ!</p>
+                    <span class="eyebrow">HỒ SƠ NHÂN SỰ &amp; CHUYÊN MÔN</span>
+                    <h2 class="section-title">Thành Viên Nhóm &amp; Hồ Sơ Năng Lực (CV)</h2>
+                    <p class="section-subtitle">Khám phá hồ sơ chuyên môn của từng thành viên. <strong>Rê chuột (Hover)</strong> vào thẻ để lật 180 độ xem thông tin liên hệ, hoặc bấm <strong>"Xem Hồ Sơ CV Chi Tiết"</strong> để mở toàn bộ CV.</p>
                 </div>
 
                 <div class="team-cards-grid">
                     
                     <!-- THẺ THÀNH VIÊN 1: ĐỖ QUỐC THỊNH (CHUẨN FORM CV ĐÃ CUNG CẤP) -->
                     <div class="flip-card-wrapper" tabindex="0" aria-label="Thẻ thành viên Đỗ Quốc Thịnh">
+                        <!-- Checkbox điều khiển lật 3D thuần CSS -->
+                        <input type="checkbox" id="flip-card-thinh" class="flip-toggle-input" aria-hidden="true">
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <!-- MẶT TRƯỚC (Front side) -->
@@ -265,45 +312,54 @@
 
                                     <div class="card-profile-header">
                                         <div class="member-photo-box">
-                                            <img src="images/DoQuocThinh.jpg" alt="Ảnh thẻ Đỗ Quốc Thịnh" class="member-photo-square" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
+                                            <img src="images/DoQuocThinh.jpg" alt="Ảnh chân dung Đỗ Quốc Thịnh" class="member-photo-square">
+                                            <span class="photo-online-badge" title="Đang trực tuyến"></span>
                                         </div>
                                         <div class="member-title-meta">
                                             <h3 class="member-name">Đỗ Quốc Thịnh</h3>
-                                            <p class="member-role">Giáo Viên Tin Học · Trợ Giảng CNTT</p>
-                                            <p class="member-sub-edu">🎓 CĐ FPT Polytechnic Đồng Nai</p>
-                                            <span class="member-gpa-badge">GPA 3.6 / 4.0 — Tốt nghiệp Xuất Sắc</span>
+                                            <p class="member-role">Nhóm trưởng Nhóm 2 </p>
+                                            <p class="member-sub-edu">🎓 CĐ FPT Polytechnic &amp; ĐH Lạc Hồng</p>
+                                            <span class="member-gpa-badge">CNTT - Phát triển phần mềm</span>
                                         </div>
                                     </div>
 
                                     <div class="card-body-details">
                                         <div class="card-section-label">ĐÓNG GÓP TRỌNG TÂM DỰ ÁN TIN MỚI</div>
                                         <p class="card-project-role">
-                                            Kiến trúc hệ thống Semantic HTML5, hệ thống Design Tokens CSS, tối ưu trải nghiệm Responsive & khả năng tiếp cận chuẩn W3C / SEO.
+                                             Kiến trúc hệ thống Semantic HTML5, hệ thống Design Tokens CSS, tối ưu trải nghiệm Responsive &amp; khả năng tiếp cận chuẩn W3C / SEO.
                                         </p>
                                         
                                         <div class="card-section-label" style="margin-top: 10px;">KỸ NĂNG NỔI BẬT</div>
                                         <div class="member-tags">
-                                            <span class="tag">Nghiệp Vụ Sư Phạm VTE</span>
+                                            <!-- <span class="tag">Nghiệp Vụ Sư Phạm VTE</span> -->
                                             <span class="tag">C# / .NET MVC</span>
                                             <span class="tag">Vue.js / HTML5</span>
                                             <span class="tag">SQL Server</span>
                                         </div>
                                     </div>
                                     
-                                    <div class="card-footer-actions">
-                                        <span class="flip-instruction">↻ Di chuột / Chạm để lật thẻ</span>
-                                        <button class="btn-open-cv" data-member="thinh" type="button" aria-label="Xem CV Đỗ Quốc Thịnh">
-                                            📄 Xem Hồ Sơ CV Chi Tiết
-                                        </button>
+                                    <div class="card-action-buttons">
+                                        <label for="modal-open-thinh" class="btn-open-cv" aria-label="Xem CV Đỗ Quốc Thịnh">
+                                            <span>📄</span> Xem Hồ Sơ CV Chi Tiết
+                                        </label>
+                                        <div class="card-action-subrow">
+                                            <label for="flip-card-thinh" class="btn-flip-trigger" aria-label="Lật thẻ xem liên hệ Đỗ Quốc Thịnh">
+                                                <span>🔄</span> Lật Xem Liên Hệ
+                                            </label>
+                                            <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="btn-github-pill" title="Mở GitHub Repo Nhóm 2">
+                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                                                <span>GitHub Nhóm 2</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- MẶT SAU (Back side - Lật 180 độ: Thông tin liên hệ chuẩn từ CV) -->
                                 <div class="flip-card-back card-back-executive">
                                     <div class="back-header">
-                                        <img src="images/DoQuocThinh.jpg" alt="Đỗ Quốc Thịnh" class="back-avatar-mini" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
+                                        <img src="images/DoQuocThinh.jpg" alt="Đỗ Quốc Thịnh" class="back-avatar-mini">
                                         <div>
-                                            <span class="back-title">THÔNG TIN LIÊN HỆ & BỔ NHIỆM</span>
+                                            <span class="back-title">THÔNG TIN LIÊN HỆ &amp; BỔ NHIỆM</span>
                                             <h4 class="back-name">Đỗ Quốc Thịnh</h4>
                                             <p class="back-role-text">Trưởng Nhóm &amp; Web Architect</p>
                                         </div>
@@ -316,6 +372,9 @@
                                         <a href="mailto:tdo5175@gmail.com" class="contact-item">
                                             <span class="c-icon">✉️</span> <span>tdo5175@gmail.com</span>
                                         </a>
+                                        <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="contact-item">
+                                            <span class="c-icon">🐙</span> <span>github.com/tdo5175-hue/Project_Nhom2</span>
+                                        </a>
                                         <div class="contact-item">
                                             <span class="c-icon">📅</span> <span>Ngày sinh: 21/08/2007</span>
                                         </div>
@@ -323,7 +382,7 @@
                                             <span class="c-icon">📍</span> <span>P. Trấn Biên, TP. Biên Hòa, Đồng Nai</span>
                                         </div>
                                         <div class="contact-item">
-                                            <span class="c-icon">📜</span> <span>Chứng chỉ NV Sư phạm Giảng viên VTE (2026)</span>
+                                            <!-- <span class="c-icon">📜</span> <span>Chứng chỉ NV Sư phạm Giảng viên VTE (2026)</span> -->
                                         </div>
                                     </div>
 
@@ -333,9 +392,18 @@
                                     </div>
                                     
                                     <div class="back-action-group">
-                                        <button class="btn-open-cv-secondary" data-member="thinh" type="button">
-                                            Mở Toàn Bộ Bản CV Đầy Đủ →
-                                        </button>
+                                        <label for="modal-open-thinh" class="btn-open-cv-secondary">
+                                            📄 Mở Toàn Bộ Bản CV Đầy Đủ →
+                                        </label>
+                                        <div class="card-action-subrow">
+                                            <label for="flip-card-thinh" class="btn-flip-back" aria-label="Lật về mặt trước">
+                                                <span>↩️</span> Lật Về Mặt Trước
+                                            </label>
+                                            <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="btn-github-pill btn-github-pill-dark" title="Mở GitHub Repo Nhóm 2">
+                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                                                <span>GitHub Nhóm 2</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -344,56 +412,67 @@
 
                     <!-- THẺ THÀNH VIÊN 2: NGUYỄN ĐÌNH NAM -->
                     <div class="flip-card-wrapper" tabindex="0" aria-label="Thẻ thành viên Nguyễn Đình Nam">
+                        <!-- Checkbox điều khiển lật 3D thuần CSS -->
+                        <input type="checkbox" id="flip-card-nam" class="flip-toggle-input" aria-hidden="true">
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <!-- MẶT TRƯỚC (Front side) -->
                                 <div class="flip-card-front card-executive card-nam">
                                     <div class="card-top-bar">
-                                        <span class="card-role-badge">KỸ SƯ PHẦN MỀM · CORE DEV</span>
+                                        <span class="card-role-badge">Thành viên Nhóm 2</span>
                                         <span class="card-status-pill"><span class="status-dot"></span> Sẵn sàng hợp tác</span>
                                     </div>
 
                                     <div class="card-profile-header">
                                         <div class="member-photo-box">
-                                            <img src="images/Anh-the-Dinh-Nam.jpg" alt="Ảnh thẻ Nguyễn Đình Nam" class="member-photo-square" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
+                                            <img src="images/Anh-the-Dinh-Nam.jpg" alt="Ảnh chân dung Nguyễn Đình Nam" class="member-photo-square">
+                                            <span class="photo-online-badge" title="Đang trực tuyến"></span>
                                         </div>
                                         <div class="member-title-meta">
                                             <h3 class="member-name">Nguyễn Đình Nam</h3>
-                                            <p class="member-role">Kỹ Sư Phần Mềm · Frontend & Logic Dev</p>
+                                            <p class="member-role">Thành viên Nhóm 2 · Frontend &amp; Logic Dev</p>
                                             <p class="member-sub-edu">🎓 Đại Học Lạc Hồng (LHU)</p>
-                                            <span class="member-gpa-badge">Khoa CNTT — Kỹ thuật Phần mềm</span>
+                                            <span class="member-gpa-badge">CNTT - Phát triển phần mềm</span>
                                         </div>
                                     </div>
 
                                     <div class="card-body-details">
                                         <div class="card-section-label">ĐÓNG GÓP TRỌNG TÂM DỰ ÁN TIN MỚI</div>
                                         <p class="card-project-role">
-                                            Phát triển Logic JavaScript tương tác DOM, hiệu ứng chuyển động 3D GPU 60 FPS, hệ thống bộ lọc bài viết, Widget Ticker &amp; Dark/Light Mode.
+                                            Phát triển Logic tương tác DOM, hiệu ứng chuyển động 3D GPU 60 FPS, hệ thống bộ lọc bài viết, Widget Ticker &amp; Dark/Light Mode.
                                         </p>
                                         
                                         <div class="card-section-label" style="margin-top: 10px;">KỸ NĂNG NỔI BẬT</div>
                                         <div class="member-tags">
                                             <span class="tag">JavaScript ES6+</span>
-                                            <span class="tag">CSS Grid & Flexbox</span>
+                                            <span class="tag">CSS Grid &amp; Flexbox</span>
                                             <span class="tag">Database SQL</span>
                                             <span class="tag">Git / GitHub</span>
                                         </div>
                                     </div>
                                     
-                                    <div class="card-footer-actions">
-                                        <span class="flip-instruction">↻ Di chuột / Chạm để lật thẻ</span>
-                                        <button class="btn-open-cv" data-member="nam" type="button" aria-label="Xem CV Nguyễn Đình Nam">
-                                            📄 Xem Hồ Sơ CV Chi Tiết
-                                        </button>
+                                    <div class="card-action-buttons">
+                                        <label for="modal-open-nam" class="btn-open-cv" aria-label="Xem CV Nguyễn Đình Nam">
+                                            <span>📄</span> Xem Hồ Sơ CV Chi Tiết
+                                        </label>
+                                        <div class="card-action-subrow">
+                                            <label for="flip-card-nam" class="btn-flip-trigger" aria-label="Lật thẻ xem liên hệ Nguyễn Đình Nam">
+                                                <span>🔄</span> Lật Xem Liên Hệ
+                                            </label>
+                                            <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="btn-github-pill" title="Mở GitHub Repo Nhóm 2">
+                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                                                <span>GitHub Nhóm 2</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- MẶT SAU (Back side - Lật 180 độ) -->
                                 <div class="flip-card-back card-back-executive">
                                     <div class="back-header">
-                                        <img src="images/Anh-the-Dinh-Nam.jpg" alt="Nguyễn Đình Nam" class="back-avatar-mini" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
+                                        <img src="images/Anh-the-Dinh-Nam.jpg" alt="Nguyễn Đình Nam" class="back-avatar-mini">
                                         <div>
-                                            <span class="back-title">THÔNG TIN LIÊN HỆ & BỔ NHIỆM</span>
+                                            <span class="back-title">THÔNG TIN LIÊN HỆ &amp; BỔ NHIỆM</span>
                                             <h4 class="back-name">Nguyễn Đình Nam</h4>
                                             <p class="back-role-text">Core Developer &amp; Logic Engineer</p>
                                         </div>
@@ -406,8 +485,8 @@
                                         <a href="mailto:nam.nguyen@example.com" class="contact-item">
                                             <span class="c-icon">✉️</span> <span>nam.nguyen@example.com</span>
                                         </a>
-                                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-item">
-                                            <span class="c-icon">🐙</span> <span>github.com/dinhnam-dev</span>
+                                        <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="contact-item">
+                                            <span class="c-icon">🐙</span> <span>github.com/tdo5175-hue/Project_Nhom2</span>
                                         </a>
                                         <div class="contact-item">
                                             <span class="c-icon">📍</span> <span>TP. Biên Hòa, Đồng Nai</span>
@@ -419,13 +498,22 @@
 
                                     <div class="back-assignment-box">
                                         <span class="assignment-title">PHÂN CÔNG DỰ ÁN</span>
-                                        <p class="assignment-desc">Chịu trách nhiệm mã nguồn JavaScript xử lý tương tác độc giả, tính năng tìm kiếm nhanh, lưu trữ LocalStorage và form gửi bài viết.</p>
+                                        <p class="assignment-desc">Chịu trách nhiệm cấu trúc ngữ nghĩa semantic, tính năng tìm kiếm nhanh, lưu trữ LocalStorage và form gửi bài viết.</p>
                                     </div>
                                     
                                     <div class="back-action-group">
-                                        <button class="btn-open-cv-secondary" data-member="nam" type="button">
-                                            Mở Toàn Bộ Bản CV Đầy Đủ →
-                                        </button>
+                                        <label for="modal-open-nam" class="btn-open-cv-secondary">
+                                            📄 Mở Toàn Bộ Bản CV Đầy Đủ →
+                                        </label>
+                                        <div class="card-action-subrow">
+                                            <label for="flip-card-nam" class="btn-flip-back" aria-label="Lật về mặt trước">
+                                                <span>↩️</span> Lật Về Mặt Trước
+                                            </label>
+                                            <a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer" class="btn-github-pill btn-github-pill-dark" title="Mở GitHub Repo Nhóm 2">
+                                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/></svg>
+                                                <span>GitHub Nhóm 2</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -488,7 +576,7 @@
                             <span class="tech-pill">Vue.js</span>
                             <span class="tech-pill">HTML5/CSS3</span>
                             <span class="tech-pill">Bootstrap 5</span>
-                            <span class="tech-pill">JavaScript</span>
+                            <span class="tech-pill">Testing</span>
                         </div>
                     </article>
 
@@ -526,30 +614,34 @@
         <!-- FOOTER TRANG WEB -->
         <footer class="site-footer">
             <div class="footer-content">
-                <p class="footer-brand">© 2026 Nhóm 2 • Đỗ Quốc Thịnh & Nguyễn Đình Nam</p>
-                <p class="footer-sub">Trường Đại Học Lạc Hồng (LHU) & FPT Polytechnic • Môn Thiết Kế Web</p>
+                <p class="footer-brand">© 2026 Nhóm 2 • Đỗ Quốc Thịnh &amp; Nguyễn Đình Nam</p>
+                <p class="footer-sub">Trường Đại Học Lạc Hồng (LHU) &amp; FPT Polytechnic • Môn Thiết Kế Web</p>
+                <p class="footer-github"><a href="https://github.com/tdo5175-hue/Project_Nhom2.git" target="_blank" rel="noopener noreferrer">🐙 GitHub Repository: tdo5175-hue/Project_Nhom2 ↗</a></p>
             </div>
         </footer>
     </div>
 
     <!-- ========================================================
-         MODAL XEM CV CHI TIẾT (CHUẨN FORM CV ĐÃ CUNG CẤP TRONG ẢNH)
+         MODAL XEM CV CHI TIẾT (PURE CSS MODAL ENGINE)
          Hiển thị đầy đủ thông tin: Thông tin cá nhân, Học vấn, Mục tiêu nghề nghiệp,
          Dự án & Kinh nghiệm, Kỹ năng sư phạm, Sở thích & Điểm mạnh
          ======================================================== -->
     <div id="cv-modal" class="cv-modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="modal-cv-name">
+        <!-- Nền overlay mờ: Bấm ra ngoài nền tối để đóng modal ngay lập tức -->
+        <label for="modal-closed" class="cv-backdrop-overlay" aria-label="Đóng cửa sổ"></label>
+
         <div class="cv-modal-container">
-            <!-- Nút đóng Modal -->
-            <button class="cv-modal-close" id="btn-close-cv-modal" aria-label="Đóng cửa sổ CV">&times;</button>
+            <!-- Nút đóng Modal góc trên -->
+            <label for="modal-closed" class="cv-modal-close" aria-label="Đóng cửa sổ CV">&times;</label>
             
-            <!-- Tabs chuyển đổi giữa 2 thành viên nếu muốn -->
+            <!-- Tabs chuyển đổi giữa 2 thành viên thuần CSS -->
             <div class="cv-modal-tabs">
-                <button class="cv-tab-btn active" data-target-cv="thinh">CV Đỗ Quốc Thịnh</button>
-                <button class="cv-tab-btn" data-target-cv="nam">CV Nguyễn Đình Nam</button>
+                <label for="modal-open-thinh" class="cv-tab-btn cv-tab-thinh">CV Đỗ Quốc Thịnh</label>
+                <label for="modal-open-nam" class="cv-tab-btn cv-tab-nam">CV Nguyễn Đình Nam</label>
             </div>
 
             <!-- NỘI DUNG CV 1: ĐỖ QUỐC THỊNH (KHỚP HOÀN TOÀN VỚI HÌNH ẢNH CV) -->
-            <div id="cv-content-thinh" class="cv-paper active">
+            <div id="cv-content-thinh" class="cv-paper">
                 
                 <!-- HEADER CV -->
                 <header class="cv-header">
@@ -566,7 +658,7 @@
                     <!-- Ảnh chân dung -->
                     <div class="cv-photo-box">
                         <div class="cv-photo-frame">
-                            <img src="images/DoQuocThinh.jpg" alt="Ảnh thẻ Đỗ Quốc Thịnh" class="cv-photo-img" onerror="this.src='images/DoQuocThinh_anhthe.jpg'">
+                            <img src="images/DoQuocThinh.jpg" alt="Ảnh thẻ Đỗ Quốc Thịnh" class="cv-photo-img">
                         </div>
                     </div>
 
@@ -713,7 +805,7 @@
                 <div class="cv-top-grid">
                     <div class="cv-photo-box">
                         <div class="cv-photo-frame">
-                            <img src="images/Anh-the-Dinh-Nam.jpg" alt="Ảnh thẻ Nguyễn Đình Nam" class="cv-photo-img" onerror="this.src='images/Anh_The_Dinh_Nam.jpg'">
+                            <img src="images/Anh-the-Dinh-Nam.jpg" alt="Ảnh thẻ Nguyễn Đình Nam" class="cv-photo-img">
                         </div>
                     </div>
 
@@ -774,8 +866,8 @@
 
             <!-- Nút in / tải CV -->
             <div class="cv-modal-footer">
-                <button class="btn-print-cv" onclick="window.print()">🖨️ In / Xuất File PDF</button>
-                <button class="btn-close-modal-bottom" id="btn-close-modal-bottom">Đóng Cửa Sổ</button>
+                <button class="btn-print-cv" type="button" title="Gợi ý: Nhấn Ctrl + P trên bàn phím để in hoặc lưu PDF">🖨️ In / Xuất PDF (Ctrl + P)</button>
+                <label for="modal-closed" class="btn-close-modal-bottom">Đóng Cửa Sổ</label>
             </div>
 
         </div>

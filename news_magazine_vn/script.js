@@ -122,11 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function switchCvTab(memberKey) {
         cvTabs.forEach(tab => {
-            tab.classList.toggle('active', tab.getAttribute('data-target-cv') === memberKey);
+            const matches = tab.getAttribute('data-target-cv') === memberKey || tab.getAttribute('for') === `modal-open-${memberKey}`;
+            tab.classList.toggle('active', matches);
         });
         cvPapers.forEach(paper => {
             paper.classList.toggle('active', paper.id === `cv-content-${memberKey}`);
+            paper.style.display = paper.id === `cv-content-${memberKey}` ? 'block' : 'none';
         });
+        const radio = document.getElementById(`modal-open-${memberKey}`);
+        if (radio) radio.checked = true;
     }
 
     function openModalWithMember(memberKey = 'thinh') {
@@ -134,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         switchCvTab(memberKey);
         requestAnimationFrame(() => {
             cvModal.classList.add('show-modal');
+            cvModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden'; // Ngăn cuộn trang phía sau khi xem CV
         });
     }
@@ -142,15 +147,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cvModal) return;
         requestAnimationFrame(() => {
             cvModal.classList.remove('show-modal');
+            cvModal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+            const radioClosed = document.getElementById('modal-closed');
+            if (radioClosed) radioClosed.checked = true;
         });
     }
 
-    // Gắn sự kiện mở modal cho các nút bấm
+    // Gắn sự kiện mở modal cho các nút bấm / label
     openCvButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Ngăn kích hoạt lật thẻ ngoài ý muốn
-            const memberKey = btn.getAttribute('data-member') || 'thinh';
+            e.stopPropagation();
+            let memberKey = btn.getAttribute('data-member');
+            if (!memberKey) {
+                const forAttr = btn.getAttribute('for') || '';
+                memberKey = forAttr.includes('nam') ? 'nam' : 'thinh';
+            }
             openModalWithMember(memberKey);
         });
     });
@@ -158,7 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chuyển tab giữa 2 thành viên
     cvTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            const memberKey = tab.getAttribute('data-target-cv');
+            let memberKey = tab.getAttribute('data-target-cv');
+            if (!memberKey) {
+                const forAttr = tab.getAttribute('for') || '';
+                memberKey = forAttr.includes('nam') ? 'nam' : 'thinh';
+            }
             switchCvTab(memberKey);
         });
     });
@@ -167,7 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
     if (btnCloseModalBottom) btnCloseModalBottom.addEventListener('click', closeModal);
     
-    // Đóng khi click ngoài backdrop
+    // Đóng khi click ngoài backdrop overlay
+    const backdropOverlay = document.querySelector('.cv-backdrop-overlay');
+    if (backdropOverlay) backdropOverlay.addEventListener('click', closeModal);
     if (cvModal) {
         cvModal.addEventListener('click', (e) => {
             if (e.target === cvModal) closeModal();
@@ -176,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Đóng khi ấn phím Escape
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && cvModal && cvModal.classList.contains('show-modal')) {
+        if (e.key === 'Escape' && cvModal && (cvModal.classList.contains('show-modal') || window.getComputedStyle(cvModal).opacity > 0)) {
             closeModal();
         }
     });
@@ -184,48 +202,69 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================================================
        4. BÀI 5: MODERN HAMBURGER MENU
        ========================================================================== */
-    const hamburgerMenu = document.getElementById('hamburger-menu');
-    const headerNav = document.getElementById('header-nav');
+    const hamburgerMenu = document.getElementById('hamburger-menu') || document.querySelector('.menu-toggle');
+    const headerNav = document.getElementById('header-nav') || document.querySelector('.main-nav');
 
     if (hamburgerMenu && headerNav) {
         hamburgerMenu.addEventListener('click', () => {
-            const isOpened = hamburgerMenu.classList.contains('active');
-            
+            const isOpened = hamburgerMenu.classList.contains('active') || headerNav.classList.contains('active');
             requestAnimationFrame(() => {
-                hamburgerMenu.classList.toggle('active');
-                headerNav.classList.toggle('active');
-                hamburgerMenu.setAttribute('aria-expanded', !isOpened);
+                hamburgerMenu.classList.toggle('active', !isOpened);
+                headerNav.classList.toggle('active', !isOpened);
+                hamburgerMenu.setAttribute('aria-expanded', String(!isOpened));
             });
         });
 
         const navLinks = headerNav.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (headerNav.classList.contains('active')) {
-                    requestAnimationFrame(() => {
-                        hamburgerMenu.classList.remove('active');
-                        headerNav.classList.remove('active');
-                        hamburgerMenu.setAttribute('aria-expanded', 'false');
-                    });
-                }
+                requestAnimationFrame(() => {
+                    hamburgerMenu.classList.remove('active');
+                    headerNav.classList.remove('active');
+                    hamburgerMenu.setAttribute('aria-expanded', 'false');
+                });
             });
         });
     }
 
     /* ==========================================================================
-       5. BÀI 2: HỖ TRỢ CARD FLIP TRÊN THIẾT BỊ CẢM ỨNG (MOBILE TOUCH)
+       5. BÀI 2: TƯƠNG TÁC THẺ LẬT 3D (3D CARD FLIP)
        ========================================================================== */
+    const flipTriggers = document.querySelectorAll('.btn-flip-trigger');
+    const flipBacks = document.querySelectorAll('.btn-flip-back');
+
+    flipTriggers.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wrapper = btn.closest('.flip-card-wrapper');
+            if (wrapper) {
+                wrapper.classList.add('is-flipped');
+                const checkbox = wrapper.querySelector('.flip-toggle-input');
+                if (checkbox) checkbox.checked = true;
+            }
+        });
+    });
+
+    flipBacks.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wrapper = btn.closest('.flip-card-wrapper');
+            if (wrapper) {
+                wrapper.classList.remove('is-flipped');
+                const checkbox = wrapper.querySelector('.flip-toggle-input');
+                if (checkbox) checkbox.checked = false;
+            }
+        });
+    });
+
     const flipCardWrappers = document.querySelectorAll('.flip-card-wrapper');
     flipCardWrappers.forEach(wrapper => {
-        wrapper.addEventListener('click', (e) => {
-            // Nếu click trúng nút mở CV thì không lật thẻ
-            if (e.target.closest('.btn-open-cv') || e.target.closest('.btn-open-cv-secondary')) {
-                return;
-            }
-            if (document.activeElement === wrapper) {
-                wrapper.blur();
-            } else {
-                wrapper.focus();
+        wrapper.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target === wrapper) {
+                e.preventDefault();
+                const isFlipped = wrapper.classList.toggle('is-flipped');
+                const checkbox = wrapper.querySelector('.flip-toggle-input');
+                if (checkbox) checkbox.checked = isFlipped;
             }
         });
     });
