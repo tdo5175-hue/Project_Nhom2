@@ -1614,6 +1614,42 @@ body:has(#modal-open-nam:checked) {
     flex-shrink: 0;
 }
 
+/* Nhãn hướng dẫn tương tác lật thẻ tự động khi hover */
+.flip-hover-hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px dashed rgba(99, 102, 241, 0.25);
+    user-select: none;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all var(--transition-fast);
+}
+
+.flip-hover-hint .hint-icon {
+    font-size: 0.95rem;
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.flip-card-wrapper:hover .flip-hover-hint .hint-icon {
+    transform: rotate(180deg);
+}
+
+.flip-hover-hint.back-hint {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #94a3b8;
+}
+
 /* Mặt sau: Danh thiếp liên hệ */
 .back-header {
     display: flex;

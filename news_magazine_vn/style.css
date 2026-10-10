@@ -843,34 +843,42 @@ html.aos-init [data-aos].aos-animate {
     border-radius: 22px;
 }
 
-/* Lật 180 độ bằng Pure CSS Checkbox Toggle */
-.flip-toggle-input:checked ~ .flip-card .flip-card-inner,
-.flip-card-wrapper.is-flipped .flip-card-inner {
+/* ==========================================================================
+   BÀI 2: TỰ ĐỘNG LẬT THẺ 180 ĐỘ KHI DI CHUỘT VÀO VÀ RA (PURE CSS 3D FLIP)
+   Chỉ cần hover chuột vào card là tự động lật sang mặt sau xem liên hệ,
+   khi chuột rời ra ngoài thì tự động lật về mặt trước.
+   ========================================================================== */
+.flip-card-wrapper:hover .flip-card-inner,
+.flip-card-wrapper:focus-within .flip-card-inner,
+.flip-card-wrapper.is-flipped .flip-card-inner,
+.flip-toggle-input:checked ~ .flip-card .flip-card-inner {
     transform: rotateY(180deg);
 }
 
-/* Kiểm soát tương tác và tầng z-index khi chưa lật */
-.flip-toggle-input:not(:checked) ~ .flip-card .flip-card-front,
-.flip-card-wrapper:not(.is-flipped) .flip-card-front {
+/* Mặt trước mặc định nhận tương tác, mặt sau ẩn tương tác */
+.flip-card-front {
     pointer-events: auto;
     z-index: 2;
 }
 
-.flip-toggle-input:not(:checked) ~ .flip-card .flip-card-back,
-.flip-card-wrapper:not(.is-flipped) .flip-card-back {
+.flip-card-back {
     pointer-events: none;
     z-index: 1;
 }
 
-/* Kiểm soát tương tác và tầng z-index khi đã lật sang mặt sau */
-.flip-toggle-input:checked ~ .flip-card .flip-card-front,
-.flip-card-wrapper.is-flipped .flip-card-front {
+/* Khi di chuột vào / lật: mặt sau nhận tương tác (click link, SĐT, Email, CV), mặt trước ẩn */
+.flip-card-wrapper:hover .flip-card-front,
+.flip-card-wrapper:focus-within .flip-card-front,
+.flip-card-wrapper.is-flipped .flip-card-front,
+.flip-toggle-input:checked ~ .flip-card .flip-card-front {
     pointer-events: none;
     z-index: 1;
 }
 
-.flip-toggle-input:checked ~ .flip-card .flip-card-back,
-.flip-card-wrapper.is-flipped .flip-card-back {
+.flip-card-wrapper:hover .flip-card-back,
+.flip-card-wrapper:focus-within .flip-card-back,
+.flip-card-wrapper.is-flipped .flip-card-back,
+.flip-toggle-input:checked ~ .flip-card .flip-card-back {
     pointer-events: auto;
     z-index: 2;
 }
@@ -1200,6 +1208,48 @@ html.aos-init [data-aos].aos-animate {
     height: 15px;
     fill: currentColor;
     flex-shrink: 0;
+}
+
+/* Nhãn hướng dẫn tương tác lật thẻ tự động khi hover */
+.flip-hover-hint {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(15, 118, 110, 0.05);
+    border: 1px dashed rgba(15, 118, 110, 0.25);
+    user-select: none;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all var(--t-fast);
+}
+
+.flip-hover-hint .hint-icon {
+    font-size: 0.95rem;
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.flip-card-wrapper:hover .flip-hover-hint .hint-icon {
+    transform: rotate(180deg);
+}
+
+.flip-hover-hint.back-hint {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .flip-hover-hint {
+    background: rgba(45, 212, 191, 0.08);
+    border-color: rgba(45, 212, 191, 0.25);
+    color: var(--muted);
 }
 
 /* Mặt sau - Danh thiếp Doanh nhân Cao cấp */

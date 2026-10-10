@@ -229,39 +229,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
        5. BÀI 2: TƯƠNG TÁC THẺ LẬT 3D (3D CARD FLIP)
+       Desktop: Tự động lật khi di chuột vào/ra (:hover) bằng Pure CSS 3D trong style.css.
+       Kèm hỗ trợ phím Enter/Space cho bàn phím (A11y) và chạm cảm ứng trên Mobile.
        ========================================================================== */
-    const flipTriggers = document.querySelectorAll('.btn-flip-trigger');
-    const flipBacks = document.querySelectorAll('.btn-flip-back');
-
-    flipTriggers.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const wrapper = btn.closest('.flip-card-wrapper');
-            if (wrapper) {
-                wrapper.classList.add('is-flipped');
-                const checkbox = wrapper.querySelector('.flip-toggle-input');
-                if (checkbox) checkbox.checked = true;
-            }
-        });
-    });
-
-    flipBacks.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const wrapper = btn.closest('.flip-card-wrapper');
-            if (wrapper) {
-                wrapper.classList.remove('is-flipped');
-                const checkbox = wrapper.querySelector('.flip-toggle-input');
-                if (checkbox) checkbox.checked = false;
-            }
-        });
-    });
-
     const flipCardWrappers = document.querySelectorAll('.flip-card-wrapper');
     flipCardWrappers.forEach(wrapper => {
+        // Hỗ trợ người dùng thao tác bằng phím Enter / Space
         wrapper.addEventListener('keydown', (e) => {
             if ((e.key === 'Enter' || e.key === ' ') && e.target === wrapper) {
                 e.preventDefault();
+                const isFlipped = wrapper.classList.toggle('is-flipped');
+                const checkbox = wrapper.querySelector('.flip-toggle-input');
+                if (checkbox) checkbox.checked = isFlipped;
+            }
+        });
+
+        // Hỗ trợ thiết bị cảm ứng di động (tap để lật nếu không có con trỏ hover)
+        wrapper.addEventListener('click', (e) => {
+            if (e.target.closest('a, button, label, input')) return;
+            if (window.matchMedia && window.matchMedia('(hover: none)').matches) {
                 const isFlipped = wrapper.classList.toggle('is-flipped');
                 const checkbox = wrapper.querySelector('.flip-toggle-input');
                 if (checkbox) checkbox.checked = isFlipped;
