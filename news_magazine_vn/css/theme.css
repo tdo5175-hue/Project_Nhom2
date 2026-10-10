@@ -58,7 +58,9 @@
 }
 
 /* ---------------------------- GIAO DIỆN TỐI ---------------------------- */
-[data-theme="dark"] {
+[data-theme="dark"],
+:root:has(#theme-toggle-chk:checked),
+body:has(#theme-toggle-chk:checked) {
     --primary: #2dd4bf;
     --primary-600: #14b8a6;
     --primary-strong: #5eead4;
@@ -190,7 +192,7 @@ p {
     transform: translateY(0);
 }
 
-/* Thanh tiến trình đọc / cuộn — dùng scaleX */
+/* Thanh tiến trình đọc / cuộn — dùng scaleX (Pure CSS Scroll-Driven) */
 .progress-bar {
     position: fixed;
     inset: 0 0 auto 0;
@@ -200,6 +202,17 @@ p {
     transform-origin: 0 50%;
     transform: scaleX(0);
     will-change: transform;
+}
+
+@supports (animation-timeline: scroll()) {
+    .progress-bar {
+        animation: pureCssScrollProgress auto linear;
+        animation-timeline: scroll();
+    }
+    @keyframes pureCssScrollProgress {
+        from { transform: scaleX(0); }
+        to { transform: scaleX(1); }
+    }
 }
 
 /* ------------------------------- TOPBAR ------------------------------- */
@@ -445,11 +458,18 @@ p {
 /* Nút đổi giao diện Sáng / Tối */
 .theme-toggle {
     overflow: hidden;
+    position: relative;
+    cursor: pointer;
 }
 
 .theme-toggle .icon-sun,
 .theme-toggle .icon-moon {
     position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
     transition: transform 0.5s var(--ease-back), opacity 0.3s ease;
 }
 
@@ -463,15 +483,30 @@ p {
     opacity: 0;
 }
 
-[data-theme="dark"] .theme-toggle .icon-moon {
+[data-theme="dark"] .theme-toggle .icon-moon,
+:root:has(#theme-toggle-chk:checked) .theme-toggle .icon-moon,
+body:has(#theme-toggle-chk:checked) .theme-toggle .icon-moon,
+#theme-toggle-chk:checked ~ * .theme-toggle .icon-moon {
     transform: translateY(-140%) rotate(-90deg);
     opacity: 0;
 }
 
-[data-theme="dark"] .theme-toggle .icon-sun {
+[data-theme="dark"] .theme-toggle .icon-sun,
+:root:has(#theme-toggle-chk:checked) .theme-toggle .icon-sun,
+body:has(#theme-toggle-chk:checked) .theme-toggle .icon-sun,
+#theme-toggle-chk:checked ~ * .theme-toggle .icon-sun {
     transform: translateY(0) rotate(0);
     opacity: 1;
     color: var(--accent);
+}
+
+.search-toggle.is-active,
+.search-toggle[aria-expanded="true"],
+body:has(#search-toggle-chk:checked) .search-toggle,
+#search-toggle-chk:checked ~ * .search-toggle {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
 /* Hamburger */
@@ -491,9 +526,17 @@ p {
 .menu-toggle .bar:nth-child(1) { transform: translateY(-6px); }
 .menu-toggle .bar:nth-child(3) { transform: translateY(6px); }
 
-.menu-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: rotate(45deg); }
-.menu-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.menu-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: rotate(-45deg); }
+.menu-toggle[aria-expanded="true"] .bar:nth-child(1),
+body:has(#mobile-menu-chk:checked) .menu-toggle .bar:nth-child(1),
+#mobile-menu-chk:checked ~ * .menu-toggle .bar:nth-child(1) { transform: rotate(45deg); }
+
+.menu-toggle[aria-expanded="true"] .bar:nth-child(2),
+body:has(#mobile-menu-chk:checked) .menu-toggle .bar:nth-child(2),
+#mobile-menu-chk:checked ~ * .menu-toggle .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+
+.menu-toggle[aria-expanded="true"] .bar:nth-child(3),
+body:has(#mobile-menu-chk:checked) .menu-toggle .bar:nth-child(3),
+#mobile-menu-chk:checked ~ * .menu-toggle .bar:nth-child(3) { transform: rotate(-45deg); }
 
 /* Ô tìm kiếm trượt xuống */
 .search-panel {
@@ -501,6 +544,7 @@ p {
     top: 100%;
     left: 0;
     right: 0;
+    z-index: 105;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     background: var(--surface);
@@ -512,11 +556,35 @@ p {
     transition: transform var(--t-normal), opacity var(--t-normal), visibility 0s linear 0.4s;
 }
 
-.search-panel.is-open {
+.search-panel.is-open,
+body:has(#search-toggle-chk:checked) .search-panel,
+#search-toggle-chk:checked ~ * .search-panel {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
     transition: transform var(--t-normal), opacity var(--t-normal), visibility 0s;
+}
+
+.search-close-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--t-fast), color var(--t-fast);
+}
+
+.search-close-btn:hover {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
 }
 
 .search-hint {
@@ -869,10 +937,12 @@ p {
     background: var(--primary);
     color: var(--on-primary);
     box-shadow: var(--shadow-lg);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(20px) scale(0.9);
-    transition: opacity var(--t-normal), transform var(--t-normal), background-color var(--t-fast);
+    opacity: 0.85;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition: opacity var(--t-fast), transform var(--t-fast), background-color var(--t-fast);
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .back-to-top.is-visible {
@@ -1038,7 +1108,10 @@ html.aos-init [data-aos].aos-animate {
         visibility: hidden;
     }
 
-    .main-nav.is-open {
+    .main-nav.is-open,
+    :root:has(#mobile-menu-chk:checked) .main-nav,
+    body:has(#mobile-menu-chk:checked) .main-nav,
+    #mobile-menu-chk:checked ~ * .main-nav {
         transform: translateX(0);
         visibility: visible;
     }
@@ -1073,9 +1146,13 @@ html.aos-init [data-aos].aos-animate {
         opacity: 0;
         pointer-events: none;
         transition: opacity var(--t-normal);
+        cursor: pointer;
     }
 
-    .nav-backdrop.is-open {
+    .nav-backdrop.is-open,
+    :root:has(#mobile-menu-chk:checked) .nav-backdrop,
+    body:has(#mobile-menu-chk:checked) .nav-backdrop,
+    #mobile-menu-chk:checked ~ * .nav-backdrop {
         opacity: 1;
         pointer-events: auto;
     }

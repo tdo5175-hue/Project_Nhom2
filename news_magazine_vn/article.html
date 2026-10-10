@@ -11,24 +11,18 @@
     <meta property="og:image" content="images/article-hero.jpg">
     <title>Những chuyển động mới đang định hình nhịp sống đô thị — Tin Mới</title>
 
-    <script>
-        (function () {
-            try {
-                var t = localStorage.getItem('tm-theme');
-                if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', t);
-            } catch (e) {}
-        })();
-    </script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/article.css">
 </head>
 <body>
+    <!-- ================= BỘ ĐIỀU KHIỂN PURE CSS (KHÔNG DÙNG JAVASCRIPT) ================= -->
+    <input type="checkbox" id="theme-toggle-chk" class="theme-toggle-chk" hidden aria-hidden="true">
+    <input type="checkbox" id="search-toggle-chk" class="search-toggle-chk" hidden aria-hidden="true">
+    <input type="checkbox" id="mobile-menu-chk" class="mobile-menu-chk" hidden aria-hidden="true">
+
     <a class="skip-link" href="#noi-dung-chinh">Bỏ qua điều hướng, đến nội dung chính</a>
     <!-- Thanh tiến trình đọc bài (scaleX theo phần thân bài) -->
     <div class="progress-bar" aria-hidden="true"></div>
@@ -67,16 +61,16 @@
             </nav>
 
             <div class="header-actions">
-                <button class="icon-btn search-toggle" type="button" aria-label="Mở ô tìm kiếm" aria-expanded="false" aria-controls="search-panel">
+                <label class="icon-btn search-toggle" for="search-toggle-chk" role="button" tabindex="0" aria-label="Mở / đóng ô tìm kiếm">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-                </button>
-                <button class="icon-btn theme-toggle" type="button" aria-label="Chuyển sang giao diện tối" aria-pressed="false">
+                </label>
+                <label class="icon-btn theme-toggle" for="theme-toggle-chk" role="button" tabindex="0" aria-label="Chuyển đổi giao diện sáng / tối">
                     <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
                     <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-                </button>
-                <button class="icon-btn menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="main-nav">
+                </label>
+                <label class="icon-btn menu-toggle" for="mobile-menu-chk" role="button" tabindex="0" aria-label="Mở / đóng menu điều hướng">
                     <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-                </button>
+                </label>
             </div>
         </div>
 
@@ -86,10 +80,18 @@
                     <label class="visually-hidden" for="site-search">Tìm kiếm bài viết</label>
                     <input id="site-search" type="search" name="q" placeholder="Nhập từ khóa: đô thị, doanh nghiệp, AI…" autocomplete="off">
                     <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                    <label class="search-close-btn" for="search-toggle-chk" aria-label="Đóng tìm kiếm">✕</label>
                 </form>
+                <div class="search-quick-tags">
+                    <span>Tìm nhanh:</span>
+                    <a href="index.html#thoi-su" class="search-chip">#ĐôThị</a>
+                    <a href="index.html#cong-nghe" class="search-chip">#TríTuệNhânTạo</a>
+                    <a href="index.html#kinh-doanh" class="search-chip">#KinhTếSố</a>
+                    <a href="index.html#doi-song" class="search-chip">#SốngXanh</a>
+                </div>
             </div>
         </div>
-        <div class="nav-backdrop" aria-hidden="true"></div>
+        <label for="mobile-menu-chk" class="nav-backdrop" aria-hidden="true"></label>
     </header>
 
     <main id="noi-dung-chinh">
@@ -121,11 +123,13 @@
                         </div>
                     </div>
                     <div class="article-tools" aria-label="Công cụ bài viết">
-                        <button class="tool-btn" type="button" data-font="-1" aria-label="Giảm cỡ chữ">A−</button>
-                        <button class="tool-btn" type="button" data-font="1" aria-label="Tăng cỡ chữ">A+</button>
-                        <button class="tool-btn" type="button" id="btn-copy-link" aria-label="Sao chép liên kết">🔗</button>
-                        <button class="tool-btn" type="button" id="btn-save-article" aria-pressed="false" aria-label="Lưu bài viết">🔖</button>
-                        <button class="tool-btn" type="button" onclick="window.print()" aria-label="In bài viết">🖨️</button>
+                        <button class="tool-btn" type="button" aria-label="Cỡ chữ tiêu chuẩn">A</button>
+                        <button class="tool-btn" type="button" aria-label="Sao chép liên kết">🔗</button>
+                        <label class="tool-btn" aria-label="Lưu bài viết" style="cursor: pointer;">
+                            <input type="checkbox" hidden>
+                            <span>🔖</span>
+                        </label>
+                        <button class="tool-btn" type="button" aria-label="In bài viết">🖨️</button>
                     </div>
                 </div>
             </div>
@@ -241,8 +245,8 @@
                 <div class="feedback" data-aos="fade-up">
                     <p>Bài viết này có hữu ích với bạn không?</p>
                     <div class="feedback-actions">
-                        <button class="btn btn-ghost btn-sm js-feedback" type="button" data-value="yes">👍 Hữu ích <span class="count">128</span></button>
-                        <button class="btn btn-ghost btn-sm js-feedback" type="button" data-value="no">👎 Chưa hay <span class="count">6</span></button>
+                        <button class="btn btn-ghost btn-sm" type="button" data-value="yes">👍 Hữu ích <span class="count">128</span></button>
+                        <button class="btn btn-ghost btn-sm" type="button" data-value="no">👎 Chưa hay <span class="count">6</span></button>
                     </div>
                 </div>
 
@@ -261,7 +265,7 @@
                             <p class="author-name">Ban Biên tập Tin Mới</p>
                             <p>Nhóm biên tập chuyên mục Thời sự — Đô thị. Theo dõi những câu chuyện về không gian sống, giao thông và cộng đồng.</p>
                         </div>
-                        <button class="btn btn-primary btn-sm js-follow" type="button" aria-pressed="false">+ Theo dõi</button>
+                        <button class="btn btn-primary btn-sm" type="button" aria-pressed="false">+ Theo dõi</button>
                     </div>
                     <p class="note">Nội dung và trích dẫn trên trang này phục vụ minh họa giao diện đồ án môn Thiết kế Web.</p>
                 </footer>
@@ -374,12 +378,9 @@
         </div>
     </footer>
 
-    <button class="back-to-top" type="button" aria-label="Lên đầu trang">
+    <!-- Nút Lên đầu trang (Pure CSS anchor) -->
+    <a class="back-to-top" href="#noi-dung-chinh" aria-label="Lên đầu trang">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
-    </button>
-
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/article.js" defer></script>
+    </a>
 </body>
 </html>

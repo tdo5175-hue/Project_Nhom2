@@ -520,14 +520,11 @@ figcaption span {
     font-size: 0.78rem;
 }
 
-.js-feedback.is-chosen {
+.feedback-actions .btn:hover,
+.feedback-actions .btn:active {
     background: var(--primary);
     border-color: var(--primary);
     color: var(--on-primary);
-}
-
-.js-feedback.is-chosen .count {
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .article-end {
@@ -557,11 +554,8 @@ figcaption span {
     line-height: 1.6;
 }
 
-.js-follow[aria-pressed="true"] {
-    background: var(--surface-2);
-    color: var(--primary);
-    border-color: var(--primary);
-    box-shadow: none;
+.author-box .btn:hover {
+    background: var(--primary-600);
 }
 
 /* Sidebar */
