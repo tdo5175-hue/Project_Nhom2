@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bài 3: Tính chỉ số BMI cơ bản - Homework JavaScript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #334155;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --primary-border: #bfdbfe;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --success-text: #065f46;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #92400e;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --error-text: #991b1b;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-card: 0 10px 25px -4px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 70px;
+    }
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .brand-badge {
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border-color: var(--primary-border);
+    }
+    .nav-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 32px auto 0;
+      padding: 0 20px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .exercise-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .box-header {
+      padding: 28px 36px;
+      border-bottom: 1px solid var(--border-color);
+      background: #fafcff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .badge-number {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--primary);
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+    .box-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+    .box-prompt {
+      padding: 20px 36px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 15.5px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+    .prompt-icon {
+      font-size: 20px;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .box-content {
+      padding: 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 36px;
+    }
+    @media (max-width: 900px) {
+      .box-content { grid-template-columns: 1fr; padding: 24px; }
+      .box-header, .box-prompt { padding: 20px 24px; }
+    }
+
+    .column-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      height: 50px;
+      padding: 0 16px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.2s;
+      background: #ffffff;
+    }
+    .form-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: block;
+    }
+
+    .presets {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .preset-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .preset-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-primary {
+      flex: 1;
+      min-width: 190px;
+      height: 48px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      height: 48px;
+      padding: 0 18px;
+      background: #ffffff;
+      color: var(--text-sub);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .result-box {
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-color);
+      background: #fafcff;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .result-box.normal {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success-text);
+    }
+    .result-box.warning {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: var(--warning-text);
+    }
+    .result-box.danger {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      color: var(--error-text);
+    }
+    .result-value {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .result-details {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .code-container {
+      background: #0f172a;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid #334155;
+      margin-top: 14px;
+    }
+    .code-header {
+      padding: 10px 18px;
+      background: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+    }
+    .code-filename {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .copy-btn {
+      background: #334155;
+      color: #e2e8f0;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .code-body {
+      padding: 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #e2e8f0;
+      overflow-x: auto;
+      max-height: 380px;
+    }
+    .token-comment { color: #64748b; font-style: italic; }
+    .token-keyword { color: #38bdf8; font-weight: 600; }
+    .token-string { color: #86efac; }
+    .token-number { color: #fde047; }
+    .token-func { color: #c084fc; }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .nav-arrow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: var(--text-sub);
+      transition: all 0.2s;
+    }
+    .nav-arrow-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .logger-card {
+      background: #0f172a;
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      margin-top: 25px;
+    }
+    .logger-title {
+      font-size: 12px;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .log-line { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- Menu Điều Hướng -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand-link">
+        <span class="brand-badge">LHU</span>
+        <span>Bài tập JS &bull; Nhóm 2</span>
+      </a>
+
+      <nav class="nav-tabs">
+        <a href="Baitap1.html" class="nav-tab">Bài 1: USD &rarr; VND</a>
+        <a href="Baitap2.html" class="nav-tab">Bài 2: Chẵn / Lẻ</a>
+        <a href="Baitap3.html" class="nav-tab active">Bài 3: Tính BMI</a>
+        <a href="Baitap4.html" class="nav-tab">Bài 4: Đăng Nhập</a>
+        <a href="Baitap5.html" class="nav-tab">Bài 5: Giảm Giá</a>
+        <a href="Baitap6.html" class="nav-tab">Bài 6: Tam Giác</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Trang chủ MathLab</a> &rsaquo;
+      <span>Bài tập 3: Tính chỉ số BMI cơ bản</span>
+    </div>
+
+    <section class="exercise-box">
+      <div class="box-header">
+        <div>
+          <span class="badge-number">Bài tập 03 / 06</span>
+          <h1 class="box-title">Tính Chỉ Số BMI Cơ Bản &amp; Đánh Giá Thể Trạng</h1>
+        </div>
+      </div>
+
+      <div class="box-prompt">
+        <span class="prompt-icon">📌</span>
+        <div>
+          <strong>Yêu cầu đề bài:</strong> Nhập chiều cao (m) và cân nặng (kg). Tính <strong>BMI = cân nặng / (chiều cao * chiều cao)</strong> và in ra kết quả.
+        </div>
+      </div>
+
+      <div class="box-content">
+        <!-- Cột trái: Tương tác -->
+        <div>
+          <div class="column-title">⚡ Khu vực thao tác trực tiếp</div>
+
+          <div class="form-grid-2">
+            <div>
+              <label class="form-label" for="inputHeight">Chiều cao (mét):</label>
+              <input type="number" step="0.01" id="inputHeight" class="form-input" placeholder="Ví dụ: 1.70" value="1.70" oninput="tinhBMITrangWeb()">
+              <span class="form-hint">Đơn vị mét (ví dụ 1m70 nhập 1.70)</span>
+            </div>
+
+            <div>
+              <label class="form-label" for="inputWeight">Cân nặng (kg):</label>
+              <input type="number" step="0.1" id="inputWeight" class="form-input" placeholder="Ví dụ: 65" value="65" oninput="tinhBMITrangWeb()">
+              <span class="form-hint">Đơn vị kilôgam (kg)</span>
+            </div>
+          </div>
+
+          <div class="presets">
+            <span class="preset-title">Mẫu thể trạng:</span>
+            <button class="preset-btn" onclick="chonNhanh(1.75, 50)">Thiếu cân (1.75m / 50kg)</button>
+            <button class="preset-btn" onclick="chonNhanh(1.70, 65)">Cân đối (1.70m / 65kg)</button>
+            <button class="preset-btn" onclick="chonNhanh(1.68, 76)">Thừa cân (1.68m / 76kg)</button>
+            <button class="preset-btn" onclick="chonNhanh(1.62, 85)">Béo phì (1.62m / 85kg)</button>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn-primary" onclick="tinhBMITrangWeb()">
+              <span>⚖️</span> Tính Chỉ Số BMI
+            </button>
+            <button class="btn-secondary" onclick="chayPrompt()">
+              <span>▶</span> Chạy bằng prompt() &amp; alert()
+            </button>
+          </div>
+
+          <div class="result-box normal" id="resultBox">
+            <div class="result-value" id="resultValue">BMI: 22.49</div>
+            <div class="result-details" id="resultDetails">
+              • Đánh giá thể trạng: <strong>Bình thường (Thân hình cân đối)</strong><br>
+              • Công thức tính toán: <code>65 kg / (1.70 m)² = 22.49</code><br>
+              • Khuyến nghị: Hãy duy trì chế độ dinh dưỡng và sinh hoạt này!
+            </div>
+          </div>
+
+          <div class="logger-card">
+            <div class="logger-title">
+              <span>&gt;_</span> KẾT QUẢ THỰC THI (CONSOLE LOGGER)
+            </div>
+            <div id="liveLog" class="log-line">Chiều cao: 1.7m | Cân nặng: 65kg => BMI: 22.49 (Bình thường)</div>
+          </div>
+        </div>
+
+        <!-- Cột phải: Logic & Code -->
+        <div>
+          <div class="column-title">🧠 Tư duy logic &amp; Mã nguồn chi tiết</div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-filename">Baitap3.js</span>
+              <button class="copy-btn" onclick="saoChepCode()">Sao chép mã</button>
+            </div>
+            <pre class="code-body"><code id="codeText"><span class="token-comment">// =========================================================
+// BÀI 3: TÍNH CHỈ SỐ BMI CƠ BẢN
+// =========================================================</span>
+
+<span class="token-comment">// Bước 1: Nhập chiều cao (m) và cân nặng (kg) qua prompt</span>
+<span class="token-keyword">let</span> inputHeight = <span class="token-func">prompt</span>(<span class="token-string">"Nhập chiều cao của bạn theo MÉT (Ví dụ: 1.70):"</span>);
+<span class="token-keyword">let</span> inputWeight = <span class="token-func">prompt</span>(<span class="token-string">"Nhập cân nặng của bạn theo KG (Ví dụ: 65):"</span>);
+
+<span class="token-comment">// Bước 2: Kiểm tra hủy bỏ</span>
+<span class="token-keyword">if</span> (inputHeight === <span class="token-keyword">null</span> || inputWeight === <span class="token-keyword">null</span>) {
+    <span class="token-func">console.log</span>(<span class="token-string">"Người dùng đã hủy thao tác tính BMI."</span>);
+} <span class="token-keyword">else</span> {
+    <span class="token-comment">// Bước 3: Ép kiểu sang số thực bằng parseFloat</span>
+    <span class="token-keyword">let</span> h = <span class="token-func">parseFloat</span>(inputHeight);
+    <span class="token-keyword">let</span> w = <span class="token-func">parseFloat</span>(inputWeight);
+
+    <span class="token-comment">// Hỗ trợ tự động nếu nhập nhầm cm thay vì mét (ví dụ 170cm)</span>
+    <span class="token-keyword">if</span> (h > <span class="token-number">30</span>) h = h / <span class="token-number">100</span>;
+
+    <span class="token-comment">// Bước 4: Kiểm tra hợp lệ (phải là số dương lớn hơn 0)</span>
+    <span class="token-keyword">if</span> (<span class="token-func">isNaN</span>(h) || h <= <span class="token-number">0</span> || <span class="token-func">isNaN</span>(w) || w <= <span class="token-number">0</span>) {
+        <span class="token-func">console.error</span>(<span class="token-string">"Lỗi: Chiều cao và cân nặng phải là số dương lớn hơn 0!"</span>);
+        <span class="token-func">alert</span>(<span class="token-string">"Vui lòng nhập chiều cao và cân nặng hợp lệ!"</span>);
+    } <span class="token-keyword">else</span> {
+        <span class="token-comment">// Bước 5: Tính chỉ số BMI theo công thức đề bài
+        // BMI = cân nặng / (chiều cao * chiều cao)</span>
+        <span class="token-keyword">let</span> bmi = w / (h * h);
+
+        <span class="token-comment">// Bước 6: Phân loại thể trạng theo tiêu chuẩn y tế (WHO)</span>
+        <span class="token-keyword">let</span> phanLoai = <span class="token-string">""</span>;
+        <span class="token-keyword">if</span> (bmi < <span class="token-number">18.5</span>) {
+            phanLoai = <span class="token-string">"Gầy (Thiếu cân)"</span>;
+        } <span class="token-keyword">else if</span> (bmi < <span class="token-number">24.9</span>) {
+            phanLoai = <span class="token-string">"Bình thường (Cân đối)"</span>;
+        } <span class="token-keyword">else if</span> (bmi < <span class="token-number">29.9</span>) {
+            phanLoai = <span class="token-string">"Thừa cân (Tiền béo phì)"</span>;
+        } <span class="token-keyword">else</span> {
+            phanLoai = <span class="token-string">"Béo phì"</span>;
+        }
+
+        <span class="token-comment">// Bước 7: Xuất kết quả ra console và alert</span>
+        <span class="token-func">console.log</span>(<span class="token-string">`BMI: ${bmi.toFixed(2)} - Phân loại: ${phanLoai}`</span>);
+        <span class="token-func">alert</span>(<span class="token-string">`Chỉ số BMI của bạn là: ${bmi.toFixed(2)}\nTình trạng thể trạng: ${phanLoai}`</span>);
+    }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+      <a href="Baitap2.html" class="nav-arrow-btn">&larr; Bài 2: Kiểm tra số chẵn/lẻ</a>
+      <a href="Baitap4.html" class="nav-arrow-btn">Bài 4: Logic Đăng nhập &rarr;</a>
+    </div>
+  </main>
+
+  <script>
+    function tinhBMITrangWeb() {
+      const hInput = document.getElementById("inputHeight");
+      const wInput = document.getElementById("inputWeight");
+      const box = document.getElementById("resultBox");
+      const valEle = document.getElementById("resultValue");
+      const detailsEle = document.getElementById("resultDetails");
+      const logEle = document.getElementById("liveLog");
+
+      let h = parseFloat(hInput.value);
+      let w = parseFloat(wInput.value);
+
+      if (isNaN(h) || h <= 0 || isNaN(w) || w <= 0) {
+        box.className = "result-box";
+        valEle.textContent = "Chờ nhập liệu...";
+        detailsEle.textContent = "Vui lòng nhập chiều cao (m) và cân nặng (kg) hợp lệ.";
+        return;
+      }
+
+      if (h > 30) {
+        h = h / 100;
+        hInput.value = h.toFixed(2);
+      }
+
+      let bmi = w / (h * h);
+      let phanLoai = "";
+      let advice = "";
+
+      if (bmi < 18.5) {
+        box.className = "result-box warning";
+        phanLoai = "Gầy (Thiếu cân)";
+        advice = "Cần tăng cường chế độ ăn uống giàu đạm và dinh dưỡng.";
+      } else if (bmi < 24.9) {
+        box.className = "result-box normal";
+        phanLoai = "Bình thường (Thân hình cân đối)";
+        advice = "Hãy duy trì chế độ dinh dưỡng và lối sống lành mạnh này!";
+      } else if (bmi < 29.9) {
+        box.className = "result-box warning";
+        phanLoai = "Thừa cân (Tiền béo phì)";
+        advice = "Nên tăng cường tập luyện thể dục và hạn chế đồ ngọt, dầu mỡ.";
+      } else {
+        box.className = "result-box danger";
+        phanLoai = "Béo phì";
+        advice = "Cần có kế hoạch giảm cân khoa học và tham vấn chuyên gia dinh dưỡng.";
+      }
+
+      valEle.textContent = `BMI: ${bmi.toFixed(2)}`;
+      detailsEle.innerHTML = `
+        • Đánh giá thể trạng: <strong>${phanLoai}</strong><br>
+        • Công thức: <code>${w} kg / (${h} m)² = ${bmi.toFixed(2)}</code><br>
+        • Lời khuyên: ${advice}
+      `;
+      let msg = `Chiều cao: ${h}m | Cân nặng: ${w}kg => BMI: ${bmi.toFixed(2)} (${phanLoai})`;
+      logEle.textContent = msg;
+      console.log(msg);
+    }
+
+    function chonNhanh(h, w) {
+      document.getElementById("inputHeight").value = h;
+      document.getElementById("inputWeight").value = w;
+      tinhBMITrangWeb();
+    }
+
+    function chayPrompt() {
+      let hStr = prompt("BÀI 3: Nhập chiều cao tính theo MÉT (Ví dụ: 1.70):");
+      if (hStr === null) return;
+      let wStr = prompt("BÀI 3: Nhập cân nặng tính theo KG (Ví dụ: 65):");
+      if (wStr === null) return;
+
+      let h = parseFloat(hStr);
+      let w = parseFloat(wStr);
+
+      if (h > 30) h = h / 100;
+
+      if (isNaN(h) || h <= 0 || isNaN(w) || w <= 0) {
+        alert("Lỗi: Chiều cao và cân nặng phải là số dương lớn hơn 0!");
+        return;
+      }
+
+      let bmi = w / (h * h);
+      let phanLoai = "";
+      if (bmi < 18.5) phanLoai = "Gầy (Thiếu cân)";
+      else if (bmi < 24.9) phanLoai = "Bình thường (Cân đối)";
+      else if (bmi < 29.9) phanLoai = "Thừa cân (Tiền béo phì)";
+      else phanLoai = "Béo phì";
+
+      let msg = `Chỉ số BMI: ${bmi.toFixed(2)}\nThể trạng: ${phanLoai}`;
+      console.log(msg);
+      alert(msg);
+
+      document.getElementById("inputHeight").value = h;
+      document.getElementById("inputWeight").value = w;
+      tinhBMITrangWeb();
+    }
+
+    function saoChepCode() {
+      const code = document.getElementById("codeText").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Đã sao chép mã nguồn Bài 3 vào bộ nhớ tạm!");
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", tinhBMITrangWeb);
+  </script>
+</body>
+</html>
