@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Phòng thí nghiệm phép toán</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #7d879b;
+      --line: #e9edf4;
+      --purple: #6957e8;
+      --purple-dark: #5140cc;
+      --surface: #fff;
+      --canvas: #f5f7fb;
+      --green: #15966a;
+      --red: #d95062;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 12% 8%, rgba(226, 220, 255, .46), transparent 33%),
+        var(--canvas);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select { font: inherit; }
+
+    .app-shell {
+      width: min(100% - 40px, 1032px);
+      margin: 0 auto;
+      padding: 38px 0 30px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 59px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--purple);
+      color: white;
+      font-size: 21px;
+      font-weight: 750;
+      box-shadow: 0 7px 15px rgba(105, 87, 232, .22);
+    }
+
+    .brand-name { font-size: 14px; font-weight: 750; letter-spacing: -.25px; }
+    .brand-caption { margin-top: 3px; color: var(--muted); font-size: 11px; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .74);
+      color: #626d81;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #26b781; }
+
+    .intro { margin-bottom: 30px; text-align: center; }
+
+    .eyebrow {
+      margin: 0 0 13px;
+      color: var(--purple);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 43px);
+      font-weight: 760;
+      letter-spacing: -1.9px;
+      line-height: 1.13;
+    }
+
+    .intro-copy {
+      max-width: 470px;
+      margin: 13px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 310px;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .panel, .result-card {
+      border: 1px solid rgba(228, 232, 241, .9);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgba(40, 50, 82, .055);
+    }
+
+    .panel { padding: 27px 28px 24px; }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 { margin: 0; font-size: 16px; letter-spacing: -.35px; }
+    .section-heading p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+
+    .step-label {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border-radius: 8px;
+      background: #f3f1ff;
+      color: var(--purple);
+      font-size: 10px;
+      font-weight: 750;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 23px;
+      padding: 5px;
+      border: 1px solid #edf0f6;
+      border-radius: 12px;
+      background: #f7f8fb;
+    }
+
+    .tab {
+      min-height: 38px;
+      padding: 8px 5px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #778196;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 650;
+      transition: background .18s, color .18s, box-shadow .18s;
+    }
+
+    .tab:hover { color: var(--purple); }
+    .tab[aria-selected="true"] {
+      background: #fff;
+      color: var(--purple-dark);
+      box-shadow: 0 2px 7px rgba(34, 43, 69, .09);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+      gap: 12px;
+      align-items: end;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 9px;
+      color: #667187;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .input-wrap { position: relative; }
+
+    .value-input, .operation-select {
+      width: 100%;
+      height: 49px;
+      border: 1px solid #e4e8f0;
+      border-radius: 11px;
+      outline: none;
+      background: white;
+      color: var(--ink);
+      transition: border-color .18s, box-shadow .18s;
+    }
+
+    .value-input {
+      padding: 0 13px;
+      font-size: 16px;
+      font-weight: 650;
+    }
+
+    .value-input::placeholder { color: #c0c6d2; font-weight: 450; }
+    .operation-select { padding: 0 10px; cursor: pointer; font-size: 13px; font-weight: 700; }
+
+    .value-input:focus, .operation-select:focus {
+      border-color: #9b8ff2;
+      box-shadow: 0 0 0 3px rgba(105, 87, 232, .11);
+    }
+
+    .operator-field .field-label { text-align: center; }
+    .operator-select { text-align: center; text-align-last: center; }
+    .unary-label { display: none; }
+
+    .calculate-button {
+      display: flex;
+      width: 100%;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 23px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--purple);
+      color: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 750;
+      box-shadow: 0 6px 14px rgba(105, 87, 232, .2);
+      transition: background .18s, transform .18s, box-shadow .18s;
+    }
+
+    .calculate-button:hover { transform: translateY(-1px); background: var(--purple-dark); box-shadow: 0 8px 18px rgba(105, 87, 232, .26); }
+    .calculate-button:active { transform: translateY(0); }
+    .calculate-button:focus-visible, .tab:focus-visible { outline: 3px solid rgba(105, 87, 232, .3); outline-offset: 2px; }
+    .button-arrow { font-size: 17px; font-weight: 500; }
+
+    .hint {
+      margin: 12px 0 0;
+      color: #98a1b1;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .result-card {
+      position: relative;
+      display: flex;
+      min-height: 340px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 27px 23px 21px;
+      background: linear-gradient(155deg, #fff 0%, #fbfaff 100%);
+    }
+
+    .result-card::before {
+      position: absolute;
+      top: -54px;
+      right: -55px;
+      width: 150px;
+      height: 150px;
+      border: 1px solid rgba(105, 87, 232, .08);
+      border-radius: 50%;
+      box-shadow: 0 0 0 19px rgba(105, 87, 232, .025), 0 0 0 39px rgba(105, 87, 232, .02);
+      content: "";
+      pointer-events: none;
+    }
+
+    .result-topline { display: flex; align-items: center; justify-content: space-between; }
+    .result-caption { color: #747f93; font-size: 12px; font-weight: 700; }
+
+    .result-icon {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: #f0edff;
+      color: var(--purple);
+      font-size: 17px;
+    }
+
+    .result-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 195px;
+      padding: 15px 0 9px;
+    }
+
+    .expression {
+      min-height: 19px;
+      overflow-wrap: anywhere;
+      color: #929bad;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .result-value {
+      overflow-wrap: anywhere;
+      margin: 10px 0 0;
+      color: #202944;
+      font-size: clamp(30px, 4vw, 42px);
+      font-weight: 760;
+      letter-spacing: -1.7px;
+      line-height: 1.12;
+    }
+
+    .result-value.boolean-true { color: var(--green); }
+    .result-value.boolean-false { color: var(--red); }
+    .result-value.placeholder { color: #c4c9d5; font-size: 36px; letter-spacing: 0; }
+
+    .result-message { margin: 8px 0 0; color: #99a2b1; font-size: 11px; line-height: 1.5; }
+
+    .result-footer {
+      padding-top: 14px;
+      border-top: 1px solid #eeedf6;
+      color: #939bad;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .details-section {
+      margin-top: 20px;
+      padding: 25px 27px;
+      border: 1px solid rgba(228, 232, 241, .9);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgba(40, 50, 82, .045);
+    }
+
+    .details-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .details-heading h2 { margin: 0; font-size: 16px; letter-spacing: -.35px; }
+    .details-heading p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .catalog-group {
+      padding: 12px;
+      border: 1px solid #edf0f6;
+      border-radius: 12px;
+      background: #fcfcfe;
+    }
+
+    .catalog-group[hidden] { display: none; }
+    .catalog-group h3 { margin: 0 0 9px; font-size: 12px; }
+
+    .catalog-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .catalog-item {
+      display: flex;
+      min-width: 0;
+      min-height: 94px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 9px;
+      border: 1px solid #edf0f6;
+      border-radius: 9px;
+      background: #fff;
+      color: #778196;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .catalog-item strong { display: block; margin-bottom: 3px; color: #323c53; font-size: 11px; line-height: 1.35; }
+    .catalog-result {
+      display: block;
+      width: 100%;
+      margin-top: auto;
+      padding: 5px 7px;
+      border-radius: 6px;
+      background: #f3f1ff;
+      color: var(--purple-dark);
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .catalog-result.error { background: #fff1f2; color: var(--red); }
+
+    .history-count {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border-radius: 8px;
+      background: #f3f1ff;
+      color: var(--purple);
+      font-size: 10px;
+      font-weight: 750;
+    }
+
+    .history-actions { display: flex; align-items: center; gap: 10px; }
+
+    .clear-history {
+      padding: 7px 10px;
+      border: 1px solid #e7eaf1;
+      border-radius: 8px;
+      background: white;
+      color: #6e788b;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .clear-history:hover { border-color: #d9d3ff; color: var(--purple-dark); }
+    .clear-history:focus-visible { outline: 3px solid rgba(105, 87, 232, .25); outline-offset: 2px; }
+
+    .history-empty {
+      margin: 0;
+      padding: 22px 12px;
+      border: 1px dashed #e4e8f0;
+      border-radius: 11px;
+      color: #98a1b1;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .history-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+
+    .history-entry {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 5px 16px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid #edf0f6;
+      border-radius: 11px;
+      background: #fff;
+    }
+
+    .history-expression { overflow-wrap: anywhere; color: #333d54; font-size: 13px; font-weight: 700; }
+    .history-meta { color: #929bad; font-size: 10px; line-height: 1.5; }
+    .history-result { grid-row: span 2; color: var(--green); font-size: 14px; font-weight: 750; text-align: right; }
+    .history-result.error { color: var(--red); }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 23px;
+      color: #99a2b1;
+      font-size: 11px;
+    }
+
+    .footer-mark { color: var(--purple); font-weight: 800; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+
+    @media (max-width: 720px) {
+      .app-shell { width: min(100% - 32px, 540px); padding-top: 23px; }
+      .topbar { margin-bottom: 42px; }
+      .workspace { grid-template-columns: 1fr; }
+      .catalog-grid { grid-template-columns: 1fr; }
+      .result-card { min-height: 260px; }
+      .result-body { min-height: 130px; }
+      .result-value { font-size: 38px; }
+    }
+
+    @media (max-width: 460px) {
+      .app-shell { width: min(100% - 24px, 400px); }
+      .topbar { margin-bottom: 37px; }
+      .brand-caption { display: none; }
+      .status-pill { padding: 8px 10px; font-size: 10px; }
+      .panel { padding: 22px 17px 19px; }
+      .details-section { padding: 21px 17px; }
+      .tabs { gap: 3px; }
+      .tab { font-size: 11px; }
+      .form-row { grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr); gap: 8px; }
+      .value-input { padding: 0 9px; font-size: 14px; }
+      .operation-select { padding: 0 5px; font-size: 12px; }
+      .result-card { padding: 22px 19px 18px; }
+      .history-entry { gap: 5px 9px; padding: 11px; }
+    }
+
+    /* Calculator layout follows a compact desktop-calculator structure. */
+    body {
+      background: #eef3f8;
+      color: #17191d;
+    }
+
+    .app-shell { width: min(100% - 28px, 520px); padding: 24px 0 32px; }
+    .topbar { margin-bottom: 18px; }
+    .brand-mark { width: 36px; height: 36px; border-radius: 10px; }
+    .intro { display: none; }
+    .workspace { display: block; }
+
+    .panel {
+      padding: 18px;
+      border: 1px solid #d7e0e9;
+      border-radius: 18px;
+      background: #f4f8fc;
+      box-shadow: 0 18px 55px rgba(49, 67, 91, .13), 0 3px 10px rgba(49, 67, 91, .06);
+      animation: calculator-arrive .45s cubic-bezier(.2, .75, .25, 1) both;
+    }
+
+    @keyframes calculator-arrive {
+      from { opacity: 0; transform: translateY(12px) scale(.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .section-heading { align-items: center; margin-bottom: 13px; }
+    .section-heading h2 { font-size: 17px; }
+    .section-heading p { font-size: 11px; }
+    .step-label { background: #e8f2ff; color: #2769a8; }
+    .tabs { margin-bottom: 12px; border-color: #dce5ee; background: #eaf0f6; }
+    .tab { min-height: 34px; }
+    .tab[aria-selected="true"] { color: #1264b7; }
+
+    .result-card {
+      min-height: 170px;
+      padding: 15px 13px 12px;
+      border-color: transparent;
+      border-radius: 10px;
+      background: #edf3f9;
+      box-shadow: inset 0 1px 5px rgba(55, 76, 101, .035);
+    }
+
+    .result-card::before, .result-topline, .result-footer, .result-message { display: none; }
+    .result-body { min-height: 130px; justify-content: flex-end; padding: 12px 5px 4px; text-align: right; }
+    .expression { min-height: 20px; color: #758397; font-size: 13px; }
+    .result-value { margin-top: 8px; color: #15191e; font-size: clamp(42px, 10vw, 60px); font-weight: 350; letter-spacing: -2px; }
+    .result-value.placeholder { color: #15191e; font-size: clamp(42px, 10vw, 60px); }
+    .result-value.boolean-true, .result-value.boolean-false { color: #15191e; }
+
+    .calculator-data { display: none; }
+    .calculate-button { display: none; }
+    .hint { margin: 11px 0 0; }
+
+    .memory-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 5px;
+      margin: 9px 0 8px;
+    }
+
+    .memory-row[hidden] { display: none; }
+
+    .memory-key {
+      min-height: 32px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: #606e7e;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 650;
+      transition: background .16s, color .16s, transform .16s;
+    }
+
+    .memory-key:hover:not(:disabled) { background: #e3ebf4; color: #1264b7; }
+    .memory-key:disabled { color: #b7c0ca; cursor: default; }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: minmax(55px, 1fr);
+      gap: 5px;
+    }
+
+    .keypad[hidden] { display: none; }
+
+    .calc-key {
+      min-height: 55px;
+      border: 1px solid #dce4ec;
+      border-radius: 8px;
+      background: #fff;
+      color: #20252c;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 450;
+      box-shadow: 0 1px 1px rgba(36, 52, 71, .035);
+      transition: transform .11s, background .16s, border-color .16s, box-shadow .16s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .calc-key:hover { border-color: #bfd0df; background: #fafdff; box-shadow: 0 3px 8px rgba(36, 52, 71, .09); }
+    .calc-key:active, .memory-key:active { transform: scale(.96); }
+    .calc-key:focus-visible, .memory-key:focus-visible { outline: 3px solid rgba(18, 100, 183, .24); outline-offset: 1px; }
+    .calc-key.function-key { background: #edf3f8; font-size: 16px; }
+    .calc-key.operator-key { background: #f5f8fb; font-size: 23px; }
+    .calc-key.operator-key.is-active { background: #dcecff; border-color: #94bce7; color: #075cb0; }
+    .calc-key.equals-key { border-color: #0867bd; background: #0867bd; color: #fff; font-size: 25px; }
+    .calc-key.equals-key:hover { border-color: #0058aa; background: #0058aa; }
+    .calc-key.wide-key { font-size: 16px; }
+
+    .calculator-data:not([hidden]) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      align-items: end;
+      margin: 11px 0;
+      padding: 12px;
+      border: 1px solid #e0e7ef;
+      border-radius: 11px;
+      background: #edf3f9;
+    }
+
+    .calculator-data .operator-field { grid-column: 1 / -1; grid-row: 2; }
+    .calculator-data .second-field { grid-column: 2; grid-row: 1; }
+    .calculator-data .field-label { margin-bottom: 5px; font-size: 10px; }
+    .calculator-data .value-input, .calculator-data .operation-select { height: 41px; border-radius: 8px; background: #fff; font-size: 13px; }
+    .calculator-data .operator-field .field-label { text-align: left; }
+    .calculator-data .operator-select { text-align: left; text-align-last: left; }
+    .calculator-data .input-wrap { display: block; }
+    .calculator-data .input-wrap .visually-hidden { position: static; width: 100%; height: 41px; overflow: visible; clip: auto; clip-path: none; white-space: normal; }
+    .calculator-data .second-field[hidden] { display: none; }
+    .calculate-button { min-height: 44px; border-radius: 9px; background: #0867bd; box-shadow: none; }
+    .calculate-button:hover { background: #0058aa; box-shadow: 0 5px 12px rgba(8, 103, 189, .2); }
+    .hint { color: #8794a3; }
+
+    .details-section { border-color: #d7e0e9; border-radius: 14px; background: #f8fbfe; box-shadow: 0 8px 28px rgba(49, 67, 91, .07); }
+    .catalog-group { background: #fff; }
+    .catalog-result { background: #eaf3fc; color: #155d9f; }
+    .catalog-result.error { background: #fff1f2; color: var(--red); }
+
+    @media (max-width: 460px) {
+      .app-shell { width: min(100% - 20px, 420px); padding-top: 15px; }
+      .panel { padding: 13px; }
+      .result-card { min-height: 145px; }
+      .result-body { min-height: 110px; }
+      .memory-row { gap: 2px; }
+      .memory-key { min-height: 29px; }
+      .keypad { gap: 4px; grid-auto-rows: minmax(51px, 1fr); }
+      .calc-key { min-height: 51px; border-radius: 7px; }
+      .calculator-data:not([hidden]) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 9px; }
+      .calculator-data .value-input, .calculator-data .operation-select { padding: 0 6px; font-size: 11px; }
+      .details-section { padding: 19px 15px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="MathLab">
+        <div class="brand-mark" aria-hidden="true">∑</div>
+        <div>
+          <div class="brand-name">MathLab</div>
+          <div class="brand-caption">Góc nhỏ khám phá toán học</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="homework.html" style="text-decoration: none; padding: 9px 15px; border-radius: 999px; background: var(--purple); color: white; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(105, 87, 232, 0.25); transition: opacity .18s;">📝 6 Bài tập về nhà</a>
+        <div class="status-pill"><span class="status-dot" aria-hidden="true"></span>Sẵn sàng tính toán</div>
+      </div>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Tính toán thật đơn giản</p>
+      <h1 id="page-title">Phòng thí nghiệm<br>phép toán</h1>
+      <p class="intro-copy">Thử nghiệm các phép toán số học, so sánh và logic trong một không gian gọn gàng, dễ sử dụng.</p>
+    </section>
+
+    <section class="workspace" aria-label="Bảng tính toán">
+      <form class="panel" id="calculator-form">
+        <div class="section-heading">
+          <div>
+            <h2>Máy tính</h2>
+            <p>Chế độ chuẩn · các phép tính cơ bản</p>
+          </div>
+          <span class="step-label" id="calculator-mode">CHUẨN</span>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Nhóm phép toán">
+          <button class="tab" type="button" role="tab" id="tab-arithmetic" aria-selected="true" data-category="arithmetic">Số học</button>
+          <button class="tab" type="button" role="tab" id="tab-comparison" aria-selected="false" data-category="comparison">So sánh</button>
+          <button class="tab" type="button" role="tab" id="tab-logic" aria-selected="false" data-category="logic">Logic</button>
+        </div>
+
+        <aside class="result-card" aria-labelledby="result-heading">
+          <div class="result-topline">
+            <span class="result-caption" id="result-heading">Màn hình</span>
+            <span class="result-icon" aria-hidden="true">⌁</span>
+          </div>
+          <div class="result-body" aria-live="polite" aria-atomic="true">
+            <div class="expression" id="expression">Sẵn sàng</div>
+            <p class="result-value placeholder" id="result-value">0</p>
+            <p class="result-message" id="result-message">Nhập biểu thức để tính.</p>
+          </div>
+          <div class="result-footer">Máy tính số học · so sánh · logic</div>
+        </aside>
+
+        <div class="form-row calculator-data" id="calculator-data" hidden>
+          <div class="input-field">
+            <label class="field-label" for="value-a" id="label-a">Giá trị thứ nhất</label>
+            <div class="input-wrap">
+              <input class="value-input" id="value-a" name="valueA" type="number" step="any" placeholder="Ví dụ: 24">
+              <select class="value-input visually-hidden" id="boolean-a" aria-label="Giá trị logic thứ nhất">
+                <option value="true">Đúng</option>
+                <option value="false">Sai</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="operator-field">
+            <label class="field-label" for="operation"><span class="binary-label">Phép tính</span><span class="unary-label">Phép tính</span></label>
+            <select class="operation-select operator-select" id="operation" name="operation" aria-label="Chọn phép tính"></select>
+          </div>
+
+          <div class="input-field second-field">
+            <label class="field-label" for="value-b" id="label-b">Giá trị thứ hai</label>
+            <div class="input-wrap">
+              <input class="value-input" id="value-b" name="valueB" type="number" step="any" placeholder="Ví dụ: 6">
+              <select class="value-input visually-hidden" id="boolean-b" aria-label="Giá trị logic thứ hai">
+                <option value="true">Đúng</option>
+                <option value="false">Sai</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="memory-row" aria-label="Bộ nhớ máy tính">
+          <button class="memory-key" type="button" data-memory="clear" disabled>MC</button>
+          <button class="memory-key" type="button" data-memory="recall" disabled>MR</button>
+          <button class="memory-key" type="button" data-memory="add" disabled>M+</button>
+          <button class="memory-key" type="button" data-memory="subtract" disabled>M−</button>
+          <button class="memory-key" type="button" data-memory="store">MS</button>
+          <button class="memory-key" type="button" data-memory="view" disabled>M▾</button>
+        </div>
+
+        <div class="keypad" aria-label="Bàn phím máy tính">
+          <button class="calc-key function-key" type="button" data-key="percent" aria-label="Phần trăm">%</button>
+          <button class="calc-key function-key" type="button" data-key="clear-entry">CE</button>
+          <button class="calc-key function-key" type="button" data-key="clear">C</button>
+          <button class="calc-key function-key" type="button" data-key="backspace" aria-label="Xóa chữ số cuối">⌫</button>
+
+          <button class="calc-key function-key" type="button" data-key="reciprocal" aria-label="Một chia x">¹⁄ₓ</button>
+          <button class="calc-key function-key" type="button" data-key="square" aria-label="Bình phương">x²</button>
+          <button class="calc-key function-key" type="button" data-key="sqrt" aria-label="Căn bậc hai">²√x</button>
+          <button class="calc-key operator-key" type="button" data-key="divide" aria-label="Chia">÷</button>
+
+          <button class="calc-key" type="button" data-digit="7">7</button>
+          <button class="calc-key" type="button" data-digit="8">8</button>
+          <button class="calc-key" type="button" data-digit="9">9</button>
+          <button class="calc-key operator-key" type="button" data-key="multiply" aria-label="Nhân">×</button>
+
+          <button class="calc-key" type="button" data-digit="4">4</button>
+          <button class="calc-key" type="button" data-digit="5">5</button>
+          <button class="calc-key" type="button" data-digit="6">6</button>
+          <button class="calc-key operator-key" type="button" data-key="subtract" aria-label="Trừ">−</button>
+
+          <button class="calc-key" type="button" data-digit="1">1</button>
+          <button class="calc-key" type="button" data-digit="2">2</button>
+          <button class="calc-key" type="button" data-digit="3">3</button>
+          <button class="calc-key operator-key" type="button" data-key="add" aria-label="Cộng">+</button>
+
+          <button class="calc-key function-key wide-key" type="button" data-key="sign">+/−</button>
+          <button class="calc-key" type="button" data-digit="0">0</button>
+          <button class="calc-key" type="button" data-key="decimal">,</button>
+          <button class="calc-key equals-key" type="button" data-key="equals" aria-label="Bằng">=</button>
+        </div>
+
+        <button class="calculate-button" type="submit">Tính kết quả <span class="button-arrow" aria-hidden="true">→</span></button>
+        <p class="hint">Dùng bàn phím số hoặc nhấn phím Enter để tính</p>
+      </form>
+    </section>
+
+    <section class="details-section" aria-labelledby="catalog-heading">
+      <div class="details-heading">
+        <div>
+          <h2 id="catalog-heading">Danh mục phép toán</h2>
+          <p>Kết quả thực tế thay đổi ngay theo dữ liệu trên máy tính; nhóm đang chọn được hiển thị bên dưới.</p>
+        </div>
+      </div>
+      <div class="catalog-grid" id="operation-catalog"></div>
+    </section>
+
+    <section class="details-section" aria-labelledby="history-heading">
+      <div class="details-heading">
+        <div>
+          <h2 id="history-heading">Lịch sử tính toán</h2>
+          <p>Các lần tính thành công và lỗi đều được ghi lại trong phiên hiện tại.</p>
+        </div>
+        <div class="history-actions">
+          <span class="history-count" id="history-count">0 lượt</span>
+          <button class="clear-history" id="clear-history" type="button">Xóa lịch sử</button>
+        </div>
+      </div>
+      <p class="history-empty" id="history-empty">Chưa có phép tính nào. Hãy thực hiện phép tính đầu tiên ở phía trên.</p>
+      <ol class="history-list" id="history-list" aria-live="polite"></ol>
+    </section>
+
+    <footer class="footer"><span class="footer-mark">∑</span><span>Học toán theo cách của bạn</span></footer>
+  </main>
+
+  <script>
+    // IIFE tạo phạm vi riêng, tránh để biến và hàm của máy tính trùng với mã khác.
+    (() => {
+      // Cấu hình từng phép toán để dùng chung cho danh sách chọn và phần hiển thị công thức.
+      const operations = {
+        arithmetic: [
+          { value: "add", label: "Cộng (+)", symbol: "+", description: "Cộng hai số để tìm tổng." },
+          { value: "subtract", label: "Trừ (−)", symbol: "−", description: "Lấy số thứ nhất trừ số thứ hai." },
+          { value: "multiply", label: "Nhân (×)", symbol: "×", description: "Nhân hai số để tìm tích." },
+          { value: "divide", label: "Chia (÷)", symbol: "÷", description: "Chia số thứ nhất cho số thứ hai; không thể chia cho 0." },
+          { value: "modulo", label: "Chia lấy dư (%)", symbol: "%", description: "Tìm số dư khi chia số thứ nhất cho số thứ hai." },
+          { value: "power", label: "Lũy thừa (aᵇ)", symbol: "^", description: "Nâng số thứ nhất lên lũy thừa của số thứ hai." },
+          { value: "percent", label: "Phần trăm (%)", symbol: "%", unary: true, description: "Chia giá trị cho 100 để đổi sang phần trăm." },
+          { value: "reciprocal", label: "Nghịch đảo (1/x)", symbol: "1/x", unary: true, description: "Tính nghịch đảo của giá trị; không thể tính khi giá trị bằng 0." },
+          { value: "square", label: "Bình phương (x²)", symbol: "²", unary: true, description: "Nhân giá trị với chính nó." },
+          { value: "sqrt", label: "Căn bậc hai (√x)", symbol: "√", unary: true, description: "Tính căn bậc hai của một số không âm." }
+        ],
+        comparison: [
+          { value: "greater", label: "Lớn hơn (>)", symbol: ">", description: "Kiểm tra số thứ nhất có lớn hơn số thứ hai không." },
+          { value: "less", label: "Nhỏ hơn (<)", symbol: "<", description: "Kiểm tra số thứ nhất có nhỏ hơn số thứ hai không." },
+          { value: "greaterEqual", label: "Lớn hơn hoặc bằng (≥)", symbol: "≥", description: "Kiểm tra số thứ nhất có lớn hơn hoặc bằng số thứ hai không." },
+          { value: "lessEqual", label: "Nhỏ hơn hoặc bằng (≤)", symbol: "≤", description: "Kiểm tra số thứ nhất có nhỏ hơn hoặc bằng số thứ hai không." },
+          { value: "equal", label: "Bằng nhau (==)", symbol: "==", description: "Kiểm tra hai số có cùng giá trị không." },
+          { value: "notEqual", label: "Khác nhau (≠)", symbol: "≠", description: "Kiểm tra hai số có giá trị khác nhau không." }
+        ],
+        logic: [
+          { value: "and", label: "VÀ (AND)", symbol: "AND", description: "Đúng khi cả hai giá trị đều Đúng." },
+          { value: "or", label: "HOẶC (OR)", symbol: "OR", description: "Đúng khi có ít nhất một giá trị Đúng." },
+          { value: "not", label: "PHỦ ĐỊNH (NOT)", symbol: "NOT", unary: true, description: "Đảo ngược giá trị logic đầu vào." },
+          { value: "xor", label: "HOẶC loại trừ (XOR)", symbol: "XOR", description: "Đúng khi hai giá trị logic khác nhau." }
+        ]
+      };
+
+      const form = document.querySelector("#calculator-form");
+      const tabs = [...document.querySelectorAll(".tab")];
+      const operationSelect = document.querySelector("#operation");
+      const valueA = document.querySelector("#value-a");
+      const valueB = document.querySelector("#value-b");
+      const calculatorData = document.querySelector("#calculator-data");
+      const booleanA = document.querySelector("#boolean-a");
+      const booleanB = document.querySelector("#boolean-b");
+      const secondField = document.querySelector(".second-field");
+      const labelA = document.querySelector("#label-a");
+      const labelB = document.querySelector("#label-b");
+      const resultValue = document.querySelector("#result-value");
+      const expression = document.querySelector("#expression");
+      const resultMessage = document.querySelector("#result-message");
+      const operationCatalog = document.querySelector("#operation-catalog");
+      const historyList = document.querySelector("#history-list");
+      const historyEmpty = document.querySelector("#history-empty");
+      const historyCount = document.querySelector("#history-count");
+      const clearHistoryButton = document.querySelector("#clear-history");
+      const keypad = document.querySelector(".keypad");
+      const memoryKeys = [...document.querySelectorAll(".memory-key")];
+      const calculatorMode = document.querySelector("#calculator-mode");
+      const history = [];
+      const categoryLabels = {
+        arithmetic: "Số học",
+        comparison: "So sánh",
+        logic: "Logic"
+      };
+      let category = "arithmetic";
+      let activeOperand = "a";
+      let firstEntry = "0";
+      let secondEntry = "";
+      let waitingForOperand = true;
+      let pendingOperation = "";
+      let memoryValue = null;
+      let lastNumericResult = null;
+      let lastArithmeticOperands = null;
+
+      // Tìm cấu hình phép toán hiện đang được chọn trong nhóm hiện tại.
+      function currentOperation() {
+        return operations[category].find((item) => item.value === operationSelect.value);
+      }
+
+      // Cập nhật đồng bộ kết quả, công thức và thông báo bên cạnh biểu mẫu.
+      function showResult(text, detail, formula, kind) {
+        resultValue.textContent = text;
+        resultValue.className = "result-value" + (kind ? " " + kind : "");
+        resultMessage.textContent = detail;
+        expression.textContent = formula;
+      }
+
+      // Hiển thị kết quả và ghi lại nhóm, phép toán, dữ liệu đầu vào cùng thời gian.
+      function finishCalculation(text, detail, formula, kind, isError = false) {
+        showResult(text, detail, formula, kind);
+        addHistoryEntry({
+          category: categoryLabels[category],
+          operation: currentOperation().label,
+          firstValue: category === "logic"
+            ? (booleanA.value === "true" ? "Đúng" : "Sai")
+            : (valueA.value || "Chưa nhập"),
+          secondValue: category === "logic"
+            ? (booleanB.value === "true" ? "Đúng" : "Sai")
+            : (valueB.value || "Chưa nhập"),
+          formula,
+          result: text,
+          detail,
+          isError,
+          isUnary: Boolean(currentOperation().unary)
+        });
+      }
+
+      // Thêm phép tính mới lên đầu danh sách để lịch sử mới nhất hiện trước.
+      function addHistoryEntry(entry) {
+        history.unshift({ ...entry, createdAt: new Date() });
+        renderHistory();
+      }
+
+      // Vẽ lịch sử bằng textContent để hiển thị dữ liệu mà không diễn giải nó thành HTML.
+      function renderHistory() {
+        historyList.replaceChildren();
+        historyEmpty.hidden = history.length > 0;
+        const errorCount = history.filter((entry) => entry.isError).length;
+        historyCount.textContent = `${history.length} lượt${errorCount ? ` · ${errorCount} lỗi` : ""}`;
+
+        history.forEach((entry) => {
+          const item = document.createElement("li");
+          item.className = "history-entry";
+
+          const formulaElement = document.createElement("span");
+          formulaElement.className = "history-expression";
+          formulaElement.textContent = entry.formula;
+
+          const resultElement = document.createElement("span");
+          resultElement.className = `history-result${entry.isError ? " error" : ""}`;
+          resultElement.textContent = entry.result;
+
+          const timestamp = entry.createdAt.toLocaleString("vi-VN", {
+            dateStyle: "short",
+            timeStyle: "short"
+          });
+          const detailElement = document.createElement("span");
+          detailElement.className = "history-meta";
+          detailElement.textContent = `${entry.category} · ${entry.operation} · Đầu vào: ${entry.firstValue}${entry.isUnary ? "" : `, ${entry.secondValue}`} · ${timestamp} · ${entry.detail}`;
+
+          item.append(formulaElement, resultElement, detailElement);
+          historyList.append(item);
+        });
+      }
+
+      // Xóa lịch sử đang hiển thị và đưa bộ đếm về 0.
+      function clearHistory() {
+        history.length = 0;
+        renderHistory();
+      }
+
+      // Hiển thị danh mục đầy đủ từ cùng cấu hình dùng để tạo danh sách phép tính.
+      function renderOperationCatalog() {
+        Object.entries(operations).forEach(([group, items]) => {
+          const section = document.createElement("section");
+          section.className = "catalog-group";
+          section.dataset.catalogGroup = group;
+
+          const heading = document.createElement("h3");
+          heading.textContent = categoryLabels[group];
+
+          const list = document.createElement("ul");
+          list.className = "catalog-list";
+
+          items.forEach((operation) => {
+            const item = document.createElement("li");
+            item.className = "catalog-item";
+
+            const name = document.createElement("strong");
+            name.textContent = operation.label;
+
+            const description = document.createElement("span");
+            description.textContent = operation.description;
+
+            // Mỗi phép toán có một ô riêng để hiển thị kết quả từ dữ liệu người dùng nhập.
+            const result = document.createElement("span");
+            result.className = "catalog-result";
+            result.dataset.catalogCategory = group;
+            result.dataset.operation = operation.value;
+            result.textContent = "Nhập dữ liệu để xem kết quả.";
+
+            item.append(name, description, result);
+            list.append(item);
+          });
+
+          section.append(heading, list);
+          operationCatalog.append(section);
+        });
+        updateCatalogResults();
+      }
+
+      // Tính thử tất cả phép toán trong nhóm đang mở và cập nhật trực tiếp danh mục.
+      function updateCatalogResults() {
+        operationCatalog.querySelectorAll(".catalog-group").forEach((groupElement) => {
+          groupElement.hidden = groupElement.dataset.catalogGroup !== category;
+        });
+
+        operationCatalog.querySelectorAll(".catalog-result").forEach((resultElement) => {
+          const resultCategory = resultElement.dataset.catalogCategory;
+          const operation = operations[resultCategory].find((item) => item.value === resultElement.dataset.operation);
+
+          if (resultCategory !== category) {
+            return;
+          }
+
+          if (resultCategory === "logic") {
+            const a = booleanA.value === "true";
+            const b = booleanB.value === "true";
+            let answer;
+            if (operation.value === "and") answer = a && b;
+            if (operation.value === "or") answer = a || b;
+            if (operation.value === "not") answer = !a;
+            if (operation.value === "xor") answer = a !== b;
+            const formula = operation.unary
+              ? `NOT ${a ? "Đúng" : "Sai"}`
+              : `${a ? "Đúng" : "Sai"} ${operation.symbol} ${b ? "Đúng" : "Sai"}`;
+
+            resultElement.classList.remove("error");
+            resultElement.textContent = `${formula} = ${answer ? "Đúng" : "Sai"}`;
+            return;
+          }
+
+          let a = valueA.valueAsNumber;
+          let b = valueB.valueAsNumber;
+
+          // Sau khi bấm bằng, tiếp tục dùng đúng cặp số vừa tính để làm ví dụ cho danh mục.
+          if (resultCategory === "arithmetic" && lastArithmeticOperands && !secondEntry) {
+            a = lastArithmeticOperands.a;
+            b = lastArithmeticOperands.b;
+          }
+
+          if (!Number.isFinite(a)) {
+            resultElement.classList.remove("error");
+            resultElement.textContent = "Nhập số thứ nhất để xem kết quả.";
+            return;
+          }
+
+          if (resultCategory === "arithmetic" && operation.unary) {
+            const answer = evaluateUnary(operation.value, a);
+            const formula = getUnaryFormula(operation, a);
+            if (!Number.isFinite(answer)) {
+              resultElement.classList.add("error");
+              resultElement.textContent = `${formula} = Không xác định với giá trị này.`;
+              return;
+            }
+            resultElement.classList.remove("error");
+            resultElement.textContent = `${formula} = ${formatNumber(answer)}`;
+            return;
+          }
+
+          if (!Number.isFinite(b)) {
+            resultElement.classList.remove("error");
+            resultElement.textContent = "Nhập đủ hai số để xem kết quả.";
+            return;
+          }
+
+          const formula = `${formatNumber(a)} ${operation.symbol} ${formatNumber(b)}`;
+          if ((operation.value === "divide" || operation.value === "modulo") && b === 0) {
+            resultElement.classList.add("error");
+            resultElement.textContent = `${formula} = Không thể chia cho 0.`;
+            return;
+          }
+
+          let answer;
+          if (resultCategory === "comparison") {
+            if (operation.value === "greater") answer = a > b;
+            if (operation.value === "less") answer = a < b;
+            if (operation.value === "greaterEqual") answer = a >= b;
+            if (operation.value === "lessEqual") answer = a <= b;
+            if (operation.value === "equal") answer = a === b;
+            if (operation.value === "notEqual") answer = a !== b;
+            resultElement.classList.remove("error");
+            resultElement.textContent = `${formula} = ${answer ? "Đúng" : "Sai"}`;
+            return;
+          }
+
+          if (operation.value === "add") answer = a + b;
+          if (operation.value === "subtract") answer = a - b;
+          if (operation.value === "multiply") answer = a * b;
+          if (operation.value === "divide") answer = a / b;
+          if (operation.value === "modulo") answer = a % b;
+          if (operation.value === "power") answer = a ** b;
+
+          if (!Number.isFinite(answer)) {
+            resultElement.classList.add("error");
+            resultElement.textContent = `${formula} = Kết quả vượt quá phạm vi số.`;
+            return;
+          }
+
+          resultElement.classList.remove("error");
+          resultElement.textContent = `${formula} = ${formatNumber(answer)}`;
+        });
+      }
+
+      // Hiển thị lỗi trên thẻ kết quả và ghi lại lỗi đó trong lịch sử.
+      function showError(message, formula) {
+        finishCalculation("Không thể tính", message, formula || "Kiểm tra lại các giá trị đã nhập", "", true);
+      }
+
+      // Đổi nhóm phép toán, cập nhật các lựa chọn và chuyển giữa ô số với ô Đúng/Sai.
+      function updateForm(nextCategory) {
+        category = nextCategory;
+        const isArithmetic = category === "arithmetic";
+        const isLogic = category === "logic";
+        calculatorData.hidden = isArithmetic;
+        keypad.hidden = !isArithmetic;
+        document.querySelector(".memory-row").hidden = !isArithmetic;
+        calculatorMode.textContent = isArithmetic ? "CHUẨN" : categoryLabels[category].toLocaleUpperCase("vi-VN");
+        pendingOperation = "";
+        activeOperand = "a";
+        waitingForOperand = true;
+
+        tabs.forEach((tab) => {
+          const selected = tab.dataset.category === category;
+          tab.setAttribute("aria-selected", String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+        });
+
+        operationSelect.replaceChildren(...operations[category].map((operation) => {
+          const option = document.createElement("option");
+          option.value = operation.value;
+          option.textContent = operation.label;
+          return option;
+        }));
+
+        valueA.type = isLogic ? "hidden" : "number";
+        valueA.required = false;
+        valueA.placeholder = isLogic ? "" : "Ví dụ: 24";
+        valueB.type = isLogic ? "hidden" : "number";
+        valueB.required = false;
+        valueB.placeholder = isLogic ? "" : "Ví dụ: 6";
+        booleanA.classList.toggle("visually-hidden", !isLogic);
+        booleanB.classList.toggle("visually-hidden", !isLogic);
+        secondField.style.display = "";
+        labelA.textContent = isLogic ? "Giá trị logic thứ nhất" : "Giá trị thứ nhất";
+        labelB.textContent = isLogic ? "Giá trị logic thứ hai" : "Giá trị thứ hai";
+        document.querySelector(".binary-label").style.display = isLogic ? "none" : "";
+        document.querySelector(".unary-label").style.display = isLogic ? "" : "none";
+        document.querySelector(".calculate-button").style.display = isArithmetic ? "none" : "flex";
+        document.querySelector(".hint").textContent = isArithmetic
+          ? "Dùng bàn phím số hoặc nhấn phím Enter để tính"
+          : "Nhập dữ liệu rồi nhấn Tính kết quả hoặc Enter";
+        updateUnaryField();
+        updateCatalogResults();
+        if (isArithmetic) {
+          valueA.value = firstEntry;
+          valueB.value = secondEntry;
+          showResult("0", "Nhập biểu thức để tính.", "Sẵn sàng", "placeholder");
+          updateCalculatorDisplay();
+        } else {
+          showResult("—", "Nhập giá trị và chọn phép tính để bắt đầu.", "Kết quả sẽ xuất hiện ở đây", "placeholder");
+        }
+      }
+
+      // Phép NOT chỉ cần một giá trị nên ẩn ô thứ hai; các phép logic khác cần cả hai.
+      function updateUnaryField() {
+        const isUnary = category === "logic" && currentOperation()?.unary;
+        secondField.hidden = Boolean(isUnary);
+        valueA.required = false;
+        valueB.required = false;
+        booleanA.required = false;
+        booleanB.required = false;
+      }
+
+      // Định dạng số theo kiểu Việt Nam; chuẩn hóa -0 để giao diện hiển thị là 0.
+      function formatNumber(number) {
+        if (Object.is(number, -0)) return "0";
+        return new Intl.NumberFormat("vi-VN", { maximumSignificantDigits: 12 }).format(number);
+      }
+
+      // Thực hiện các phép toán chỉ cần một toán hạng của máy tính chuẩn.
+      function evaluateUnary(operation, value) {
+        if (operation === "percent") return value / 100;
+        if (operation === "reciprocal") return value === 0 ? NaN : 1 / value;
+        if (operation === "square") return value ** 2;
+        if (operation === "sqrt") return value < 0 ? NaN : Math.sqrt(value);
+        return NaN;
+      }
+
+      // Tạo biểu thức một toán hạng để dùng nhất quán trên màn hình và danh mục.
+      function getUnaryFormula(operation, value) {
+        const formattedValue = formatNumber(value);
+        if (operation.value === "percent") return `${formattedValue} %`;
+        if (operation.value === "reciprocal") return `1 ÷ ${formattedValue}`;
+        if (operation.value === "square") return `${value < 0 ? `(${formattedValue})` : formattedValue}²`;
+        if (operation.value === "sqrt") return `√${value < 0 ? `(${formattedValue})` : formattedValue}`;
+        return `${operation.symbol}(${formattedValue})`;
+      }
+
+      // Trả về ô nhập đang được bàn phím số điều khiển.
+      function activeInput() {
+        return activeOperand === "a" ? valueA : valueB;
+      }
+
+      // Vẽ biểu thức đang nhập và giữ nguyên định dạng thập phân trên màn hình.
+      function updateCalculatorDisplay() {
+        const currentEntry = activeOperand === "a" ? firstEntry : secondEntry;
+        const visibleEntry = currentEntry ? currentEntry.replace(".", ",") : "0";
+        const operation = operations.arithmetic.find((item) => item.value === pendingOperation);
+        const formula = operation
+          ? `${firstEntry ? formatNumber(Number(firstEntry)) : "0"} ${operation.symbol}${secondEntry ? ` ${formatNumber(Number(secondEntry))}` : ""}`
+          : "Sẵn sàng";
+
+        resultValue.textContent = visibleEntry;
+        resultValue.className = "result-value";
+        expression.textContent = formula;
+        resultMessage.textContent = "Nhập biểu thức để tính.";
+      }
+
+      // Nhập một chữ số vào toán hạng đang hoạt động.
+      function enterDigit(digit) {
+        lastArithmeticOperands = null;
+        if (waitingForOperand) {
+          if (activeOperand === "a") firstEntry = "";
+          else secondEntry = "";
+          waitingForOperand = false;
+        }
+
+        const input = activeInput();
+        const entry = activeOperand === "a" ? firstEntry : secondEntry;
+        const nextEntry = entry === "0" ? digit : entry === "-0" ? `-${digit}` : `${entry}${digit}`;
+        if (activeOperand === "a") firstEntry = nextEntry;
+        else secondEntry = nextEntry;
+        input.value = nextEntry;
+        updateCalculatorDisplay();
+        updateCatalogResults();
+      }
+
+      // Chọn phép tính hai toán hạng và chuyển bàn phím sang nhập số thứ hai.
+      function chooseOperator(operationValue) {
+        if (!firstEntry || !Number.isFinite(Number(firstEntry))) return;
+        lastArithmeticOperands = null;
+        pendingOperation = operationValue;
+        operationSelect.value = operationValue;
+        activeOperand = "b";
+        secondEntry = "";
+        valueB.value = "";
+        waitingForOperand = true;
+        updateUnaryField();
+        document.querySelectorAll(".operator-key").forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.key === operationValue);
+        });
+        updateCalculatorDisplay();
+        updateCatalogResults();
+      }
+
+      // Gửi phép tính qua cùng bộ xử lý dùng bởi chế độ so sánh và logic.
+      function submitCalculatorOperation() {
+        lastNumericResult = null;
+        calculate({ preventDefault() {} });
+        if (lastNumericResult === null || !Number.isFinite(lastNumericResult)) return;
+
+        firstEntry = String(lastNumericResult);
+        secondEntry = "";
+        valueA.value = firstEntry;
+        valueB.value = "";
+        pendingOperation = "";
+        activeOperand = "a";
+        waitingForOperand = true;
+        document.querySelectorAll(".operator-key").forEach((button) => button.classList.remove("is-active"));
+        updateCatalogResults();
+      }
+
+      // Tính biểu thức đang nhập; nếu thiếu toán hạng thứ hai thì dùng toán hạng thứ nhất.
+      function pressEquals() {
+        if (!pendingOperation) return;
+        if (!secondEntry) {
+          secondEntry = firstEntry;
+          valueB.value = secondEntry;
+        }
+        operationSelect.value = pendingOperation;
+        submitCalculatorOperation();
+      }
+
+      // Áp dụng hàm một toán hạng lên số đang hiển thị và ghi kết quả vào lịch sử.
+      function applyUnaryOperation(operationValue) {
+        const input = activeInput();
+        const value = input.valueAsNumber;
+        if (!Number.isFinite(value)) return;
+
+        lastArithmeticOperands = null;
+        valueA.value = String(value);
+        valueB.value = "";
+        operationSelect.value = operationValue;
+        pendingOperation = "";
+        activeOperand = "a";
+        waitingForOperand = true;
+        submitCalculatorOperation();
+      }
+
+      // Xóa toàn bộ biểu thức hiện tại mà không ảnh hưởng đến bộ nhớ.
+      function clearCalculator() {
+        lastArithmeticOperands = null;
+        firstEntry = "0";
+        secondEntry = "";
+        valueA.value = "0";
+        valueB.value = "";
+        pendingOperation = "";
+        activeOperand = "a";
+        waitingForOperand = true;
+        lastNumericResult = null;
+        document.querySelectorAll(".operator-key").forEach((button) => button.classList.remove("is-active"));
+        showResult("0", "Nhập biểu thức để tính.", "Sẵn sàng", "placeholder");
+        updateCatalogResults();
+      }
+
+      // Xử lý các phím chức năng của máy tính và bộ nhớ.
+      function handleCalculatorKey(action) {
+        if (category !== "arithmetic") return;
+        if (["add", "subtract", "multiply", "divide"].includes(action)) {
+          chooseOperator(action);
+          return;
+        }
+        if (["percent", "reciprocal", "square", "sqrt"].includes(action)) {
+          applyUnaryOperation(action);
+          return;
+        }
+        if (action === "equals") {
+          pressEquals();
+          return;
+        }
+        if (action === "clear") {
+          clearCalculator();
+          return;
+        }
+
+        const input = activeInput();
+        let entry = activeOperand === "a" ? firstEntry : secondEntry;
+        if (action === "clear-entry") entry = "";
+        if (action === "backspace") entry = entry.slice(0, -1);
+        if (action === "sign") {
+          if (entry === "0") entry = "-0";
+          else if (entry === "-0") entry = "0";
+          else if (entry) entry = entry.startsWith("-") ? entry.slice(1) : `-${entry}`;
+        }
+        if (action === "decimal" && !entry.includes(".")) entry = `${entry || "0"}.`;
+        if (activeOperand === "a") firstEntry = entry;
+        else secondEntry = entry;
+        input.value = entry;
+        waitingForOperand = false;
+        updateCalculatorDisplay();
+        updateCatalogResults();
+      }
+
+      // Lưu, nạp, cộng hoặc trừ giá trị hiển thị trong bộ nhớ tạm của máy tính.
+      function handleMemoryAction(action) {
+        if (action === "clear") memoryValue = null;
+        else if (action === "store") memoryValue = activeInput().valueAsNumber || 0;
+        else if (action === "recall" && memoryValue !== null) {
+          const recalledValue = String(memoryValue);
+          if (activeOperand === "a") {
+            firstEntry = recalledValue;
+            valueA.value = recalledValue;
+          } else {
+            secondEntry = recalledValue;
+            valueB.value = recalledValue;
+          }
+          waitingForOperand = false;
+        } else if (action === "add" || action === "subtract") {
+          const currentValue = activeInput().valueAsNumber || 0;
+          memoryValue = (memoryValue || 0) + (action === "add" ? currentValue : -currentValue);
+        } else if (action === "view" && memoryValue !== null) {
+          showResult(formatNumber(memoryValue), "Giá trị đang được lưu trong bộ nhớ.", "Bộ nhớ (M)", "");
+        }
+
+        memoryKeys.forEach((button) => {
+          button.disabled = memoryValue === null && button.dataset.memory !== "store";
+        });
+        if (action === "recall") {
+          updateCalculatorDisplay();
+          updateCatalogResults();
+        }
+      }
+
+      // Xử lý gửi biểu mẫu và chọn nhánh tính theo nhóm phép toán.
+      function calculate(event) {
+        event.preventDefault();
+        const operation = currentOperation();
+        lastNumericResult = null;
+
+        // Giá trị logic lấy từ hai danh sách Đúng/Sai thay vì các ô nhập số.
+        if (category === "logic") {
+          const a = booleanA.value === "true";
+          const b = booleanB.value === "true";
+          let answer;
+          if (operation.value === "and") answer = a && b;
+          if (operation.value === "or") answer = a || b;
+          if (operation.value === "not") answer = !a;
+          if (operation.value === "xor") answer = a !== b;
+          const formula = operation.value === "not"
+            ? `NOT ${a ? "Đúng" : "Sai"}`
+            : `${a ? "Đúng" : "Sai"} ${operation.symbol} ${b ? "Đúng" : "Sai"}`;
+          finishCalculation(answer ? "Đúng" : "Sai", answer ? "Mệnh đề logic có giá trị đúng." : "Mệnh đề logic có giá trị sai.", formula, answer ? "boolean-true" : "boolean-false");
+          return;
+        }
+
+        // valueAsNumber trả về NaN nếu ô trống hoặc nội dung không phải số.
+        const a = valueA.valueAsNumber;
+        if (!Number.isFinite(a)) {
+          showError("Vui lòng nhập một số hợp lệ.");
+          return;
+        }
+
+        if (category === "arithmetic" && operation.unary) {
+          const answer = evaluateUnary(operation.value, a);
+          const formula = getUnaryFormula(operation, a);
+          if (!Number.isFinite(answer)) {
+            showError("Phép tính này không xác định với giá trị đã nhập.", formula);
+            return;
+          }
+          lastNumericResult = answer;
+          finishCalculation(formatNumber(answer), "Phép tính một toán hạng đã hoàn tất.", formula, "");
+          return;
+        }
+
+        const b = valueB.valueAsNumber;
+        if (!Number.isFinite(b)) {
+          showError("Vui lòng nhập số thứ hai hợp lệ.");
+          return;
+        }
+
+        const formula = `${formatNumber(a)} ${operation.symbol} ${formatNumber(b)}`;
+        // Chặn phép chia và phép chia lấy dư cho 0 trước khi thực hiện.
+        if ((operation.value === "divide" || operation.value === "modulo") && b === 0) {
+          showError("Không thể chia cho 0. Hãy nhập một số khác 0.", formula);
+          return;
+        }
+
+        // Nhóm so sánh trả về giá trị Boolean, hiển thị thành Đúng hoặc Sai.
+        if (category === "comparison") {
+          let answer;
+          if (operation.value === "greater") answer = a > b;
+          if (operation.value === "less") answer = a < b;
+          if (operation.value === "greaterEqual") answer = a >= b;
+          if (operation.value === "lessEqual") answer = a <= b;
+          if (operation.value === "equal") answer = a === b;
+          if (operation.value === "notEqual") answer = a !== b;
+          finishCalculation(answer ? "Đúng" : "Sai", answer ? "Mệnh đề so sánh chính xác." : "Mệnh đề so sánh không chính xác.", formula, answer ? "boolean-true" : "boolean-false");
+          return;
+        }
+
+        // Nhóm số học: chọn phép tính tương ứng với giá trị của danh sách.
+        let answer;
+        if (operation.value === "add") answer = a + b;
+        if (operation.value === "subtract") answer = a - b;
+        if (operation.value === "multiply") answer = a * b;
+        if (operation.value === "divide") answer = a / b;
+        if (operation.value === "modulo") answer = a % b;
+        if (operation.value === "power") answer = a ** b;
+
+        if (!Number.isFinite(answer)) {
+          showError("Kết quả vượt quá phạm vi số có thể biểu diễn.", formula);
+          return;
+        }
+        lastNumericResult = answer;
+        if (category === "arithmetic") lastArithmeticOperands = { a, b };
+        finishCalculation(formatNumber(answer), "Phép tính đã hoàn tất thành công.", formula, "");
+      }
+
+      // Gắn sự kiện: đổi tab, đổi phép toán (đặc biệt là NOT) và gửi biểu mẫu.
+      tabs.forEach((tab) => tab.addEventListener("click", () => updateForm(tab.dataset.category)));
+      operationSelect.addEventListener("change", updateUnaryField);
+      form.addEventListener("submit", calculate);
+      clearHistoryButton.addEventListener("click", clearHistory);
+      keypad.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        if (button.dataset.digit !== undefined) enterDigit(button.dataset.digit);
+        else handleCalculatorKey(button.dataset.key);
+      });
+      memoryKeys.forEach((button) => {
+        button.addEventListener("click", () => handleMemoryAction(button.dataset.memory));
+      });
+      document.addEventListener("keydown", (event) => {
+        if (category !== "arithmetic" || event.altKey || event.ctrlKey || event.metaKey) return;
+        const targetTag = event.target.tagName;
+        if (["INPUT", "SELECT", "TEXTAREA", "BUTTON"].includes(targetTag)) return;
+
+        if (/^\d$/.test(event.key)) {
+          event.preventDefault();
+          enterDigit(event.key);
+        } else if (["+", "-", "*", "/", "%"].includes(event.key)) {
+          event.preventDefault();
+          const operationByKey = { "+": "add", "-": "subtract", "*": "multiply", "/": "divide", "%": "percent" };
+          handleCalculatorKey(operationByKey[event.key]);
+        } else if (event.key === "Enter" || event.key === "=") {
+          event.preventDefault();
+          pressEquals();
+        } else if (event.key === "Backspace") {
+          event.preventDefault();
+          handleCalculatorKey("backspace");
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          clearCalculator();
+        } else if (event.key === "." || event.key === ",") {
+          event.preventDefault();
+          handleCalculatorKey("decimal");
+        }
+      });
+      valueA.addEventListener("input", updateCatalogResults);
+      valueB.addEventListener("input", updateCatalogResults);
+      booleanA.addEventListener("change", updateCatalogResults);
+      booleanB.addEventListener("change", updateCatalogResults);
+      updateForm(category);
+      renderOperationCatalog();
+      renderHistory();
+    })();
+  </script>
+</body>
+</html>

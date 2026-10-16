@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo cáo Bài tập về nhà JavaScript - 6 Bài tập tự rèn luyện</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. CẤU HÌNH BIẾN & THIẾT LẬP NỀN TRẮNG HIỆN ĐẠI (CLEAN LIGHT DESIGN)
+       ========================================================================== */
+    :root {
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #334155;
+      
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --primary-border: #bfdbfe;
+      
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.08);
+      --shadow-hover: 0 16px 36px -6px rgba(37, 99, 235, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    /* Container chính rộng rãi, thoáng đãng */
+    .app-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       2. THANH ĐIỀU HƯỚNG CỐ ĐỊNH TRÊN CÙNG (STICKY HEADER & NAV)
+       ========================================================================== */
+    .top-header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .top-header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: var(--primary);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .brand-info h1 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--bg-subtle);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-pill:hover {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border-color: var(--primary-border);
+      transform: translateY(-1px);
+    }
+
+    .nav-pill.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .back-btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      padding: 7px 14px;
+      border-radius: 999px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       3. BANNER GIỚI THIỆU (HERO SECTION)
+       ========================================================================== */
+    .hero-section {
+      padding: 48px 0 32px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4.5vw, 40px);
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -1px;
+      line-height: 1.25;
+      margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+
+    .stats-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 24px;
+      padding: 12px 24px;
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+
+    .stat-icon {
+      font-size: 16px;
+    }
+
+    /* ==========================================================================
+       4. BỐ CỤC TỪNG BÀI TẬP (LARGE EXERCISE STUDIO CARDS)
+       ========================================================================== */
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    .exercise-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+      scroll-margin-top: 90px;
+    }
+
+    .exercise-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: #cbd5e1;
+    }
+
+    /* Card Header */
+    .card-head {
+      padding: 24px 32px;
+      background: #fafcff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .card-head-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .exercise-num-badge {
+      font-size: 13px;
+      font-weight: 800;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--primary);
+      color: #fff;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .card-head-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .card-head-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .code-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Card Requirement Callout */
+    .card-prompt-bar {
+      padding: 16px 32px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      color: var(--text-sub);
+    }
+
+    .prompt-icon {
+      font-size: 18px;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    /* Card Main Body: Split into Interactive Area & Explanation */
+    .card-body {
+      padding: 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 960px) {
+      .card-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* VÙNG TƯƠNG TÁC (INTERACTIVE PLAYGROUND) */
+    .interactive-zone {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-mini-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .input-helper {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .custom-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-main);
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .custom-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    .input-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .input-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Preset Quick Buttons */
+    .preset-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preset-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .preset-btn {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .preset-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    /* Action Buttons */
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .btn-calc {
+      flex: 1;
+      min-width: 180px;
+      height: 46px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14.5px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-calc:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-calc:active {
+      transform: translateY(0);
+    }
+
+    .btn-prompt {
+      height: 46px;
+      padding: 0 18px;
+      background: #ffffff;
+      color: var(--text-sub);
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-prompt:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: var(--text-main);
+    }
+
+    /* KHUNG HIỂN THỊ KẾT QUẢ (RESULT DISPLAY) */
+    .result-display {
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-color);
+      background: #fafcff;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .result-display.status-waiting {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-style: italic;
+    }
+
+    .result-display.status-success {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: #065f46;
+    }
+
+    .result-display.status-warning {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: #92400e;
+    }
+
+    .result-display.status-error {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      color: #991b1b;
+    }
+
+    .result-highlight {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .result-subinfo {
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    /* VÙNG CODE & PHÂN TÍCH (CODE & LOGIC SECTION) */
+    .logic-zone {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .logic-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--text-sub);
+    }
+
+    .step-badge {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    /* Khung Code Syntax chuẩn */
+    .code-wrapper {
+      background: #0f172a;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+
+    .code-topbar {
+      padding: 10px 16px;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+
+    .code-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .copy-btn {
+      background: #334155;
+      color: #e2e8f0;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .copy-btn:hover {
+      background: #475569;
+      color: #fff;
+    }
+
+    .code-box {
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      overflow-x: auto;
+      max-height: 260px;
+    }
+
+    /* Cú pháp highlight code đơn giản */
+    .token-comment { color: #64748b; font-style: italic; }
+    .token-keyword { color: #38bdf8; font-weight: 600; }
+    .token-string { color: #a7f3d0; }
+    .token-number { color: #fde047; }
+    .token-func { color: #c084fc; }
+
+    /* ==========================================================================
+       5. MÀN HÌNH CONSOLE TRỰC TIẾP (LIVE CONSOLE DOCK)
+       ========================================================================== */
+    .live-console-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      margin-top: 48px;
+    }
+
+    .console-dock-head {
+      background: #1e293b;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+
+    .console-dock-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .console-dock-body {
+      padding: 18px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 240px;
+      overflow-y: auto;
+      color: #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .log-line {
+      word-break: break-all;
+    }
+
+    .log-time {
+      color: #64748b;
+      font-size: 11px;
+      margin-right: 6px;
+    }
+
+    .log-info { color: #bae6fd; }
+    .log-success { color: #86efac; font-weight: 600; }
+    .log-warn { color: #fde047; }
+    .log-error { color: #fca5a5; font-weight: 600; }
+
+    /* ==========================================================================
+       6. FOOTER
+       ========================================================================== */
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 13.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. THANH ĐIỀU HƯỚNG CỐ ĐỊNH -->
+  <header class="top-header">
+    <div class="top-header-inner">
+      <a href="#top" class="brand-box">
+        <div class="brand-logo">JS</div>
+        <div class="brand-info">
+          <h1>Homework 6 Bài Tập</h1>
+          <p>Nhóm 2 &bull; Buổi 14/10/2026 &bull; ĐH Lạc Hồng</p>
+        </div>
+      </a>
+
+      <!-- Quick Jump Nav -->
+      <nav class="nav-pills">
+        <a href="#bai1" class="nav-pill">Bài 1: USD &rarr; VND</a>
+        <a href="#bai2" class="nav-pill">Bài 2: Chẵn / Lẻ</a>
+        <a href="#bai3" class="nav-pill">Bài 3: Tính BMI</a>
+        <a href="#bai4" class="nav-pill">Bài 4: Đăng Nhập</a>
+        <a href="#bai5" class="nav-pill">Bài 5: Giảm Giá</a>
+        <a href="#bai6" class="nav-pill">Bài 6: Tam Giác</a>
+        <a href="#console-box" class="nav-pill" style="color: var(--primary);">🖥 Live Console</a>
+      </nav>
+
+      <a href="index.html" class="back-btn">
+        &larr; Về MathLab Lab
+      </a>
+    </div>
+  </header>
+
+  <main class="app-container" id="top">
+
+    <!-- 2. HERO INTRO BANNER -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Bài Tập Tự Rèn Luyện Tại Nhà &bull; JavaScript Buổi 14/10/2026
+      </div>
+      <h2 class="hero-title">Giải Pháp Toàn Diện 6 Bài Tập Lập Trình JS</h2>
+      <p class="hero-subtitle">
+        Thiết kế lại toàn bộ với giao diện nền sáng hiện đại, kích thước các bài thoáng đãng, hỗ trợ tương tác trực tiếp theo thời gian thực kết hợp kiểm tra ngoại lệ chặt chẽ.
+      </p>
+
+      <div class="stats-bar">
+        <div class="stat-item"><span class="stat-icon">✅</span> Đầy đủ 6/6 bài tập</div>
+        <div class="stat-item"><span class="stat-icon">⚡</span> Chạy ngay trên web hoặc Prompt</div>
+        <div class="stat-item"><span class="stat-icon">🛡</span> Xử lý trọn vẹn ngoại lệ</div>
+        <div class="stat-item"><span class="stat-icon">📋</span> Có sẵn mã nguồn kèm chú thích</div>
+      </div>
+    </section>
+
+    <!-- 3. DANH SÁCH 6 BÀI TẬP LỚN -->
+    <div class="exercise-list">
+
+      <!-- ================================================================== -->
+      <!-- BÀI 1: CHUYỂN ĐỔI TIỀN TỆ ĐƠN GIẢN -->
+      <!-- ================================================================== -->
+      <article class="exercise-card" id="bai1">
+        <div class="card-head">
+          <div class="card-head-left">
+            <span class="exercise-num-badge">Bài tập 01</span>
+            <div>
+              <h3 class="card-head-title">Chuyển Đổi Tiền Tệ Đơn Giản (USD &rarr; VND)</h3>
+              <div class="card-head-tags">
+                <span class="code-tag">const TY_GIA = 25000</span>
+                <span class="code-tag">parseFloat()</span>
+                <span class="code-tag">toLocaleString("vi-VN")</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-prompt-bar">
+          <span class="prompt-icon">📌</span>
+          <div>
+            <strong>Yêu cầu đề bài:</strong> Viết mã JS cho phép nhập số lượng USD và tính ra số tiền VND tương ứng (giả sử tỉ giá <strong>25.000</strong>). Kết quả hiện ra console.
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Vùng tương tác bên trái -->
+          <div class="interactive-zone">
+            <div class="section-mini-title">⚡ Khu vực trải nghiệm trực tiếp</div>
+
+            <div class="input-group">
+              <label class="input-label" for="b1_input_usd">Số lượng USD cần đổi:</label>
+              <input type="number" id="b1_input_usd" class="custom-input" placeholder="Ví dụ: 100, 250, 1000..." value="100" oninput="bai1_TinhUI()">
+              <span class="input-helper">Tỉ giá quy ước: 1 USD = 25.000 VNĐ</span>
+            </div>
+
+            <div class="preset-bar">
+              <span class="preset-label">Chọn nhanh:</span>
+              <button class="preset-btn" onclick="document.getElementById('b1_input_usd').value=20; bai1_TinhUI();">$20</button>
+              <button class="preset-btn" onclick="document.getElementById('b1_input_usd').value=50; bai1_TinhUI();">$50</button>
+              <button class="preset-btn" onclick="document.getElementById('b1_input_usd').value=100; bai1_TinhUI();">$100</button>
+              <button class="preset-btn" onclick="document.getElementById('b1_input_usd').value=500; bai1_TinhUI();">$500</button>
+            </div>
+
+            <div class="button-row">
+              <button class="btn-calc" onclick="bai1_TinhUI()">
+                <span>💰</span> Tính Thành Tiền VND
+              </button>
+              <button class="btn-prompt" onclick="bai1_Prompt()">
+                <span>▶</span> Chạy bằng Prompt / Alert
+              </button>
+            </div>
+
+            <!-- Khung kết quả -->
+            <div class="result-display status-waiting" id="b1_result">
+              Bấm nút "Tính Thành Tiền" để xem kết quả.
+            </div>
+          </div>
+
+          <!-- Vùng giải thích logic & Code bên phải -->
+          <div class="logic-zone">
+            <div class="section-mini-title">🧠 Phân tích thuật toán & Code mẫu</div>
+            
+            <div class="logic-steps">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <span><strong>Input:</strong> Nhập số tiền USD qua <code>prompt()</code> hoặc ô input, ép kiểu bằng <code>parseFloat()</code>.</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <span><strong>Validation:</strong> Kiểm tra <code>isNaN()</code> hoặc số âm (tiền tệ không âm).</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">3</span>
+                <span><strong>Process:</strong> Áp dụng công thức <code>VND = USD * 25000</code>.</span>
+              </div>
+            </div>
+
+            <div class="code-wrapper">
+              <div class="code-topbar">
+                <span class="code-title">bai1_homework.js</span>
+                <button class="copy-btn" onclick="copyCodeBlock('code_bai1', this)">Sao chép mã</button>
+              </div>
+              <pre class="code-box"><code id="code_bai1"><span class="token-comment">// Hằng số tỉ giá quy đổi cố định</span>
+<span class="token-keyword">const</span> TY_GIA = <span class="token-number">25000</span>;
+
+<span class="token-comment">// Nhận giá trị USD và ép kiểu số</span>
+<span class="token-keyword">let</span> inputUSD = <span class="token-func">prompt</span>(<span class="token-string">"Nhập số lượng USD:"</span>);
+<span class="token-keyword">let</span> usd = <span class="token-func">parseFloat</span>(inputUSD);
+
+<span class="token-comment">// Kiểm tra tính hợp lệ</span>
+<span class="token-keyword">if</span> (<span class="token-func">isNaN</span>(usd) || usd < <span class="token-number">0</span>) {
+    <span class="token-func">console.error</span>(<span class="token-string">"Số USD không hợp lệ!"</span>);
+} <span class="token-keyword">else</span> {
+    <span class="token-keyword">let</span> vnd = usd * TY_GIA;
+    <span class="token-comment">// In ra Console theo đề bài</span>
+    <span class="token-func">console.log</span>(<span class="token-string">`${usd} USD = ${vnd.toLocaleString("vi-VN")} VND`</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- ================================================================== -->
+      <!-- BÀI 2: KIỂM TRA SỐ CHẴN / SỐ LẺ -->
+      <!-- ================================================================== -->
+      <article class="exercise-card" id="bai2">
+        <div class="card-head">
+          <div class="card-head-left">
+            <span class="exercise-num-badge">Bài tập 02</span>
+            <div>
+              <h3 class="card-head-title">Kiểm Tra Số Chẵn / Số Lẻ</h3>
+              <div class="card-head-tags">
+                <span class="code-tag">n % 2 === 0</span>
+                <span class="code-tag">Number.isInteger()</span>
+                <span class="code-tag">Số âm &amp; Số 0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-prompt-bar">
+          <span class="prompt-icon">📌</span>
+          <div>
+            <strong>Yêu cầu đề bài:</strong> Nhập một số bất kỳ từ bàn phím. Thông báo cho người dùng biết đó là số chẵn hay số lẻ.
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="interactive-zone">
+            <div class="section-mini-title">⚡ Khu vực trải nghiệm trực tiếp</div>
+
+            <div class="input-group">
+              <label class="input-label" for="b2_input_num">Nhập số nguyên cần kiểm tra:</label>
+              <input type="number" id="b2_input_num" class="custom-input" placeholder="Ví dụ: -4, 0, 7, 100..." value="8" oninput="bai2_TinhUI()">
+              <span class="input-helper">Toán học: Chẵn/lẻ chỉ áp dụng cho tập số nguyên (Z).</span>
+            </div>
+
+            <div class="preset-bar">
+              <span class="preset-label">Thử ngay:</span>
+              <button class="preset-btn" onclick="document.getElementById('b2_input_num').value=-6; bai2_TinhUI();">-6 (Âm chẵn)</button>
+              <button class="preset-btn" onclick="document.getElementById('b2_input_num').value=0; bai2_TinhUI();">0 (Số chẵn)</button>
+              <button class="preset-btn" onclick="document.getElementById('b2_input_num').value=15; bai2_TinhUI();">15 (Số lẻ)</button>
+              <button class="preset-btn" onclick="document.getElementById('b2_input_num').value=-7; bai2_TinhUI();">-7 (Âm lẻ)</button>
+            </div>
+
+            <div class="button-row">
+              <button class="btn-calc" onclick="bai2_TinhUI()">
+                <span>🔍</span> Kiểm Tra Chẵn / Lẻ
+              </button>
+              <button class="btn-prompt" onclick="bai2_Prompt()">
+                <span>▶</span> Chạy bằng Prompt / Alert
+              </button>
+            </div>
+
+            <div class="result-display status-waiting" id="b2_result">
+              Bấm nút "Kiểm Tra" để xem kết quả.
+            </div>
+          </div>
+
+          <div class="logic-zone">
+            <div class="section-mini-title">🧠 Phân tích thuật toán & Code mẫu</div>
+            
+            <div class="logic-steps">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <span><strong>Bản chất:</strong> Số chẵn là số chia hết cho 2 (phần dư = 0).</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <span><strong>Bẫy số âm trong JS:</strong> Với số âm lẻ (như <code>-3</code>), toán tử <code>-3 % 2</code> cho kết quả <code>-1</code>. Vì vậy dùng điều kiện <code>n % 2 === 0</code> là an toàn tuyệt đối cho cả âm và dương.</span>
+              </div>
+            </div>
+
+            <div class="code-wrapper">
+              <div class="code-topbar">
+                <span class="code-title">bai2_homework.js</span>
+                <button class="copy-btn" onclick="copyCodeBlock('code_bai2', this)">Sao chép mã</button>
+              </div>
+              <pre class="code-box"><code id="code_bai2"><span class="token-keyword">let</span> input = <span class="token-func">prompt</span>(<span class="token-string">"Nhập số nguyên:"</span>);
+<span class="token-keyword">let</span> n = <span class="token-func">Number</span>(input);
+
+<span class="token-comment">// Kiểm tra số nguyên hợp lệ</span>
+<span class="token-keyword">if</span> (<span class="token-func">isNaN</span>(n) || !<span class="token-func">Number.isInteger</span>(n)) {
+    <span class="token-func">alert</span>(<span class="token-string">"Vui lòng nhập một số nguyên hợp lệ!"</span>);
+} <span class="token-keyword">else if</span> (n % <span class="token-number">2</span> === <span class="token-number">0</span>) {
+    <span class="token-func">console.log</span>(<span class="token-string">`Số ${n} là SỐ CHẴN.`</span>);
+    <span class="token-func">alert</span>(<span class="token-string">`Số ${n} là SỐ CHẴN.`</span>);
+} <span class="token-keyword">else</span> {
+    <span class="token-func">console.log</span>(<span class="token-string">`Số ${n} là SỐ LẺ.`</span>);
+    <span class="token-func">alert</span>(<span class="token-string">`Số ${n} là SỐ LẺ.`</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- ================================================================== -->
+      <!-- BÀI 3: TÍNH CHỈ SỐ BMI CƠ BẢN -->
+      <!-- ================================================================== -->
+      <article class="exercise-card" id="bai3">
+        <div class="card-head">
+          <div class="card-head-left">
+            <span class="exercise-num-badge">Bài tập 03</span>
+            <div>
+              <h3 class="card-head-title">Tính Chỉ Số BMI Cơ Bản &amp; Đánh Giá Thể Trạng</h3>
+              <div class="card-head-tags">
+                <span class="code-tag">BMI = W / (H * H)</span>
+                <span class="code-tag">toFixed(2)</span>
+                <span class="code-tag">Thang đo WHO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-prompt-bar">
+          <span class="prompt-icon">📌</span>
+          <div>
+            <strong>Yêu cầu đề bài:</strong> Nhập chiều cao (m) và cân nặng (kg). Tính <strong>BMI = cân nặng / (chiều cao * chiều cao)</strong> và in ra kết quả.
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="interactive-zone">
+            <div class="section-mini-title">⚡ Khu vực trải nghiệm trực tiếp</div>
+
+            <div class="input-row-2">
+              <div class="input-group">
+                <label class="input-label" for="b3_input_h">Chiều cao (mét):</label>
+                <input type="number" step="0.01" id="b3_input_h" class="custom-input" placeholder="Ví dụ: 1.70" value="1.70" oninput="bai3_TinhUI()">
+                <span class="input-helper">Đơn vị mét (ví dụ: 1m70 nhập 1.70)</span>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label" for="b3_input_w">Cân nặng (kg):</label>
+                <input type="number" step="0.1" id="b3_input_w" class="custom-input" placeholder="Ví dụ: 65" value="65" oninput="bai3_TinhUI()">
+                <span class="input-helper">Đơn vị kilôgam (kg)</span>
+              </div>
+            </div>
+
+            <div class="preset-bar">
+              <span class="preset-label">Mẫu thể trạng:</span>
+              <button class="preset-btn" onclick="document.getElementById('b3_input_h').value=1.75; document.getElementById('b3_input_w').value=50; bai3_TinhUI();">Thiếu cân (1.75m / 50kg)</button>
+              <button class="preset-btn" onclick="document.getElementById('b3_input_h').value=1.70; document.getElementById('b3_input_w').value=65; bai3_TinhUI();">Cân đối (1.70m / 65kg)</button>
+              <button class="preset-btn" onclick="document.getElementById('b3_input_h').value=1.65; document.getElementById('b3_input_w').value=75; bai3_TinhUI();">Thừa cân (1.65m / 75kg)</button>
+            </div>
+
+            <div class="button-row">
+              <button class="btn-calc" onclick="bai3_TinhUI()">
+                <span>⚖️</span> Tính Chỉ Số BMI
+              </button>
+              <button class="btn-prompt" onclick="bai3_Prompt()">
+                <span>▶</span> Chạy bằng Prompt / Alert
+              </button>
+            </div>
+
+            <div class="result-display status-waiting" id="b3_result">
+              Bấm nút "Tính Chỉ Số BMI" để xem phân loại thể trạng.
+            </div>
+          </div>
+
+          <div class="logic-zone">
+            <div class="section-mini-title">🧠 Phân tích thuật toán & Code mẫu</div>
+            
+            <div class="logic-steps">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <span><strong>Công thức:</strong> <code>BMI = weight / (height * height)</code>.</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <span><strong>Làm tròn:</strong> Dùng <code>bmi.toFixed(2)</code> lấy 2 chữ số sau dấu phẩy.</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">3</span>
+                <span><strong>Phân loại (WHO):</strong> &lt;18.5 (Gầy) | 18.5 - 24.9 (Chuẩn) | 25 - 29.9 (Thừa cân) | &ge;30 (Béo phì).</span>
+              </div>
+            </div>
+
+            <div class="code-wrapper">
+              <div class="code-topbar">
+                <span class="code-title">bai3_homework.js</span>
+                <button class="copy-btn" onclick="copyCodeBlock('code_bai3', this)">Sao chép mã</button>
+              </div>
+              <pre class="code-box"><code id="code_bai3"><span class="token-keyword">let</span> h = <span class="token-func">parseFloat</span>(<span class="token-func">prompt</span>(<span class="token-string">"Nhập chiều cao (m):"</span>));
+<span class="token-keyword">let</span> w = <span class="token-func">parseFloat</span>(<span class="token-func">prompt</span>(<span class="token-string">"Nhập cân nặng (kg):"</span>));
+
+<span class="token-comment">// Kiểm tra hợp lệ</span>
+<span class="token-keyword">if</span> (h > <span class="token-number">0</span> && w > <span class="token-number">0</span>) {
+    <span class="token-keyword">let</span> bmi = w / (h * h);
+    <span class="token-func">console.log</span>(<span class="token-string">`BMI = ${bmi.toFixed(2)}`</span>);
+    <span class="token-func">alert</span>(<span class="token-string">`Chỉ số BMI của bạn là: ${bmi.toFixed(2)}`</span>);
+} <span class="token-keyword">else</span> {
+    <span class="token-func">alert</span>(<span class="token-string">"Chiều cao và cân nặng phải lớn hơn 0!"</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- ================================================================== -->
+      <!-- BÀI 4: LOGIC ĐĂNG NHẬP (MÔ PHỎNG) -->
+      <!-- ================================================================== -->
+      <article class="exercise-card" id="bai4">
+        <div class="card-head">
+          <div class="card-head-left">
+            <span class="exercise-num-badge">Bài tập 04</span>
+            <div>
+              <h3 class="card-head-title">Logic Đăng Nhập (Mô Phỏng Xác Thực)</h3>
+              <div class="card-head-tags">
+                <span class="code-tag">user === CORRECT</span>
+                <span class="code-tag">&amp;&amp; pass === CORRECT</span>
+                <span class="code-tag">Security Logic</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-prompt-bar">
+          <span class="prompt-icon">📌</span>
+          <div>
+            <strong>Yêu cầu đề bài:</strong> Tạo 2 biến username và password cố định. Viết cấu trúc if kiểm tra nếu người dùng nhập đúng cả 2 thì hiện <strong>"Đăng nhập thành công"</strong>, nếu sai 1 trong 2 thì hiện <strong>"Thông tin không chính xác"</strong>.
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="interactive-zone">
+            <div class="section-mini-title">⚡ Khu vực trải nghiệm trực tiếp</div>
+
+            <div class="input-row-2">
+              <div class="input-group">
+                <label class="input-label" for="b4_input_user">Username (Tài khoản):</label>
+                <input type="text" id="b4_input_user" class="custom-input" placeholder="Tài khoản mẫu: admin" value="admin">
+              </div>
+
+              <div class="input-group">
+                <label class="input-label" for="b4_input_pass">Password (Mật khẩu):</label>
+                <input type="password" id="b4_input_pass" class="custom-input" placeholder="Mật khẩu mẫu: 123456" value="123456">
+              </div>
+            </div>
+
+            <div class="preset-bar">
+              <span class="preset-label">Test case:</span>
+              <button class="preset-btn" onclick="document.getElementById('b4_input_user').value='admin'; document.getElementById('b4_input_pass').value='123456'; bai4_TinhUI();">Đúng cả 2 (admin / 123456)</button>
+              <button class="preset-btn" onclick="document.getElementById('b4_input_user').value='admin'; document.getElementById('b4_input_pass').value='sai_pass'; bai4_TinhUI();">Sai mật khẩu</button>
+              <button class="preset-btn" onclick="document.getElementById('b4_input_user').value='user123'; document.getElementById('b4_input_pass').value='123456'; bai4_TinhUI();">Sai tài khoản</button>
+            </div>
+
+            <div class="button-row">
+              <button class="btn-calc" onclick="bai4_TinhUI()">
+                <span>🔐</span> Thực Hiện Đăng Nhập
+              </button>
+              <button class="btn-prompt" onclick="bai4_Prompt()">
+                <span>▶</span> Chạy bằng Prompt / Alert
+              </button>
+            </div>
+
+            <div class="result-display status-waiting" id="b4_result">
+              Bấm nút "Đăng Nhập" để kiểm tra xác thực.
+            </div>
+          </div>
+
+          <div class="logic-zone">
+            <div class="section-mini-title">🧠 Phân tích thuật toán & Code mẫu</div>
+            
+            <div class="logic-steps">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <span><strong>Toán tử && (AND):</strong> Chỉ thỏa mãn khi CẢ HAI vế đều đúng.</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <span><strong>Bảo mật thực tế:</strong> Thông báo chung "Thông tin không chính xác" giúp ngăn hacker biết được tên tài khoản có tồn tại hay không.</span>
+              </div>
+            </div>
+
+            <div class="code-wrapper">
+              <div class="code-topbar">
+                <span class="code-title">bai4_homework.js</span>
+                <button class="copy-btn" onclick="copyCodeBlock('code_bai4', this)">Sao chép mã</button>
+              </div>
+              <pre class="code-box"><code id="code_bai4"><span class="token-comment">// Hai biến cố định theo đề bài</span>
+<span class="token-keyword">const</span> USERNAME_CORRECT = <span class="token-string">"admin"</span>;
+<span class="token-keyword">const</span> PASSWORD_CORRECT = <span class="token-string">"123456"</span>;
+
+<span class="token-keyword">let</span> u = <span class="token-func">prompt</span>(<span class="token-string">"Nhập username:"</span>);
+<span class="token-keyword">let</span> p = <span class="token-func">prompt</span>(<span class="token-string">"Nhập password:"</span>);
+
+<span class="token-comment">// Cấu trúc if...else với toán tử &&</span>
+<span class="token-keyword">if</span> (u === USERNAME_CORRECT && p === PASSWORD_CORRECT) {
+    <span class="token-func">alert</span>(<span class="token-string">"Đăng nhập thành công"</span>);
+} <span class="token-keyword">else</span> {
+    <span class="token-func">alert</span>(<span class="token-string">"Thông tin không chính xác"</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- ================================================================== -->
+      <!-- BÀI 5: MÁY TÍNH GIẢM GIÁ (DISCOUNT CALCULATOR) -->
+      <!-- ================================================================== -->
+      <article class="exercise-card" id="bai5">
+        <div class="card-head">
+          <div class="card-head-left">
+            <span class="exercise-num-badge">Bài tập 05</span>
+            <div>
+              <h3 class="card-head-title">Máy Tính Giảm Giá (Discount Calculator)</h3>
+              <div class="card-head-tags">
+                <span class="code-tag">amount &gt; 500000</span>
+                <span class="code-tag">discount = 10%</span>
+                <span class="code-tag">tienPhaiTra</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-prompt-bar">
+          <span class="prompt-icon">📌</span>
+          <div>
+            <strong>Yêu cầu đề bài:</strong> Nhập số tiền hóa đơn. Nếu số tiền <strong>&gt; 500.000đ</strong> thì giảm giá <strong>10%</strong>, ngược lại không giảm. Tính số tiền cuối cùng phải trả.
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="interactive-zone">
+            <div class="section-mini-title">⚡ Khu vực trải nghiệm trực tiếp</div>
+
+            <div class="input-group">
+              <label class="input-label" for="b5_input_amount">Số tiền hóa đơn (VNĐ):</label>
+              <input type="number" id="b5_input_amount" class="custom-input" placeholder="Ví dụ: 600000" value="750000" oninput="bai5_TinhUI()">
+              <span class="input-helper">Chính sách: Hóa đơn trên 500.000đ giảm ngay 10%</span>
+            </div>
+
+            <div class="preset-bar">
+              <span class="preset-label">Hóa đơn mẫu:</span>
+              <button class="preset-btn" onclick="bai5_GanMau(350000)">350.000đ (Không giảm)</button>
+              <button class="preset-btn" onclick="bai5_GanMau(500000)">500.000đ (Đúng ngưỡng = 0%)</button>
+              <button class="preset-btn" onclick="bai5_GanMau(800000)">800.000đ (Giảm 10%)</button>
+              <button class="preset-btn" onclick="bai5_GanMau(1500000)">1.500.000đ (Giảm 10%)</button>
+            </div>
+
+            <div class="button-row">
+              <button class="btn-calc" onclick="bai5_TinhUI()">
+                <span>🏷️</span> Tính Tiền Thanh Toán
+              </button>
+              <button class="btn-prompt" onclick="bai5_Prompt()">
+                <span>▶</span> Chạy bằng Prompt / Alert
+              </button>
+            </div>
+
+            <div class="result-display status-waiting" id="b5_result">
+              Bấm nút "Tính Tiền" để xem chiết khấu.
+            </div>
+          </div>
+
+          <div class="logic-zone">
+            <div class="section-mini-title">🧠 Phân tích thuật toán & Code mẫu</div>
+            
+            <div class="logic-steps">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <span><strong>Điều kiện:</strong> Phải là <code>amount > 500000</code> (lớn hơn hẳn, nếu đúng bằng 500.000 thì không giảm).</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <span><strong>Tiền thực trả:</strong> <code>thực_trả = hóa_đơn - tiền_giảm</code>.</span>
+              </div>
+            </div>
+
+            <div class="code-wrapper">
+              <div class="code-topbar">
+                <span class="code-title">bai5_homework.js</span>
+                <button class="copy-btn" onclick="copyCodeBlock('code_bai5', this)">Sao chép mã</button>
+              </div>
+              <pre class="code-box"><code id="code_bai5"><span class="token-keyword">let</span> tongTien = <span class="token-func">parseFloat</span>(<span class="token-func">prompt</span>(<span class="token-string">"Nhập số tiền hóa đơn:"</span>));
+<span class="token-keyword">let</span> tienGiam = <span class="token-number">0</span>;
+
+<span class="token-keyword">if</span> (tongTien > <span class="token-number">500000</span>) {
+    tienGiam = tongTien * <span class="token-number">0.10</span>; <span class="token-comment">// Giảm 10%</span>
+} <span class="token-keyword">else</span> {
+    tienGiam = <span class="token-number">0</span>;            <span class="token-comment">// Không giảm</span>
+}
+
+<span class="token-keyword">let</span> tienPhaiTra = tongTien - tienGiam;
+<span class="token-func">console.log</span>(<span class="token-string">`Thực trả: ${tienPhaiTra.toLocaleString("vi-VN")} VND`</span>);
+<span class="token-func">alert</span>(<span class="token-string">`Số tiền cuối cùng phải trả là: ${tienPhaiTra.toLocaleString("vi-VN")} VND`</span>);</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- ================================================================== -->
+      <!-- BÀI 6: PHÂN LOẠI TAM GIÁC (KIỂM TRA TAM GIÁC ĐỀU) -->
+      <!-- ================================================================== -->
+      <article class="exercise-card" id="bai6">
+        <div class="card-head">
+          <div class="card-head-left">
+            <span class="exercise-num-badge">Bài tập 06</span>
+            <div>
+              <h3 class="card-head-title">Phân Loại Tam Giác (Kiểm Tra Tam Giác Đều)</h3>
+              <div class="card-head-tags">
+                <span class="code-tag">BĐT Tam Giác</span>
+                <span class="code-tag">a === b &amp;&amp; b === c</span>
+                <span class="code-tag">Hình học phẳng</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-prompt-bar">
+          <span class="prompt-icon">📌</span>
+          <div>
+            <strong>Yêu cầu đề bài:</strong> Nhập vào 3 cạnh của một tam giác. Kiểm tra xem đó có phải là tam giác đều không (<strong>3 cạnh bằng nhau</strong>).
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="interactive-zone">
+            <div class="section-mini-title">⚡ Khu vực trải nghiệm trực tiếp</div>
+
+            <div class="input-row-3">
+              <div class="input-group">
+                <label class="input-label" for="b6_input_a">Cạnh a:</label>
+                <input type="number" step="any" id="b6_input_a" class="custom-input" placeholder="a" value="6" oninput="bai6_TinhUI()">
+              </div>
+              <div class="input-group">
+                <label class="input-label" for="b6_input_b">Cạnh b:</label>
+                <input type="number" step="any" id="b6_input_b" class="custom-input" placeholder="b" value="6" oninput="bai6_TinhUI()">
+              </div>
+              <div class="input-group">
+                <label class="input-label" for="b6_input_c">Cạnh c:</label>
+                <input type="number" step="any" id="b6_input_c" class="custom-input" placeholder="c" value="6" oninput="bai6_TinhUI()">
+              </div>
+            </div>
+
+            <div class="preset-bar">
+              <span class="preset-label">Bộ 3 cạnh test:</span>
+              <button class="preset-btn" onclick="bai6_GanMau(5, 5, 5)">Đều [5, 5, 5]</button>
+              <button class="preset-btn" onclick="bai6_GanMau(3, 4, 5)">Vuông [3, 4, 5]</button>
+              <button class="preset-btn" onclick="bai6_GanMau(6, 6, 8)">Cân [6, 6, 8]</button>
+              <button class="preset-btn" onclick="bai6_GanMau(1, 2, 10)">Không hợp lệ [1, 2, 10]</button>
+            </div>
+
+            <div class="button-row">
+              <button class="btn-calc" onclick="bai6_TinhUI()">
+                <span>🔺</span> Phân Loại Tam Giác
+              </button>
+              <button class="btn-prompt" onclick="bai6_Prompt()">
+                <span>▶</span> Chạy bằng Prompt / Alert
+              </button>
+            </div>
+
+            <div class="result-display status-waiting" id="b6_result">
+              Bấm nút "Phân Loại Tam Giác" để xem kết quả.
+            </div>
+          </div>
+
+          <div class="logic-zone">
+            <div class="section-mini-title">🧠 Phân tích thuật toán & Code mẫu</div>
+            
+            <div class="logic-steps">
+              <div class="step-item">
+                <span class="step-badge">1</span>
+                <span><strong>Bất đẳng thức tam giác:</strong> Tổng 2 cạnh bất kỳ luôn &gt; cạnh còn lại: <code>(a+b>c) && (a+c>b) && (b+c>a)</code> và các cạnh phải &gt; 0.</span>
+              </div>
+              <div class="step-item">
+                <span class="step-badge">2</span>
+                <span><strong>Tam giác đều:</strong> 3 cạnh bằng nhau: <code>a === b && b === c</code>.</span>
+              </div>
+            </div>
+
+            <div class="code-wrapper">
+              <div class="code-topbar">
+                <span class="code-title">bai6_homework.js</span>
+                <button class="copy-btn" onclick="copyCodeBlock('code_bai6', this)">Sao chép mã</button>
+              </div>
+              <pre class="code-box"><code id="code_bai6"><span class="token-keyword">let</span> a = <span class="token-func">parseFloat</span>(<span class="token-func">prompt</span>(<span class="token-string">"Nhập cạnh a:"</span>));
+<span class="token-keyword">let</span> b = <span class="token-func">parseFloat</span>(<span class="token-func">prompt</span>(<span class="token-string">"Nhập cạnh b:"</span>));
+<span class="token-keyword">let</span> c = <span class="token-func">parseFloat</span>(<span class="token-func">prompt</span>(<span class="token-string">"Nhập cạnh c:"</span>));
+
+<span class="token-comment">// Kiểm tra điều kiện tồn tại tam giác</span>
+<span class="token-keyword">let</span> isValid = (a > <span class="token-number">0</span> && b > <span class="token-number">0</span> && c > <span class="token-number">0</span>) &&
+              (a + b > c) && (a + c > b) && (b + c > a);
+
+<span class="token-keyword">if</span> (!isValid) {
+    <span class="token-func">alert</span>(<span class="token-string">"Ba cạnh này không tạo thành tam giác!"</span>);
+} <span class="token-keyword">else if</span> (a === b && b === c) {
+    <span class="token-func">alert</span>(<span class="token-string">"Đây là TAM GIÁC ĐỀU (3 cạnh bằng nhau)"</span>);
+} <span class="token-keyword">else</span> {
+    <span class="token-func">alert</span>(<span class="token-string">"Đây KHÔNG PHẢI là tam giác đều."</span>);
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- 4. MÀN HÌNH LIVE CONSOLE LOGGER -->
+    <section class="live-console-card" id="console-box">
+      <div class="console-dock-head">
+        <div class="console-dock-title">
+          <span>&gt;_</span> MÀN HÌNH THEO DÕI LIVE CONSOLE LOGGER
+        </div>
+        <button class="copy-btn" onclick="clearLiveScreen()">Làm sạch Console</button>
+      </div>
+      <div class="console-dock-body" id="liveConsoleContent">
+        <div class="log-line log-info">
+          <span class="log-time">[Hệ thống]</span> Đã sẵn sàng! Khi bạn tương tác hoặc chạy Prompt, các dòng log sẽ hiển thị ngay tại đây.
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. FOOTER -->
+    <footer class="footer">
+      <p>Báo cáo Bài tập về nhà JavaScript &bull; Đại học Lạc Hồng (LHU) &bull; Nhóm 2</p>
+      <p style="margin-top: 6px; font-size: 12px; color: #94a3b8;">Hệ thống giải toán chuẩn hóa theo yêu cầu buổi học 14/10/2026</p>
+    </footer>
+
+  </main>
+
+  <!-- Nạp file JavaScript xử lý nghiệp vụ -->
+  <script src="homework.js"></script>
+
+  <!-- Kích hoạt tính toán ban đầu cho giao diện -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      bai1_TinhUI();
+      bai2_TinhUI();
+      bai3_TinhUI();
+      bai4_TinhUI();
+      bai5_TinhUI();
+      bai6_TinhUI();
+      logToScreen("Đã nạp và kích hoạt tính toán mẫu cho toàn bộ 6 bài tập thành công!", "success");
+    });
+  </script>
+</body>
+</html>
