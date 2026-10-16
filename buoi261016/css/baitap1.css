@@ -1,0 +1,1010 @@
+/* ==========================================================================
+       1. HỆ THỐNG BIẾN MÀU SẮC & GIAO DIỆN (CSS VARIABLES)
+       Hỗ trợ chuyển đổi mượt mà giữa Chế độ Sáng (Light) và Tối (Dark Mode)
+       ========================================================================== */
+    :root {
+      /* Bảng màu Light Mode */
+      --bg-body: #f1f5f9;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --bg-input: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-light: #eef2ff;
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+      --danger-light: #fef2f2;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --transition-speed: 0.3s;
+
+      /* Màu viền theo Mức độ ưu tiên */
+      --priority-high: #ef4444;    /* Quan trọng: Viền đỏ */
+      --priority-medium: #f59e0b;  /* Bình thường: Viền vàng cam */
+      --priority-low: #10b981;     /* Thấp: Viền xanh lá */
+    }
+
+    /* Bảng màu Dark Mode */
+    [data-theme="dark"] {
+      --bg-body: #0b0f19;
+      --bg-sidebar: #111827;
+      --bg-card: #1f2937;
+      --bg-input: #111827;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-color: #374151;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-light: #1e1e38;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ==========================================================================
+       2. RESET & THIẾT LẬP CƠ BẢN
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       3. BỐ CỤC CHÍNH BẰNG CSS GRID (Rubric: Responsive & Grid)
+       Layout 2 cột: Sidebar bên trái (280px) & Nội dung chính bên phải (1fr)
+       ========================================================================== */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Lớp phủ mờ (Backdrop) khi mở Sidebar trên Mobile */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 40;
+      opacity: 0;
+      transition: opacity var(--transition-speed);
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       4. SIDEBAR (THANH ĐIỀU HƯỚNG BÊN TRÁI)
+       ========================================================================== */
+    .sidebar {
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: transform var(--transition-speed) ease, background-color var(--transition-speed);
+      z-index: 50;
+    }
+
+    /* Logo & Tên ứng dụng */
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-title h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .brand-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Ô Tìm kiếm Real-time (BƯỚC 5: Search & Filter) */
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Nhóm các Bộ lọc (Filter Pills) */
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .filter-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+
+    .filter-badge {
+      background: rgba(0, 0, 0, 0.08);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .filter-btn.active .filter-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* 3 Thẻ thống kê mở rộng (Rubric Điểm 9-10 & BƯỚC 5) */
+    .mini-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini-stat-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.2s;
+    }
+
+    .mini-stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .mini-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mini-stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Thẻ thông tin cá nhân sinh viên & Nút mở AI Log */
+    .sidebar-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .student-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .student-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .student-info p {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .student-info span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .btn-ai-log {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px dashed var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-ai-log:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-style: solid;
+    }
+
+    /* ==========================================================================
+       5. MAIN CONTENT AREA (NỘI DUNG CHÍNH)
+       ========================================================================== */
+    .main-content {
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Top Bar Header: Lời chào cá nhân, Đồng hồ & Switch Theme */
+    .dashboard-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dải màu trang trí phía trên Header */
+    .dashboard-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4f46e5, #ec4899, #f59e0b);
+    }
+
+    /* Nút Hamburger bật/tắt Sidebar trên điện thoại */
+    .mobile-menu-btn {
+      display: none;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text-main);
+      font-size: 18px;
+    }
+
+    .greeting-box h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .greeting-box p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* Đồng hồ thời gian thực (Giờ/Phút/Giây liên tục cập nhật) */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .realtime-clock-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .clock-pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--success);
+      border-radius: 50%;
+      animation: pulseAnimation 1.5s infinite;
+    }
+
+    @keyframes pulseAnimation {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .clock-text {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Nút bật tắt Dark Mode */
+    .theme-toggle-btn {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: rotate(15deg) scale(1.05);
+    }
+
+    /* Thanh tiến độ tổng quan (Progress Bar) */
+    .progress-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-input);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #4f46e5, #10b981);
+      border-radius: 999px;
+      transition: width 0.4s ease-out;
+    }
+
+    /* ==========================================================================
+       6. INPUT SECTION (KHUNG NHẬP CÔNG VIỆC BẰNG FLEXBOX)
+       Rubric: Flexbox cho thanh Input, hỗ trợ Select phân loại & Enter
+       ========================================================================== */
+    .task-input-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .input-form-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-task-text {
+      flex: 1;
+      min-width: 240px;
+      padding: 12px 18px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-task-text:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
+    }
+
+    /* Rung lắc khi bỏ trống ô nhập (Bẫy logic kiểm tra rỗng) */
+    .input-task-text.shake {
+      animation: shakeAnimation 0.4s ease-in-out;
+      border-color: var(--danger) !important;
+    }
+
+    @keyframes shakeAnimation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* Select phân loại mức độ ưu tiên (BƯỚC 5: Priority Tag) */
+    .select-priority {
+      padding: 12px 16px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .select-priority:focus {
+      border-color: var(--primary);
+    }
+
+    /* Nút Thêm công việc */
+    .btn-add-task {
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .btn-add-task:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+    }
+
+    .btn-add-task:active {
+      transform: translateY(1px);
+    }
+
+    /* ==========================================================================
+       7. TASK LIST SECTION (DANH SÁCH CÔNG VIỆC)
+       ========================================================================== */
+    .task-list-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .list-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .btn-clear-completed {
+      background: transparent;
+      border: none;
+      color: var(--danger);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s;
+    }
+
+    .btn-clear-completed:hover {
+      background: var(--danger-light);
+    }
+
+    /* Thẻ danh sách ul */
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Mỗi hàng công việc li */
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--border-color); /* Đường viền đổi theo mức độ ưu tiên */
+      border-radius: var(--radius-sm);
+      transition: all 0.25s ease;
+      animation: slideInTask 0.35s ease-out;
+    }
+
+    /* Hiệu ứng xuất hiện khi thêm task mới */
+    @keyframes slideInTask {
+      from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Hiệu ứng mờ dần & thu nhỏ khi xóa task (Prompt mẫu Bước 3: Fade Out) */
+    .task-item.fade-out {
+      opacity: 0;
+      transform: translateX(30px) scale(0.95);
+      transition: all 0.35s ease-out;
+    }
+
+    .task-item:hover {
+      border-color: rgba(79, 70, 229, 0.3);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Viền theo mức độ ưu tiên (Yêu cầu mở rộng 1) */
+    .task-item.priority-high {
+      border-left-color: var(--priority-high);
+    }
+    .task-item.priority-medium {
+      border-left-color: var(--priority-medium);
+    }
+    .task-item.priority-low {
+      border-left-color: var(--priority-low);
+    }
+
+    /* Checkbox tùy chỉnh */
+    .custom-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      background: var(--bg-card);
+    }
+
+    .custom-checkbox:hover {
+      border-color: var(--primary);
+    }
+
+    .custom-checkbox svg {
+      display: none;
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Trạng thái đã hoàn thành (Completed) */
+    .task-item.completed {
+      background: rgba(16, 185, 129, 0.04);
+      border-left-color: var(--text-muted);
+      opacity: 0.75;
+    }
+
+    .task-item.completed .custom-checkbox {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .task-item.completed .custom-checkbox svg {
+      display: block;
+    }
+
+    /* Nội dung văn bản công việc */
+    .task-text {
+      flex: 1;
+      font-size: 15px;
+      color: var(--text-main);
+      cursor: pointer;
+      user-select: none;
+      word-break: break-word;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
+
+    /* Click vào để gạch ngang chữ */
+    .task-item.completed .task-text {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    /* Nhãn Badge mức độ ưu tiên */
+    .priority-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-high {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--priority-high);
+    }
+
+    .badge-medium {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--priority-medium);
+    }
+
+    .badge-low {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--priority-low);
+    }
+
+    /* Thời gian tạo tác vụ */
+    .task-time {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Nút Xóa công việc */
+    .btn-delete-task {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-delete-task:hover {
+      background: var(--danger-light);
+      color: var(--danger);
+      transform: scale(1.1);
+    }
+
+    /* Trạng thái trống (Empty State khi không có tác vụ nào) */
+    .empty-state {
+      padding: 40px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      opacity: 0.6;
+    }
+
+    .empty-state p {
+      font-size: 15px;
+    }
+
+    /* ==========================================================================
+       8. FOOTER: HIỂN THỊ TỔNG SỐ CÔNG VIỆC (Yêu cầu mục A & 6)
+       ========================================================================== */
+    .dashboard-footer {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-stats-badges {
+      display: flex;
+      gap: 16px;
+    }
+
+    .stat-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-badge-item strong {
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       9. MODAL NHẬT KÝ SỬ DỤNG AI (Rubric & Báo cáo quy trình 3 giai đoạn)
+       ========================================================================== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      max-width: 720px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      color: var(--text-main);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .log-step {
+      margin-bottom: 18px;
+      padding: 14px;
+      background: var(--bg-input);
+      border-radius: var(--radius-sm);
+      border-left: 4px solid var(--primary);
+    }
+
+    .log-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .log-step p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .code-preview {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #1e1e2e;
+      color: #a6accd;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 12px;
+      overflow-x: auto;
+    }
+
+    /* ==========================================================================
+       10. RESPONSIVE DESIGN (Rubric: Responsive Mobile & Desktop 30%)
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr; /* Trở về 1 cột trên Mobile/Tablet */
+      }
+
+      .mobile-menu-btn {
+        display: block; /* Hiển thị nút Hamburger */
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        transform: translateX(-100%); /* Ẩn sidebar về bên trái */
+        box-shadow: var(--shadow-lg);
+      }
+
+      .sidebar.open {
+        transform: translateX(0); /* Trượt ra khi click mở */
+      }
+
+      .main-content {
+        padding: 20px 16px;
+      }
+
+      .dashboard-header {
+        padding: 18px 20px;
+      }
+
+      .input-form-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-add-task {
+        justify-content: center;
+      }
+
+      .dashboard-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }

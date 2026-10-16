@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dự Án Nhóm 2 - Thiết Kế Web & Lập Trình AI</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --primary: #6366f1;
+      --secondary: #0ea5e9;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top right, #1e1b4b, #0f172a 60%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+    }
+
+    .hub-container {
+      max-width: 1000px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .hub-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .badge-course {
+      align-self: center;
+      padding: 6px 16px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #818cf8;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .hub-header h1 {
+      font-size: 34px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hub-header p {
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 16px 36px rgba(99, 102, 241, 0.2);
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .card-1::before {
+      background: linear-gradient(90deg, #4f46e5, #ec4899);
+    }
+
+    .card-2::before {
+      background: linear-gradient(90deg, #0ea5e9, #10b981);
+    }
+
+    .card-icon {
+      font-size: 40px;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-content h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+    }
+
+    .btn-launch {
+      margin-top: auto;
+      padding: 14px 24px;
+      background: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    }
+
+    .card-2 .btn-launch {
+      background: #0284c7;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-launch:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.15);
+    }
+
+    .hub-footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hub-container">
+    
+    <header class="hub-header">
+      <span class="badge-course">ĐẠI HỌC LẠC HỒNG • PROJECT NHÓM 2</span>
+      <h1>Kho Bài Tập Lập Trình Web</h1>
+      <p>Cấu trúc module hóa chuyên nghiệp (Tách rời HTML, CSS và JavaScript sạch sẽ)</p>
+    </header>
+
+    <div class="project-grid">
+
+      <!-- Thẻ Bài Tập 1 -->
+      <div class="project-card card-1">
+        <div class="card-icon">📋</div>
+        <div class="card-content">
+          <h2>Bài Tập 1: Personalized AI Dashboard</h2>
+          <p>Ứng dụng quản lý tác vụ cá nhân theo chuẩn Rubric. Tích hợp đồng hồ thời gian thực mỗi giây, lưu LocalStorage, bẫy logic khi bỏ trống, bộ lọc đa năng, mức độ ưu tiên và chuyển đổi Dark Mode.</p>
+        </div>
+        <div class="tech-tags">
+          <span class="tag">HTML5 Grid & Flexbox</span>
+          <span class="tag">LocalStorage</span>
+          <span class="tag">setInterval</span>
+          <span class="tag">Dark Mode</span>
+          <span class="tag">css/baitap1.css</span>
+          <span class="tag">js/baitap1.js</span>
+        </div>
+        <a href="Baitap1.html" class="btn-launch">
+          <span>Khởi Chạy Bài Tập 1</span> ➔
+        </a>
+      </div>
+
+      <!-- Thẻ Bài Tập 2 -->
+      <div class="project-card card-2">
+        <div class="card-icon">🧭</div>
+        <div class="card-content">
+          <h2>Bài Tập 2: Weather & Travel Planner</h2>
+          <p>Ứng dụng tra cứu thời tiết và lên lịch trình du lịch cá nhân theo phong cách Glassmorphism (Kính mờ). Đổi màu ánh sáng theo thành phố, gợi ý trang phục thông minh, xuất file .txt và đồng hồ đếm ngược ngày đi.</p>
+        </div>
+        <div class="tech-tags">
+          <span class="tag">Glassmorphism</span>
+          <span class="tag">Array & Object</span>
+          <span class="tag">Smart Suggestions</span>
+          <span class="tag">Export .txt (Blob)</span>
+          <span class="tag">Countdown Timer</span>
+          <span class="tag">css/baitap2.css</span>
+          <span class="tag">js/baitap2.js</span>
+        </div>
+        <a href="Baitap2.html" class="btn-launch">
+          <span>Khởi Chạy Bài Tập 2</span> ➔
+        </a>
+      </div>
+
+    </div>
+
+    <footer class="hub-footer">
+      Bản quyền © 2026 Nhóm 2 - Khoa Công Nghệ Thông Tin - Đại Học Lạc Hồng.
+    </footer>
+
+  </div>
+
+</body>
+</html>
