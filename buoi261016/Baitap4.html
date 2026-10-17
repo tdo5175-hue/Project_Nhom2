@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4f2ec">
+  <meta name="description" content="AURA SOUND — âm thanh tinh tế cho những khoảnh khắc đáng nhớ. Khám phá tai nghe và loa không dây.">
+  <title>AURA SOUND — Hear your own world</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/baitap4.css">
+  <script src="js/baitap4.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="AURA SOUND - về đầu trang" data-i18n-aria-label="wordmarkHome">
+      <span class="wordmark-icon" aria-hidden="true">◖</span>
+      <span>AURA<span class="wordmark-light">SOUND</span></span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="primaryNav">
+      <span></span><span></span>
+    </button>
+
+    <nav class="primary-nav" id="primaryNav" aria-label="Điều hướng chính" data-i18n-aria-label="navigation">
+      <a href="#collection" data-i18n="navProducts">Sản phẩm</a>
+      <a href="#story" data-i18n="navStory">Câu chuyện</a>
+      <a href="#reviews" data-i18n="navReviews">Đánh giá</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch to English" title="Switch to English">EN</button>
+      <button class="bag-button" id="bagButton" type="button" aria-label="Giỏ hàng, 0 sản phẩm">
+      <span data-i18n="cart">Giỏ hàng</span>
+      <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-wrap" id="home">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="heroEyebrow">ÂM THANH CỦA RIÊNG BẠN</span></p>
+        <h1 data-i18n-html="heroTitle">Nghe thế giới<br>theo <em>cách của bạn.</em></h1>
+        <p class="hero-description" data-i18n="heroDescription">Chạm vào từng sắc âm. Tìm thấy khoảng lặng giữa phố thị. Âm thanh được tạo ra để đồng hành cùng nhịp sống của bạn.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#collection"><span data-i18n="heroCta">Khám phá bộ sưu tập</span><span aria-hidden="true">↗</span></a>
+          <span class="hero-note" data-i18n="heroNote">Thiết kế tinh giản. Chất âm có chiều sâu.</span>
+        </div>
+        <div class="hero-proof">
+          <div class="avatar-stack" aria-hidden="true"><span>H</span><span>M</span><span>L</span><span>+</span></div>
+          <p><strong data-i18n="heroProofNumber">2.400+</strong> <span data-i18n="heroProof">người đã tìm thấy chất âm của mình</span></p>
+        </div>
+      </div>
+      <div class="hero-art reveal">
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+        <div class="hero-label"><span>01 / 03</span><span data-i18n="heroSeries">STUDIO SERIES</span></div>
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" aria-label="Video giới thiệu sản phẩm AURA SOUND" data-i18n-aria-label="videoLabel">
+          <source src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="hero-product-tag">
+          <span class="tag-line"></span>
+          <div><strong>STUDIO ONE</strong><small data-i18n="heroTagline">Âm thanh. Không giới hạn.</small></div>
+          <span class="tag-price" data-price-display="3490000">3.490.000₫</span>
+        </div>
+        <span class="art-index" aria-hidden="true">A.</span>
+      </div>
+      <a class="scroll-cue" href="#collection"><span></span><span data-i18n="scrollCue">CUỘN ĐỂ KHÁM PHÁ</span></a>
+    </section>
+
+    <section class="ticker" aria-label="Điểm nổi bật" data-i18n-aria-label="highlights">
+      <div class="ticker-track">
+        <span data-i18n="tickerSound">ÂM THANH CHÂN THỰC</span><b>✳</b><span data-i18n="tickerDesign">THIẾT KẾ CÓ CHỦ ĐÍCH</span><b>✳</b><span data-i18n="tickerWarranty">BẢO HÀNH 24 THÁNG</span><b>✳</b><span data-i18n="tickerDelivery">GIAO HÀNG MIỄN PHÍ</span><b>✳</b>
+        <span data-i18n="tickerSound">ÂM THANH CHÂN THỰC</span><b>✳</b><span data-i18n="tickerDesign">THIẾT KẾ CÓ CHỦ ĐÍCH</span><b>✳</b><span data-i18n="tickerWarranty">BẢO HÀNH 24 THÁNG</span><b>✳</b><span data-i18n="tickerDelivery">GIAO HÀNG MIỄN PHÍ</span><b>✳</b>
+      </div>
+    </section>
+
+    <section class="collection section-wrap" id="collection">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="collectionEyebrow">TÌM CHẤT ÂM CỦA BẠN</span></p>
+          <h2 data-i18n-html="collectionTitle">Ít hơn, nhưng <em>đúng hơn.</em></h2>
+        </div>
+        <p data-i18n="collectionDescription">Mỗi sản phẩm là sự cân bằng giữa chất âm giàu cảm xúc, thiết kế vượt thời gian và những chi tiết hữu ích trong đời sống.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card reveal" data-product="Studio One">
+          <a class="product-image product-image-sand" href="#details" aria-label="Xem chi tiết tai nghe Studio One" data-i18n-aria-label="viewStudio">
+            <span class="product-badge" data-i18n="badgeBestseller">BÁN CHẠY</span>
+            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Tai nghe Studio One chụp tai" data-i18n-alt="altStudio" loading="lazy" decoding="async">
+            <span class="quick-view" aria-hidden="true" data-i18n="quickView">XEM CHI TIẾT ↗</span>
+          </a>
+          <div class="product-info">
+            <div><p class="product-category" data-i18n="categoryHeadphones">TAI NGHE CHỤP TAI</p><h3>Studio One</h3></div>
+            <span class="product-price" data-price-display="3490000">3.490.000₫</span>
+          </div>
+          <p class="product-summary" data-i18n="studioSummary">Chống ồn chủ động · 40 giờ pin</p>
+          <button class="add-button" type="button" data-add-product="Studio One" data-price="3490000"><span class="add-label" data-i18n="addToCart">Thêm vào giỏ</span><span aria-hidden="true">＋</span></button>
+        </article>
+
+        <article class="product-card reveal" data-product="Wave Mini">
+          <a class="product-image product-image-blue" href="#details" aria-label="Xem chi tiết tai nghe Wave Mini" data-i18n-aria-label="viewWave">
+            <span class="product-badge product-badge-new" data-i18n="badgeNew">MỚI RA MẮT</span>
+            <img src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Tai nghe không dây Wave Mini" data-i18n-alt="altWave" loading="lazy" decoding="async">
+            <span class="quick-view" aria-hidden="true" data-i18n="quickView">XEM CHI TIẾT ↗</span>
+          </a>
+          <div class="product-info">
+            <div><p class="product-category" data-i18n="categoryWireless">TAI NGHE KHÔNG DÂY</p><h3>Wave Mini</h3></div>
+            <span class="product-price" data-price-display="1890000">1.890.000₫</span>
+          </div>
+          <p class="product-summary" data-i18n="waveSummary">Chống nước IPX5 · 28 giờ pin</p>
+          <button class="add-button" type="button" data-add-product="Wave Mini" data-price="1890000"><span class="add-label" data-i18n="addToCart">Thêm vào giỏ</span><span aria-hidden="true">＋</span></button>
+        </article>
+
+        <article class="product-card reveal" data-product="Room Speaker">
+          <a class="product-image product-image-olive" href="#details" aria-label="Xem chi tiết loa Room Speaker" data-i18n-aria-label="viewRoom">
+            <span class="product-badge product-badge-limited">EDITION 01</span>
+            <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Loa bluetooth Room Speaker" data-i18n-alt="altRoom" loading="lazy" decoding="async">
+            <span class="quick-view" aria-hidden="true" data-i18n="quickView">XEM CHI TIẾT ↗</span>
+          </a>
+          <div class="product-info">
+            <div><p class="product-category" data-i18n="categorySpeaker">LOA BLUETOOTH</p><h3>Room Speaker</h3></div>
+            <span class="product-price" data-price-display="2750000">2.750.000₫</span>
+          </div>
+          <p class="product-summary" data-i18n="roomSummary">Âm thanh 360° · 18 giờ pin</p>
+          <button class="add-button" type="button" data-add-product="Room Speaker" data-price="2750000"><span class="add-label" data-i18n="addToCart">Thêm vào giỏ</span><span aria-hidden="true">＋</span></button>
+        </article>
+      </div>
+    </section>
+
+    <section class="feature section-wrap" id="details">
+      <div class="feature-image reveal">
+        <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Chi tiết thiết kế tai nghe AURA Studio One" data-i18n-alt="altStudioDetail" loading="lazy" decoding="async">
+        <span class="image-caption" data-i18n="imageCaption">STUDIO ONE / MATTE BLACK</span>
+      </div>
+      <div class="feature-copy reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="featureEyebrow">TÂM ĐIỂM · STUDIO ONE</span></p>
+        <h2 data-i18n-html="featureTitle">Không chỉ nghe.<br><em>Cảm nhận.</em></h2>
+        <p class="feature-description" data-i18n="featureDescription">Màng loa 40 mm tinh chỉnh riêng, tái hiện âm thanh cân bằng và giàu chi tiết. Chế độ chống ồn thích ứng giúp bạn tập trung vào điều quan trọng.</p>
+        <div class="spec-tabs" role="tablist" aria-label="Thông tin Studio One" data-i18n-aria-label="specsLabel">
+          <button class="spec-tab is-active" id="tab-sound" type="button" role="tab" aria-selected="true" aria-controls="panel-sound" data-tab="sound" data-i18n="tabSound">Chất âm</button>
+          <button class="spec-tab" id="tab-battery" type="button" role="tab" aria-selected="false" aria-controls="panel-battery" data-tab="battery" tabindex="-1" data-i18n="tabBattery">Thời lượng pin</button>
+          <button class="spec-tab" id="tab-build" type="button" role="tab" aria-selected="false" aria-controls="panel-build" data-tab="build" tabindex="-1" data-i18n="tabBuild">Thiết kế</button>
+        </div>
+        <div class="spec-panels">
+          <div class="spec-panel is-active" id="panel-sound" role="tabpanel" aria-labelledby="tab-sound">
+            <strong data-i18n="soundTitle">Âm thanh Hi-Res, cân bằng tự nhiên</strong>
+            <p data-i18n="soundDescription">Màng loa dynamic 40 mm, dải tần 20 Hz–40 kHz và chống ồn chủ động thích ứng đa chế độ.</p>
+          </div>
+          <div class="spec-panel" id="panel-battery" role="tabpanel" aria-labelledby="tab-battery" hidden>
+            <strong data-i18n="batteryTitle">40 giờ nghe nhạc liền mạch</strong>
+            <p data-i18n="batteryDescription">Bật chống ồn vẫn sử dụng đến 30 giờ. Sạc nhanh 10 phút cho thêm 5 giờ nghe nhạc.</p>
+          </div>
+          <div class="spec-panel" id="panel-build" role="tabpanel" aria-labelledby="tab-build" hidden>
+            <strong data-i18n="buildTitle">Nhẹ, êm, sẵn sàng đồng hành</strong>
+            <p data-i18n="buildDescription">Khung nhôm siêu nhẹ, đệm tai memory foam thay thế được và kết nối Bluetooth 5.3 đa điểm.</p>
+          </div>
+        </div>
+        <div class="feature-purchase">
+          <span data-price-display="3490000">3.490.000₫</span>
+          <button class="button button-dark" type="button" data-add-product="Studio One" data-price="3490000"><span data-i18n="chooseStudio">Chọn Studio One</span><span aria-hidden="true">↗</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story-inner section-wrap reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="storyEyebrow">TRIẾT LÝ CỦA AURA</span></p>
+        <blockquote data-i18n-html="storyQuote">“Công nghệ tốt nhất là công nghệ để bạn <em>quên đi nó đang ở đó.</em>”</blockquote>
+        <p class="story-note" data-i18n="storyNote">Chúng tôi tạo ra những sản phẩm để nghe lâu hơn, dùng bền hơn và sống trọn vẹn hơn.</p>
+        <span class="story-signature">AURA SOUND — SINCE 2021</span>
+      </div>
+    </section>
+
+    <section class="reviews section-wrap" id="reviews">
+      <div class="review-heading reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="reviewsEyebrow">NGHE TỪ CỘNG ĐỒNG</span></p>
+        <h2 data-i18n-html="reviewsTitle">Chất âm được <em>lắng nghe.</em></h2>
+      </div>
+      <div class="review-grid">
+        <article class="review-card reveal">
+          <div class="review-stars" aria-label="5 trên 5 sao" data-i18n-aria-label="fiveStars">★★★★★</div>
+          <blockquote data-i18n="reviewStudio">“Đeo cả ngày mà quên mất mình đang đeo tai nghe. Chống ồn tốt, nhưng thứ mình thích nhất là chất âm rất tự nhiên.”</blockquote>
+          <div class="review-author"><span class="review-avatar">ML</span><span><strong>Minh Lê</strong><small data-i18n="verifiedStudio">Studio One · Đã xác minh</small></span></div>
+        </article>
+        <article class="review-card reveal">
+          <div class="review-stars" aria-label="5 trên 5 sao" data-i18n-aria-label="fiveStars">★★★★★</div>
+          <blockquote data-i18n="reviewWave">“Wave Mini nhỏ gọn, kết nối nhanh. Mang đi tập hay đi làm đều ổn, hộp sạc cũng đẹp hơn mình nghĩ.”</blockquote>
+          <div class="review-author"><span class="review-avatar avatar-blue">AT</span><span><strong data-i18n="reviewerThu">Anh Thư</strong><small data-i18n="verifiedWave">Wave Mini · Đã xác minh</small></span></div>
+        </article>
+        <article class="review-card reveal">
+          <div class="review-stars" aria-label="5 trên 5 sao" data-i18n-aria-label="fiveStars">★★★★★</div>
+          <blockquote data-i18n="reviewRoom">“Room Speaker lấp đầy căn phòng bằng âm thanh ấm áp. Thiết kế tối giản đặt đâu cũng hợp.”</blockquote>
+          <div class="review-author"><span class="review-avatar avatar-olive">QD</span><span><strong data-i18n="reviewerDat">Quốc Đạt</strong><small data-i18n="verifiedRoom">Room Speaker · Đã xác minh</small></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="newsletter section-wrap reveal">
+      <div><p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="newsletterEyebrow">TÍN HIỆU TỐT ĐẸP</span></p><h2 data-i18n-html="newsletterTitle">Một chút âm thanh<br><em>trong hộp thư bạn.</em></h2></div>
+      <form class="newsletter-form" id="newsletterForm">
+        <label class="visually-hidden" for="newsletterEmail" data-i18n="emailLabel">Email của bạn</label>
+        <input id="newsletterEmail" type="email" placeholder="Email của bạn" data-i18n-placeholder="emailPlaceholder" autocomplete="email" required>
+        <button type="submit" aria-label="Đăng ký nhận tin" data-i18n-aria-label="subscribe">↗</button>
+        <p class="newsletter-status" id="newsletterStatus" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark footer-wordmark" href="#home"><span class="wordmark-icon" aria-hidden="true">◖</span><span>AURA<span class="wordmark-light">SOUND</span></span></a>
+    <p data-i18n="footerTagline">Âm thanh cho những khoảnh khắc của riêng bạn.</p>
+    <span>© 2026 AURA SOUND. MADE TO BE HEARD.</span>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
