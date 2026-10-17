@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BÀI TẬP 3: Hệ Thống Đăng Ký Sự Kiện Tích Hợp Google Sheets & Email - Đại Học Lạc Hồng</title>
+  
+  <!-- Stylesheet chuẩn mực, tông nền trắng mặc định, hiệu ứng tinh tế -->
+  <link rel="stylesheet" href="css/baitap3.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. SITE HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="Baitap3.html" class="brand-logo" title="Hệ thống đăng ký sự kiện AI Workshop 2026">
+        <div class="brand-icon-box">AI</div>
+        <div>
+          <div class="brand-name">AI WORKSHOP 2026</div>
+          <div class="brand-tagline">Đại Học Lạc Hồng • Nhóm 2</div>
+        </div>
+      </a>
+
+      <!-- Menu chuyển đổi bài tập & Nút đổi giao diện -->
+      <div class="header-right">
+        <a href="index.html" class="nav-pill-link" title="Trang Chủ Tổng Hợp Bài Tập">
+          🏠 Trang Chủ
+        </a>
+        <a href="Baitap1.html" class="nav-pill-link" title="Bài Tập 1: Dashboard Quản Lý Tác Vụ">
+          📋 Bài 1
+        </a>
+        <a href="Baitap2.html" class="nav-pill-link" title="Bài Tập 2: Weather & Travel Planner">
+          🧭 Bài 2
+        </a>
+        <a href="Baitap4.html" class="nav-pill-link" title="Bài Tập 4: Aura Sound Store">
+          🎧 Bài 4
+        </a>
+
+        <!-- Nút đổi tông màu / Dark Mode nhẹ nhàng -->
+        <button type="button" class="btn-theme-toggle" id="themeToggleBtn" aria-label="Đổi giao diện Sáng / Tối">
+          <span id="themeIcon">☀️</span>
+          <span id="themeLabel">Giao diện</span>
+        </button>
+
+        <!-- Thẻ thông tin email hỗ trợ gửi thư -->
+        <div class="support-tag" title="Tài khoản gửi thông báo tự động">
+          Hỗ trợ: <strong>tdo5175@gmail.com</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         2. HERO SECTION: GIỚI THIỆU SỰ KIỆN & ĐẾM NGƯỢC CHỖ NGỒI
+         ========================================================================== -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-badge-row">
+            <span class="hero-badge">Hội Thảo Công Nghệ & Định Hướng Nghề Nghiệp</span>
+            <div class="seats-counter-wrap">
+              <div class="seats-counter-badge" id="seatCounterBadge" title="Giới hạn tối đa 50 người đăng ký">
+                <span>👥 Chỗ còn lại:</span>
+                <strong id="remainingSeatsVal">50 / 50</strong>
+              </div>
+              <button type="button" class="btn-reload-seats" id="resetSeatsBtn" title="Đặt lại 50 chỗ ngồi ban đầu" aria-label="Đặt lại 50 chỗ ngồi">
+                <span class="reload-icon" id="reloadSeatsIcon">🔄</span>
+                <span>Reset 50 chỗ</span>
+              </button>
+              <span class="seats-reset-toast" id="seatsResetToast" aria-live="polite">✓ Đã reset 50 chỗ!</span>
+            </div>
+          </div>
+
+          <h1 class="hero-title">Workshop: Khám Phá Kỷ Nguyên AI & Định Hình Nghề Nghiệp Tương Lai</h1>
+          <p class="hero-desc">
+            Sự kiện chuyên sâu kết nối sinh viên Đại học Lạc Hồng với các chuyên gia AI hàng đầu. 
+            Cung cấp tư duy ứng dụng Generative AI, thực hành xây dựng trợ lý AI phục vụ học tập và mở rộng cơ hội việc làm trong kỷ nguyên mới.
+          </p>
+
+          <!-- Thông tin then chốt -->
+          <div class="hero-facts-row">
+            <div class="fact-card">
+              <div class="fact-icon">📅</div>
+              <div>
+                <div class="fact-label">Thời gian</div>
+                <div class="fact-val">08:30 - 11:30, Thứ Bảy (26/10/2026)</div>
+              </div>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-icon">📍</div>
+              <div>
+                <div class="fact-label">Địa điểm</div>
+                <div class="fact-val">Hội trường A, Đại Học Lạc Hồng</div>
+              </div>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-icon">✉️</div>
+              <div>
+                <div class="fact-label">Hộp thư gửi vé</div>
+                <div class="fact-val">tdo5175@gmail.com</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         3. LUỒNG ĐẶT VÉ CHÍNH (BOOKING WORKFLOW)
+         Thanh Stepper tiến trình -> Chọn vé -> Điền thông tin -> Xác nhận
+         ========================================================================== -->
+    <section class="booking-section">
+      <div class="container">
+
+        <!-- THANH TIẾN TRÌNH TRỰC QUAN (PROGRESS STEPPER) -->
+        <div class="booking-stepper" aria-label="Tiến trình đặt vé">
+          <div class="stepper-step active" id="stepIndicator1">
+            <div class="step-circle">1</div>
+            <div class="step-text">
+              <span class="step-small">Bước 1</span>
+              <span class="step-name">Chọn Vé & Số Lượng</span>
+            </div>
+          </div>
+          <div class="stepper-connector active"></div>
+          <div class="stepper-step active" id="stepIndicator2">
+            <div class="step-circle">2</div>
+            <div class="step-text">
+              <span class="step-small">Bước 2</span>
+              <span class="step-name">Thông Tin Người Nhận</span>
+            </div>
+          </div>
+          <div class="stepper-connector"></div>
+          <div class="stepper-step" id="stepIndicator3">
+            <div class="step-circle">3</div>
+            <div class="step-text">
+              <span class="step-small">Bước 3</span>
+              <span class="step-name">Xác Nhận & Vé QR</span>
+            </div>
+          </div>
+        </div>
+        
+        <form id="bookingForm" novalidate>
+          <div class="booking-grid">
+            
+            <!-- CỘT TRÁI: CHỌN VÉ VÀ ĐIỀN THÔNG TIN KHÁCH HÀNG -->
+            <div class="booking-left-col">
+              
+              <!-- BƯỚC 1: KHU VỰC CHỌN VÉ -->
+              <section class="booking-block" id="ticketSection">
+                <div class="block-header">
+                  <div class="step-num">1</div>
+                  <div>
+                    <h2 class="block-title">Chọn Loại Vé Tham Dự</h2>
+                    <p class="block-subtitle">Chọn hạng vé phù hợp với nhu cầu tham dự của bạn.</p>
+                  </div>
+                </div>
+
+                <!-- Danh sách 3 loại vé tham dự -->
+                <div class="ticket-grid" id="ticketGridContainer">
+                  <!-- Được khởi tạo và render bởi js/baitap3.js -->
+                </div>
+
+                <!-- Bộ chọn số lượng vé (1 đến 5 vé) -->
+                <div class="qty-row">
+                  <div class="qty-label">
+                    <strong>Số Lượng Vé</strong>
+                    <span>Tối đa 5 vé trên một đơn đặt</span>
+                  </div>
+                  <div class="qty-stepper">
+                    <button type="button" class="btn-stepper" id="qtyMinusBtn" aria-label="Giảm số lượng vé">-</button>
+                    <input type="number" id="ticketQuantity" class="input-stepper" value="1" min="1" max="5" readonly>
+                    <button type="button" class="btn-stepper" id="qtyPlusBtn" aria-label="Tăng số lượng vé">+</button>
+                  </div>
+                </div>
+              </section>
+
+              <!-- BƯỚC 2: FORM THÔNG TIN NGƯỜI NHẬN VÉ (CẤU TRÚC MỚI, NÂNG CẤP ĐẦY ĐỦ) -->
+              <section class="booking-block" id="customerSection">
+                <div class="block-header">
+                  <div class="step-num">2</div>
+                  <div>
+                    <h2 class="block-title">Thông Tin Người Nhận Vé</h2>
+                    <p class="block-subtitle">Vui lòng điền chính xác để ban tổ chức gửi vé điện tử và mã QR qua email.</p>
+                  </div>
+                </div>
+
+                <!-- BỐ CỤC 2 CỘT HIỆN ĐẠI KÈM ICON VÀ VALIDATION ANIMATION -->
+                <div class="form-grid-2col">
+                  
+                  <!-- Họ và tên (Cột 1) -->
+                  <div class="form-group">
+                    <label class="form-label" for="customerName">
+                      Họ và tên <span class="req-star">*</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                      <span class="input-field-icon" aria-hidden="true">👤</span>
+                      <input 
+                        type="text" 
+                        id="customerName" 
+                        class="form-input with-icon" 
+                        placeholder="Ví dụ: Nguyễn Văn An"
+                        autocomplete="name"
+                        required
+                      >
+                      <span class="valid-check-icon" aria-hidden="true">✓</span>
+                    </div>
+                    <span class="field-error" id="nameError">Vui lòng nhập họ và tên (tối thiểu 2 ký tự).</span>
+                  </div>
+
+                  <!-- Số điện thoại (Cột 2) -->
+                  <div class="form-group">
+                    <label class="form-label" for="customerPhone">
+                      Số điện thoại <span class="req-star">*</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                      <span class="input-field-icon" aria-hidden="true">📞</span>
+                      <input 
+                        type="tel" 
+                        id="customerPhone" 
+                        class="form-input with-icon" 
+                        placeholder="Ví dụ: 0912345678"
+                        autocomplete="tel"
+                        required
+                      >
+                      <span class="valid-check-icon" aria-hidden="true">✓</span>
+                    </div>
+                    <span class="field-error" id="phoneError">Số điện thoại không hợp lệ (10 chữ số, ví dụ: 0912345678).</span>
+                  </div>
+
+                  <!-- Email nhận vé (Chiếm toàn bộ 2 cột) -->
+                  <div class="form-group col-span-full">
+                    <label class="form-label" for="customerEmail">
+                      Email nhận vé điện tử & thư xác nhận <span class="req-star">*</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                      <span class="input-field-icon" aria-hidden="true">✉️</span>
+                      <input 
+                        type="email" 
+                        id="customerEmail" 
+                        class="form-input with-icon" 
+                        placeholder="emailcuaban@gmail.com"
+                        autocomplete="email"
+                        required
+                      >
+                      <span class="valid-check-icon" aria-hidden="true">✓</span>
+                    </div>
+                    <span class="field-error" id="emailError">Vui lòng nhập địa chỉ email hợp lệ (ví dụ: ten@domain.com).</span>
+                    <span class="form-helper">
+                      📌 Vé điện tử, mã QR check-in và thư xác nhận từ ban tổ chức (<strong>tdo5175@gmail.com</strong>) sẽ được gửi đến hòm thư này.
+                    </span>
+                  </div>
+
+                  <!-- Đối tượng tham dự (Cột 1) -->
+                  <div class="form-group">
+                    <label class="form-label" for="customerRole">
+                      Đối tượng tham dự <span class="req-star">*</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                      <span class="input-field-icon" aria-hidden="true">🎓</span>
+                      <select id="customerRole" class="form-select with-icon">
+                        <option value="Sinh viên Đại Học Lạc Hồng (LHU)" selected>Sinh viên ĐH Lạc Hồng (LHU)</option>
+                        <option value="Sinh viên trường ĐH / CĐ khác">Sinh viên trường ĐH / CĐ khác</option>
+                        <option value="Người đi làm / Doanh nghiệp">Người đi làm / Doanh nghiệp</option>
+                        <option value="Giảng viên / Nghiên cứu sinh">Giảng viên / Nghiên cứu sinh</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Mã số sinh viên (MSSV) hoặc Đơn vị công tác (Cột 2) -->
+                  <div class="form-group">
+                    <label class="form-label" for="customerOrg">
+                      Mã SV hoặc Lớp / Đơn vị <span class="req-star">*</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                      <span class="input-field-icon" aria-hidden="true">🏢</span>
+                      <input 
+                        type="text" 
+                        id="customerOrg" 
+                        class="form-input with-icon" 
+                        placeholder="Ví dụ: 123000... hoặc Lớp 22CT111"
+                        required
+                      >
+                      <span class="valid-check-icon" aria-hidden="true">✓</span>
+                    </div>
+                    <span class="field-error" id="orgError">Vui lòng nhập mã sinh viên hoặc đơn vị công tác.</span>
+                    <span class="form-helper" style="font-size: 11.5px;">Dùng để in thẻ đeo check-in & cấp chứng nhận tham gia.</span>
+                  </div>
+
+                  <!-- Ghi chú hoặc câu hỏi cho diễn giả (Chiếm toàn bộ 2 cột) -->
+                  <div class="form-group col-span-full">
+                    <div class="textarea-header-row">
+                      <label class="form-label" for="customerNote" style="margin-bottom: 0;">
+                        Câu hỏi hoặc nội dung muốn thảo luận cùng diễn giả (Tùy chọn)
+                      </label>
+                      <span class="char-counter" id="noteCharCounter">0 / 200 ký tự</span>
+                    </div>
+                    <div class="input-icon-wrap" style="align-items: flex-start;">
+                      <span class="input-field-icon" style="top: 14px;" aria-hidden="true">💬</span>
+                      <textarea 
+                        id="customerNote" 
+                        class="form-textarea with-icon" 
+                        rows="3" 
+                        maxlength="200"
+                        placeholder="Ví dụ: Bạn muốn hỏi diễn giả về lộ trình thực chiến AI, xu hướng tuyển dụng hay giải đáp thắc mắc..."
+                      ></textarea>
+                    </div>
+
+                    <!-- Gợi ý câu hỏi nhanh 1 chạm (Quick Question Chips) -->
+                    <div class="question-chips-area">
+                      <span class="chips-label">💡 Gợi ý câu hỏi nhanh (nhấn để tự động điền):</span>
+                      <div class="chips-list">
+                        <button type="button" class="chip-item" data-question="Cơ hội việc làm mảng AI cho sinh viên mới ra trường thế nào?">
+                          💼 Cơ hội việc làm AI
+                        </button>
+                        <button type="button" class="chip-item" data-question="Lộ trình học AI bắt đầu từ con số 0 như thế nào?">
+                          🚀 Lộ trình học AI từ số 0
+                        </button>
+                        <button type="button" class="chip-item" data-question="Cách ứng dụng AI vào đồ án chuyên ngành hiệu quả nhất?">
+                          🛠️ Ứng dụng AI vào đồ án
+                        </button>
+                        <button type="button" class="chip-item" data-question="Kỹ năng nào quan trọng nhất khi làm việc với AI hiện nay?">
+                          🎯 Kỹ năng cốt lõi
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </section>
+
+            </div>
+
+            <!-- CỘT PHẢI: BẢNG KIỂM TRA ĐƠN HÀNG VÀ XÁC NHẬN -->
+            <aside class="booking-right-col">
+              <div class="summary-card">
+                
+                <div class="summary-header">
+                  <h3 class="summary-title">Kiểm Tra Đơn Đặt Vé</h3>
+                  <span class="summary-step-badge">Bước 3 / 3</span>
+                </div>
+
+                <div class="summary-list">
+                  <div class="summary-row">
+                    <span class="summary-row-label">Sự kiện:</span>
+                    <span class="summary-row-val" style="color: var(--color-primary);">AI Workshop 2026</span>
+                  </div>
+
+                  <div class="summary-row" id="rowSummaryName">
+                    <span class="summary-row-label">Người đặt:</span>
+                    <span class="summary-row-val" id="summaryName">Chưa nhập</span>
+                  </div>
+
+                  <div class="summary-row" id="rowSummaryPhone">
+                    <span class="summary-row-label">Số điện thoại:</span>
+                    <span class="summary-row-val" id="summaryPhone">Chưa nhập</span>
+                  </div>
+
+                  <div class="summary-row" id="rowSummaryEmail">
+                    <span class="summary-row-label">Email nhận vé:</span>
+                    <span class="summary-row-val" id="summaryEmail">Chưa nhập</span>
+                  </div>
+
+                  <div class="summary-row" id="rowSummaryRole">
+                    <span class="summary-row-label">Đối tượng:</span>
+                    <span class="summary-row-val" id="summaryRole">Sinh viên LHU</span>
+                  </div>
+
+                  <div class="summary-row" id="rowSummaryOrg">
+                    <span class="summary-row-label">Mã SV / Đơn vị:</span>
+                    <span class="summary-row-val" id="summaryOrg">Chưa nhập</span>
+                  </div>
+
+                  <div class="summary-divider"></div>
+
+                  <div class="summary-row" id="rowSummaryTicketType">
+                    <span class="summary-row-label">Loại vé:</span>
+                    <span class="summary-row-val" id="summaryTicketType">Vé Tiêu Chuẩn</span>
+                  </div>
+
+                  <div class="summary-row">
+                    <span class="summary-row-label">Đơn giá:</span>
+                    <span class="summary-row-val" id="summaryUnitPrice">150.000 đ</span>
+                  </div>
+
+                  <div class="summary-row">
+                    <span class="summary-row-label">Số lượng:</span>
+                    <span class="summary-row-val" id="summaryQuantity">1 vé</span>
+                  </div>
+                </div>
+
+                <!-- Tổng tiền thanh toán -->
+                <div class="summary-total-box">
+                  <span class="total-title">Tổng thanh toán:</span>
+                  <span class="total-number" id="summaryTotalPrice">150.000 đ</span>
+                </div>
+
+                <!-- Nút Xác nhận đặt vé (Submit) -->
+                <button type="submit" class="btn-confirm" id="confirmBookingBtn">
+                  <span class="spinner" id="submitSpinner"></span>
+                  <span id="submitBtnText">XÁC NHẬN ĐẶT VÉ ➔</span>
+                </button>
+
+                <p class="trust-badge">
+                  🔒 Thông tin của bạn được bảo mật tuyệt đối. Sau khi xác nhận, mã QR check-in và thư xác nhận sẽ được gửi tự động đến email của bạn từ <strong>tdo5175@gmail.com</strong>.
+                </p>
+
+                <!-- Ngăn cấu hình Google Apps Script Backend (Rút gọn, an toàn) -->
+                <div class="config-drawer">
+                  <button type="button" class="config-toggle-btn" id="configToggleBtn">
+                    <span>⚙️ Cấu hình Google Apps Script</span>
+                    <span id="scriptBadge" style="font-size: 11px; color: var(--color-success);">Sẵn sàng</span>
+                  </button>
+
+                  <div class="config-body" id="configDrawerBody">
+                    <input 
+                      type="url" 
+                      id="scriptUrlInput" 
+                      class="form-input" 
+                      placeholder="Dán link Web App (https://script.google.com/.../exec)"
+                    >
+                    <button type="button" id="saveScriptUrlBtn">Lưu đường dẫn Web App</button>
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+
+          </div>
+        </form>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       4. MODAL THÔNG BÁO ĐẶT VÉ THÀNH CÔNG (SUCCESS POPUP VỚI QR SCANNER FRAME)
+       ========================================================================== -->
+  <div class="modal-overlay" id="orderSuccessModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      
+      <div class="modal-header">
+        <h3 id="modalTitle">🎉 ĐẶT VÉ THÀNH CÔNG!</h3>
+        <button type="button" class="modal-close" id="closeModalBtn" aria-label="Đóng popup">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <div class="success-alert">
+          <div class="success-alert-icon">✓</div>
+          <div>Đơn đặt vé đã được lưu vào hệ thống và xác nhận thành công!</div>
+        </div>
+
+        <!-- Chi tiết vé đã ghi nhận -->
+        <div class="modal-ticket-summary">
+          <div class="ticket-item">
+            <span>Mã đơn vé:</span>
+            <span id="modalTicketCode" style="color: var(--color-danger); font-size: 15px; font-weight: 700;">AI2026-000000</span>
+          </div>
+          <div class="ticket-item">
+            <span>Họ và tên:</span>
+            <span id="modalCustomerName">Nguyễn Văn An</span>
+          </div>
+          <div class="ticket-item">
+            <span>Số điện thoại:</span>
+            <span id="modalCustomerPhone">0912345678</span>
+          </div>
+          <div class="ticket-item">
+            <span>Email nhận vé:</span>
+            <span id="modalRecipientEmail">an@gmail.com</span>
+          </div>
+          <div class="ticket-item">
+            <span>Đối tượng & Đơn vị:</span>
+            <span id="modalCustomerRoleOrg">Sinh viên LHU (22CT111)</span>
+          </div>
+          <div class="ticket-item">
+            <span>Loại vé & Số lượng:</span>
+            <span id="modalTicketSummary">Vé Tiêu Chuẩn (1 vé)</span>
+          </div>
+          <div class="ticket-item">
+            <span>Tổng thanh toán:</span>
+            <span id="modalTotalPrice" style="color: var(--color-success); font-size: 15px; font-weight: 700;">150.000 đ</span>
+          </div>
+        </div>
+
+        <!-- Khung hiển thị mã QR Check-in với viền định vị công nghệ -->
+        <div class="qr-container">
+          <div class="qr-scanner-box">
+            <div class="qr-corner top-left"></div>
+            <div class="qr-corner top-right"></div>
+            <div class="qr-corner bottom-left"></div>
+            <div class="qr-corner bottom-right"></div>
+            <img id="modalQrImage" class="qr-image" src="" alt="Mã QR Check-in">
+          </div>
+          <div class="qr-caption">
+            <strong>Mã QR Check-in Điện Tử</strong><br>
+            Xuất trình mã này tại bàn đón tiếp của Hội trường A để nhận thẻ vào cửa.
+          </div>
+        </div>
+
+        <!-- Thông báo gửi email tự động -->
+        <div class="email-dispatched-box">
+          ✉️ <strong>Thông báo gửi thư:</strong> Thư xác nhận kèm đầy đủ thông tin vé đã được gửi tự động đến email của bạn từ tài khoản ban tổ chức: <strong>tdo5175@gmail.com</strong>.
+        </div>
+
+        <!-- Các nút hành động trong modal -->
+        <div class="modal-actions">
+          <button type="button" class="btn-modal btn-modal-primary" id="downloadQrBtn">
+            📥 Tải Mã QR Check-in
+          </button>
+          <button type="button" class="btn-modal btn-modal-secondary" id="printTicketBtn">
+            🖨️ In Vé Tham Dự
+          </button>
+          <button type="button" class="btn-modal btn-modal-secondary" id="dismissModalBtn">
+            Đóng & Hoàn Tất
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       5. FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div>
+        <p><strong>AI & Future Careers Workshop 2026</strong> • Trường Đại Học Lạc Hồng</p>
+        <p style="font-size: 12px; margin-top: 3px;">Dự án Bài tập Nhóm 2 • Khoa Công Nghệ Thông Tin</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="index.html" class="footer-link">Trang Chủ</a>
+        <a href="Baitap1.html" class="footer-link">Bài 1: Dashboard</a>
+        <a href="Baitap2.html" class="footer-link">Bài 2: Weather</a>
+        <a href="Baitap4.html" class="footer-link">Bài 4: Aura Sound</a>
+        <span>•</span>
+        <span>Hỗ trợ: tdo5175@gmail.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       6. JAVASCRIPT: LOGIC ĐĂNG KÝ VÉ, VALIDATION & GOOGLE SHEETS
+       ========================================================================== -->
+  <script src="js/baitap3.js"></script>
+</body>
+</html>

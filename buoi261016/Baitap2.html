@@ -3,236 +3,372 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BÀI TẬP 2: Weather & Travel Planner - Lên Kế Hoạch Du Lịch Thông Minh</title>
-    <link rel="stylesheet" href="css/baitap2.css">
+  <title>BÀI TẬP 2: Weather & Travel Planner - Lập Kế Hoạch Du Lịch Thông Minh</title>
+  <link rel="stylesheet" href="css/baitap2.css">
 </head>
 <body>
 
   <!-- ==========================================================================
-       CONTAINER CHÍNH
+       CONTAINER CHÍNH CỦA ỨNG DỤNG
        ========================================================================== -->
-  <div class="app-container">
+  <div class="app-wrapper">
 
-    <!-- Header ứng dụng -->
+    <!-- 1. HEADER KÍNH MỜ (APP BAR) -->
     <header class="app-header">
-      <div class="brand-wrap">
-        <span class="brand-logo-icon">🧭</span>
+      <div class="brand-section">
+        <span class="brand-badge-pill">NHÓM 2 • ĐH LẠC HỒNG</span>
         <div class="brand-text">
           <h1>Weather & Travel Planner</h1>
-          <p>Lập Kế Hoạch Chuyến Đi Thông Minh & Dự Báo Thời Tiết</p>
+          <p>Lập Kế Hoạch Du Lịch & Thời Tiết Trực Tiếp Vệ Tinh (34 Tỉnh Thành)</p>
         </div>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <div class="header-quick-stats">
-          <span>📍 Đang chọn: <strong id="headerCityName">Đà Lạt</strong></span>
-          <span>•</span>
-          <span>📅 Số điểm đến: <strong id="headerPlaceCount">0</strong></span>
+      <div class="header-status-panel">
+        <!-- Bộ chuyển đổi chế độ giao diện 3 nấc: Tự động (giờ thực) / Sáng / Tối -->
+        <div class="theme-switch-deck" role="group" aria-label="Chế độ giao diện ngày đêm">
+          <button type="button" class="theme-toggle-btn active" data-theme="auto" title="Tự động theo giờ thực (Sáng: 06:00-18:00 | Tối: 18:00-06:00)">
+            <span>🕒 Tự động</span>
+          </button>
+          <button type="button" class="theme-toggle-btn" data-theme="light" title="Chuyển sang giao diện Kính Trắng Sáng">
+            <span>☀️ Sáng</span>
+          </button>
+          <button type="button" class="theme-toggle-btn" data-theme="dark" title="Chuyển sang giao diện Kính Tối Huyền Bí">
+            <span>🌙 Tối</span>
+          </button>
         </div>
 
-        <a href="Baitap1.html" class="btn-export-txt" style="text-decoration: none; padding: 6px 14px; font-size: 12px; background: rgba(99, 102, 241, 0.25); border-color: #818cf8;" title="Chuyển sang Bài Tập 1 (AI Dashboard)">
-          📋 Bài Tập 1
-        </a>
+        <div class="stat-chip">
+          <span>Điểm đến:</span>
+          <strong id="headerCityName">Đà Lạt</strong>
+        </div>
 
-        <a href="index.html" class="btn-export-txt" style="text-decoration: none; padding: 6px 14px; font-size: 12px; background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3);" title="Về Trang Chủ Hub">
-          🏠 Trang Chủ
-        </a>
+        <div class="stat-chip">
+          <span>Lịch trình:</span>
+          <strong id="headerPlaceCount">0/0</strong>
+        </div>
+
+        <div class="stat-chip clock-chip" title="Đồng hồ thời gian thực">
+          <span id="headerRealClock">--:--:--</span>
+        </div>
+
+        <nav class="nav-actions-group">
+          <a href="Baitap1.html" class="btn-nav-jump" title="Chuyển sang Bài 1: AI Dashboard">Bài 1</a>
+          <a href="Baitap3.html" class="btn-nav-jump" title="Chuyển sang Bài 3: Event Registration">Bài 3</a>
+          <a href="Baitap4.html" class="btn-nav-jump" title="Chuyển sang Bài 4: Quản lý bán hàng">Bài 4</a>
+          <a href="index.html" class="btn-nav-jump active-hub" title="Trở về Trang Chủ Hub">Trang Chủ</a>
+        </nav>
       </div>
     </header>
 
-    <!-- Khung chính 2 cột: Cột trái (Thời tiết) & Cột phải (Lịch trình) -->
-    <main class="main-grid">
+    <!-- 2. KHUNG LƯỚI CHÍNH 2 CỘT LOGIC: TRÁI (THỜI TIẾT) & PHẢI (LỊCH TRÌNH 2 TẦNG) -->
+    <main class="main-two-columns">
 
       <!-- ======================================================================
-           CỘT TRÁI: WEATHER MODULE & SMART HUB
+           CỘT TRÁI: WEATHER MODULE & SMART HUB (THỜI TIẾT VÀ KHỞI HÀNH)
            ====================================================================== -->
-      <section class="glass-card">
-        
-        <div class="card-title">
-          <span>🌦️ Thông Tin Thời Tiết & Điểm Đến</span>
-        </div>
+      <aside class="left-column-stack">
 
-        <!-- Ô chọn thành phố (<select>) -->
-        <div class="city-selector-wrap">
-          <label for="citySelect" class="selector-label">Chọn Thành Phố Dự Kiến Đến:</label>
-          <select id="citySelect" class="city-select" aria-label="Chọn thành phố du lịch">
-            <!-- Được render hoặc đồng bộ từ dữ liệu JavaScript -->
-            <option value="dalat">🌸 Đà Lạt (Lâm Đồng)</option>
-            <option value="bienhoa">🌳 Biên Hòa (Đồng Nai)</option>
-            <option value="vungtau">🌊 Vũng Tàu (Bà Rịa - Vũng Tàu)</option>
-            <option value="sapa">⛰️ Sa Pa (Lào Cai)</option>
-            <option value="phuquoc">🏝️ Phú Quốc (Kiên Giang)</option>
-          </select>
-        </div>
-
-        <!-- Thẻ hiển thị thời tiết chính (Nhiệt độ, Tình trạng, Icon động) -->
-        <div class="weather-display-hero" id="weatherHeroCard">
-          <div class="weather-glow" id="weatherGlow"></div>
-
-          <div class="weather-primary-info">
-            <span class="weather-city-name" id="weatherCityTitle">Đà Lạt</span>
-            <span class="weather-condition-tag" id="weatherCondition">
-              <span id="conditionIcon">⛅</span>
-              <span id="conditionText">Se lạnh, sương mù</span>
-            </span>
-            <div class="weather-temp-huge" id="weatherTemp">16°C</div>
+        <!-- THẺ CHỌN THÀNH PHỐ & KHÁM PHÁ 34 TỈNH THÀNH -->
+        <section class="glass-panel">
+          <div class="panel-header-title">
+            <span class="panel-title-text">Điểm Đến & Thời Tiết</span>
+            <span class="panel-sub-tag">34 Tỉnh Thành Toàn Quốc</span>
           </div>
 
-          <div class="weather-icon-huge" id="weatherHeroIcon">
-            ⛅
-          </div>
-        </div>
+          <!-- Bộ chọn tỉnh thành chính (<select>) theo rubric -->
+          <div class="city-picker-box">
+            <div class="picker-label-row">
+              <label for="citySelect" class="picker-title">Chọn Tỉnh / Thành Phố:</label>
+              
+              <!-- Bộ lọc nhanh vùng miền -->
+              <div class="region-filters-wrap" role="tablist" aria-label="Lọc theo miền">
+                <button type="button" class="region-pill active" data-region="all">Tất cả</button>
+                <button type="button" class="region-pill" data-region="bac">Bắc</button>
+                <button type="button" class="region-pill" data-region="trung">Trung</button>
+                <button type="button" class="region-pill" data-region="nam">Nam</button>
+              </div>
+            </div>
 
-        <!-- Các thông số độ ẩm, sức gió -->
-        <div class="weather-sub-metrics">
-          <div class="metric-badge">
-            <span class="metric-badge-icon">💧</span>
-            <div class="metric-badge-data">
-              <p>Độ Ẩm Không Khí</p>
-              <strong id="weatherHumidity">88%</strong>
+            <!-- Thẻ select chọn nhanh 34 tỉnh thành và ô lọc nhanh -->
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <select id="citySelect" class="city-select-dropdown" style="flex: 2; min-width: 180px;" aria-label="Chọn thành phố du lịch">
+                <!-- Render tự động 34 tỉnh thành: Đà Lạt, Biên Hòa, Vũng Tàu, Hà Nội... -->
+              </select>
+              <input 
+                type="text" 
+                id="provinceSearchInput" 
+                class="form-control-input" 
+                style="flex: 1; min-width: 110px; font-size: 12px; padding: 8px 10px;" 
+                placeholder="Lọc 34 tỉnh..."
+                autocomplete="off"
+              />
+            </div>
+
+            <!-- Dải chips 34 tỉnh thành trực quan cuộn ngang -->
+            <div id="provinceChipsRibbon" class="province-chips-ribbon" role="region" aria-label="Dải thẻ chọn nhanh tỉnh thành">
+              <!-- Render tự động bởi js/baitap2.js -->
             </div>
           </div>
 
-          <div class="metric-badge">
-            <span class="metric-badge-icon">💨</span>
-            <div class="metric-badge-data">
-              <p>Tốc Độ Gió</p>
-              <strong id="weatherWind">8 km/h</strong>
+          <!-- THẺ HIỂN THỊ THỜI TIẾT CHÍNH (WEATHER DISPLAY HERO VỚI QUẦNG SÁNG PHẢN QUANG) -->
+          <div class="weather-hero-card" id="weatherHeroCard">
+            <!-- Quầng sáng ambient đổi màu theo thời tiết (Nắng cam, Mưa xanh, Lạnh tím) -->
+            <div class="weather-ambient-glow" id="weatherGlow"></div>
+
+            <div class="weather-hero-top">
+              <div class="satellite-status">
+                <span class="live-pulse-dot"></span>
+                <span class="live-text" id="liveSatelliteIndicator">Trực Tiếp Vệ Tinh</span>
+              </div>
+              <button type="button" id="refreshWeatherBtn" class="btn-refresh-pill" title="Làm mới thời tiết vệ tinh">
+                Làm mới
+              </button>
+            </div>
+
+            <div class="weather-hero-mid">
+              <h2 class="weather-city-heading" id="weatherCityTitle">Đà Lạt (Lâm Đồng)</h2>
+              <span class="weather-region-badge" id="weatherRegionTag">Cao nguyên</span>
+            </div>
+
+            <div class="weather-hero-temp-row">
+              <div class="temp-huge-wrap">
+                <div class="temp-huge-value" id="weatherTemp">17°C</div>
+                <div class="apparent-temp-wrap">
+                  <span>Cảm giác</span>
+                  <strong id="weatherApparentTemp">18°C</strong>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span id="weatherHeroIcon" class="weather-hero-floating-icon" title="Tình trạng thời tiết">⛅</span>
+                <div class="condition-pill-wrap">
+                  <span class="condition-tag-text" id="conditionText">Se lạnh, sương mù</span>
+                  <span class="condition-glyph" id="conditionIcon">Mát mẻ</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lưới thông số phụ: Độ ẩm, Tốc độ gió, Lượng mưa -->
+            <div class="weather-metrics-triad">
+              <div class="metric-card">
+                <span class="metric-name">💧 Độ Ẩm</span>
+                <span class="metric-data" id="weatherHumidity">88%</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-name">💨 Tốc Độ Gió</span>
+                <span class="metric-data" id="weatherWind">8 km/h</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-name">🌧️ Lượng Mưa</span>
+                <span class="metric-data" id="weatherPrecip">0 mm</span>
+              </div>
+            </div>
+
+            <div class="weather-footer-timestamp" id="weatherLastUpdated">
+              Cập nhật trực tiếp qua Open-Meteo API
             </div>
           </div>
-        </div>
 
-        <!-- Gợi ý thông minh (Smart Suggestions - Mục 4 điểm 9-10) -->
-        <div class="suggestion-box" id="suggestionBox">
-          <span class="suggestion-box-icon" id="suggestionIcon">🧥</span>
-          <div class="suggestion-box-text">
-            <h4 id="suggestionTitle">Gợi Ý Trang Phục</h4>
-            <p id="suggestionContent">Trời se lạnh về chiều tối, nên chuẩn bị áo len, khăn quàng cổ và thưởng thức sữa đậu nành nóng ven hồ!</p>
-          </div>
-        </div>
-
-        <!-- Review từ Travel Blogger về địa điểm nổi bật -->
-        <div class="blogger-quote" id="bloggerQuote">
-          "Hồ Xuân Hương sáng sớm mờ sương tựa tranh thủy mặc. Đừng quên thuê xe đạp đôi vòng quanh hồ và ghé tiệm cà phê ngắm thông reo."
-        </div>
-
-        <!-- Đồng hồ đếm ngược chuyến đi (Countdown Timer - Mục 4 điểm 9-10) -->
-        <div class="countdown-section">
-          <div class="countdown-header">
-            <span>⏳ Đếm Ngược Ngày Khởi Hành:</span>
-            <input type="datetime-local" id="departureDateInput" class="datetime-input" title="Chọn ngày và giờ khởi hành">
+          <!-- GỢI Ý TRANG PHỤC THÔNG MINH (SMART SUGGESTIONS - MỤC 4 ĐIỂM 9-10) -->
+          <div class="smart-suggestion-box" id="suggestionBox">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="suggestionIcon" style="font-size: 18px;">🧥</span>
+              <h4 class="suggestion-headline" id="suggestionTitle">Gợi Ý Trang Phục & Hành Trình</h4>
+            </div>
+            <p class="suggestion-body" id="suggestionContent">Trời se lạnh về đêm và sáng sớm. Nên chuẩn bị áo len, khăn quàng cổ và thưởng thức sữa đậu nành nóng ven hồ!</p>
           </div>
 
-          <div class="countdown-display-grid">
-            <div class="time-slot">
-              <div class="time-val" id="countDays">00</div>
-              <div class="time-unit">Ngày</div>
+          <!-- REVIEW TỪ TRAVEL BLOGGER VỀ ĐỊA ĐIỂM -->
+          <div class="travel-blogger-card" id="bloggerQuote">
+            "Hồ Xuân Hương sáng sớm mờ sương tựa tranh thủy mặc. Đừng quên thuê xe đạp đôi vòng quanh hồ và ghé tiệm cà phê ngắm thông reo."
+          </div>
+
+          <!-- ĐỒNG HỒ ĐẾM NGƯỢC CHUYẾN ĐI (COUNTDOWN TIMER - MỤC 4 ĐIỂM 9-10) -->
+          <div class="countdown-module">
+            <div class="countdown-bar-top">
+              <span class="countdown-title">Đếm Ngược Khởi Hành:</span>
+              <input 
+                type="datetime-local" 
+                id="departureDateInput" 
+                class="datetime-picker-input" 
+                title="Chọn ngày giờ xuất phát"
+              />
             </div>
-            <div class="time-slot">
-              <div class="time-val" id="countHours">00</div>
-              <div class="time-unit">Giờ</div>
-            </div>
-            <div class="time-slot">
-              <div class="time-val" id="countMinutes">00</div>
-              <div class="time-unit">Phút</div>
-            </div>
-            <div class="time-slot">
-              <div class="time-val" id="countSeconds">00</div>
-              <div class="time-unit">Giây</div>
+
+            <div class="countdown-slots-grid">
+              <div class="time-slot-unit">
+                <div class="slot-number" id="countDays">00</div>
+                <div class="slot-text">Ngày</div>
+              </div>
+              <div class="time-slot-unit">
+                <div class="slot-number" id="countHours">00</div>
+                <div class="slot-text">Giờ</div>
+              </div>
+              <div class="time-slot-unit">
+                <div class="slot-number" id="countMinutes">00</div>
+                <div class="slot-text">Phút</div>
+              </div>
+              <div class="time-slot-unit">
+                <div class="slot-number" id="countSeconds">00</div>
+                <div class="slot-text">Giây</div>
+              </div>
             </div>
           </div>
-        </div>
 
-      </section>
+        </section>
+
+      </aside>
 
       <!-- ======================================================================
-           CỘT PHẢI: ITINERARY MODULE (QUẢN LÝ LỊCH TRÌNH DU LỊCH)
+           CỘT PHẢI: ITINERARY MODULE (LỊCH TRÌNH 2 TẦNG: ĐỀ XUẤT & QUẢN LÝ)
            ====================================================================== -->
-      <section class="glass-card">
-        
-        <div class="itinerary-header-bar">
-          <div class="card-title" style="border: none; padding: 0; margin: 0;">
-            <span>🗺️ Danh Sách Địa Điểm Lịch Trình</span>
+      <section class="right-column-stack">
+
+        <!-- TẦNG 1: ĐỊA ĐIỂM ĐỀ XUẤT CỦA TỈNH THÀNH HIỆN TẠI -->
+        <article class="glass-panel recommendations-deck">
+          <div class="panel-header-title">
+            <h3 class="panel-title-text" id="recommendedHeading">Địa Điểm Đề Xuất Tại Điểm Đến</h3>
+            <span class="panel-sub-tag">Bấm "+ Thêm" để đưa vào lịch trình</span>
           </div>
 
-          <!-- Nút Xuất Lịch Trình dạng .txt (Mục 4 điểm 9-10) -->
-          <button id="exportTxtBtn" class="btn-export-txt" title="Tải xuống lịch trình thành file text">
-            📥 Xuất Lịch Trình (.txt)
-          </button>
-        </div>
+          <div id="recommendedGrid" class="recommended-cards-grid">
+            <!-- Render tự động 4 danh lam thắng cảnh tiêu biểu của tỉnh -->
+          </div>
+        </article>
 
-        <!-- Form nhập địa điểm và thời gian ghé thăm -->
-        <form id="itineraryForm" class="itinerary-form" onsubmit="return false;">
-          <input 
-            type="text" 
-            id="placeNameInput" 
-            class="input-place" 
-            placeholder="Tên địa điểm (Ví dụ: Hồ Xuân Hương, Thác Giang Điền...)"
-            autocomplete="off"
-          />
+        <!-- TẦNG 2: TẠO THÊM TIẾP CHỖ MUỐN ĐI & QUẢN LÝ LỊCH TRÌNH -->
+        <article class="glass-panel itinerary-board-panel">
+          
+          <!-- Form nhập liệu gồm 2 ô input chuẩn: "Tên địa điểm" và "Thời gian ghé thăm" + Ghi chú -->
+          <form id="itineraryForm" class="add-place-form-box" onsubmit="return false;">
+            <div class="form-header-line">
+              <h3 class="form-header-title" id="formCityTitle">Thêm địa điểm muốn đến</h3>
+              <span style="font-size: 11.5px; color: var(--text-dim);">Lưu trữ bền vững LocalStorage</span>
+            </div>
 
-          <input 
-            type="text" 
-            id="placeTimeInput" 
-            class="input-time" 
-            placeholder="Thời gian (Vd: 08:30 AM)"
-            autocomplete="off"
-          />
+            <div class="form-inputs-group">
+              <input 
+                type="text" 
+                id="placeNameInput" 
+                class="form-control-input input-name" 
+                placeholder="Tên địa điểm (Ví dụ: Thác Giang Điền, Hồ Xuân Hương...)"
+                autocomplete="off"
+              />
 
-          <button type="submit" id="addPlaceBtn" class="btn-add-place">
-            <span>+ Thêm Địa Điểm</span>
-          </button>
-        </form>
+              <input 
+                type="text" 
+                id="placeTimeInput" 
+                class="form-control-input input-time" 
+                placeholder="Thời gian (Vd: 08:30 AM)"
+                autocomplete="off"
+              />
 
-        <!-- Thanh bộ lọc trạng thái và thao tác nhanh -->
-        <div class="list-filter-row">
-          <div class="filter-tabs">
-            <button class="tab-btn active" data-filter="all">Tất cả (<span id="countAll">0</span>)</button>
-            <button class="tab-btn" data-filter="upcoming">Chưa đi (<span id="countUpcoming">0</span>)</button>
-            <button class="tab-btn" data-filter="visited">Đã ghé thăm (<span id="countVisited">0</span>)</button>
+              <input 
+                type="text" 
+                id="placeNoteInput" 
+                class="form-control-input input-note" 
+                placeholder="Ghi chú (Vd: Cắm trại, check-in...)"
+                autocomplete="off"
+              />
+
+              <button type="submit" id="addPlaceBtn" class="btn-submit-add">
+                + Thêm Địa Điểm
+              </button>
+            </div>
+          </form>
+
+          <!-- Thanh công cụ quản lý danh sách tuân thủ quy chuẩn .skill/skill.md:
+               Tìm kiếm, Lọc, Sắp xếp (Title), Phân trang (10, 20, 50, all) -->
+          <div class="board-toolbar">
+            
+            <!-- Lọc theo Tab trạng thái -->
+            <div class="tab-pills-row" role="tablist">
+              <button type="button" class="tab-btn active" data-filter="all">Tất cả</button>
+              <button type="button" class="tab-btn" data-filter="upcoming">Chưa đi</button>
+              <button type="button" class="tab-btn" data-filter="visited">Đã đến</button>
+            </div>
+
+            <div class="toolbar-controls-right">
+              <!-- 1. Tìm kiếm (Search) -->
+              <input 
+                type="text" 
+                id="itinerarySearchInput" 
+                class="search-itinerary-box" 
+                placeholder="Tìm địa điểm..."
+                autocomplete="off"
+              />
+
+              <!-- 2. Sắp xếp trên title theo chuẩn skill.md (A-Z, Z-A) -->
+              <select id="itinerarySortSelect" class="select-control" aria-label="Sắp xếp danh sách">
+                <option value="title-asc">Tên (A đến Z)</option>
+                <option value="title-desc">Tên (Z đến A)</option>
+                <option value="time">Theo khung giờ</option>
+                <option value="default">Mặc định</option>
+              </select>
+
+              <!-- 3. Phân trang theo chuẩn skill.md (10, 20, 50, all) -->
+              <select id="pageSizeSelect" class="select-control" aria-label="Số lượng mỗi trang">
+                <option value="all">Hiển thị: Tất cả</option>
+                <option value="10">10 điểm / trang</option>
+                <option value="20">20 điểm / trang</option>
+                <option value="50">50 điểm / trang</option>
+              </select>
+
+              <!-- 4. Xuất dữ liệu ra file text (.txt) theo Mục 4 điểm 9-10 -->
+              <button type="button" id="exportTxtBtn" class="btn-export-txt" title="Tải xuống lịch trình dạng file .txt">
+                Xuất file (.txt)
+              </button>
+
+              <!-- Xóa toàn bộ lịch trình thành phố hiện tại -->
+              <button type="button" id="clearAllBtn" class="btn-clear-all" title="Xóa tất cả địa điểm của thành phố này">
+                Xóa tất cả
+              </button>
+            </div>
+
           </div>
 
-          <button id="clearAllBtn" class="btn-clear-all" title="Xóa toàn bộ lịch trình">
-            Xóa tất cả
-          </button>
-        </div>
-
-        <!-- Thẻ ul chứa danh sách địa điểm -->
-        <ul id="itineraryList" class="itinerary-list">
-          <!-- Các thẻ <li> sẽ được render tự động bằng JavaScript -->
-        </ul>
-
-        <!-- Trạng thái trống (Empty State khi chưa có địa điểm nào) -->
-        <div id="emptyState" class="empty-itinerary-state" style="display: none;">
-          <div class="empty-itinerary-icon">🎒</div>
-          <p>Chưa có địa điểm nào trong chuyến đi này. Hãy thêm một địa điểm bạn muốn ghé thăm nhé!</p>
-        </div>
-
-        <!-- Footer thống kê số lượng địa điểm -->
-        <div class="itinerary-footer-bar">
-          <div>
-            <span>Tổng cộng: <strong id="totalPlacesCount">0</strong> địa điểm</span>
+          <!-- Thanh tiến độ check-in chuyến đi -->
+          <div class="itinerary-progress-card">
+            <div class="progress-labels-row">
+              <span>
+                Tổng cộng: <strong id="totalPlacesCount">0</strong> • Chưa đi: <strong id="upcomingPlacesCount">0</strong> • Đã đến: <strong id="visitedPlacesCount" style="color: #6ee7b7;">0</strong>
+              </span>
+              <span id="itineraryProgressText">0%</span>
+            </div>
+            <div class="progress-track">
+              <div id="itineraryProgressFill" class="progress-bar-fill"></div>
+            </div>
           </div>
-          <div>
-            <span>Đã check-in: <strong id="visitedPlacesCount" style="color: #6ee7b7;">0</strong> địa điểm</span>
+
+          <!-- Danh sách địa điểm lịch trình (ul#itineraryList) -->
+          <ul id="itineraryList" class="itinerary-items-list">
+            <!-- Render tự động bởi js/baitap2.js với hiệu ứng trượt êm ái -->
+          </ul>
+
+          <!-- Trạng thái trống (Empty State khi chưa có địa điểm) -->
+          <div id="emptyState" class="empty-itinerary-state" style="display: none;">
+            <p>Chưa có địa điểm nào trong chuyến đi này. Hãy chọn nhanh từ mục "Địa điểm đề xuất" hoặc thêm địa điểm mới vào kế hoạch!</p>
           </div>
-        </div>
+
+          <!-- Điều khiển phân trang (Pagination 10, 20, 50, all) -->
+          <div id="paginationContainer" class="pagination-deck" style="display: none;">
+            <!-- Render tự động khi chọn phân trang -->
+          </div>
+
+        </article>
 
       </section>
 
     </main>
 
-    <!-- Bản quyền / Footer trang -->
-    <footer class="app-copyright">
-      BÀI TẬP 2: WEATHER & TRAVEL PLANNER • HTML5 Semantic • Glassmorphism CSS3 • JavaScript thuần LocalStorage
+    <!-- 3. FOOTER BẢN QUYỀN TRANG -->
+    <footer class="app-footer">
+      BÀI TẬP 2: WEATHER & TRAVEL PLANNER • NHÓM 2 ĐẠI HỌC LẠC HỒNG • HTML5 SEMANTIC • DYNAMIC GLASSMORPHISM • JAVASCRIPT THUẦN
     </footer>
 
   </div>
 
-  <!-- ==========================================================================
-       10. MÃ JAVASCRIPT THUẦN: ARRAY, OBJECT, DOM & LOCALSTORAGE
-       Tổ chức module logic, chú thích chi tiết, không lỗi Console
-       ========================================================================== -->
-    <script src="js/baitap2.js"></script>
+  <!-- JavaScript logic tách file độc lập external -->
+  <script src="js/baitap2.js"></script>
 </body>
 </html>

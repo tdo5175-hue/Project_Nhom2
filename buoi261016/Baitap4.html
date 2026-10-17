@@ -3,219 +3,787 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f4f2ec">
-  <meta name="description" content="AURA SOUND — âm thanh tinh tế cho những khoảnh khắc đáng nhớ. Khám phá tai nghe và loa không dây.">
-  <title>AURA SOUND — Hear your own world</title>
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="AURA SOUND — Thương hiệu thiết bị âm thanh cao cấp. Thiết kế tối giản, chất âm chuẩn phòng thu.">
+  <title>AURA SOUND — Thiết Bị Âm Thanh Cao Cấp</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans (Giao diện hiện đại, dễ đọc, chuẩn web thương mại) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- File CSS độc lập theo chuẩn .skill -->
   <link rel="stylesheet" href="css/baitap4.css">
+
+  <!-- File JavaScript độc lập theo chuẩn .skill -->
   <script src="js/baitap4.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <a class="wordmark" href="#home" aria-label="AURA SOUND - về đầu trang" data-i18n-aria-label="wordmarkHome">
-      <span class="wordmark-icon" aria-hidden="true">◖</span>
-      <span>AURA<span class="wordmark-light">SOUND</span></span>
-    </a>
 
-    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="primaryNav">
-      <span></span><span></span>
-    </button>
+  <!-- ==========================================================================
+       1. THANH ĐIỀU HƯỚNG DỰ ÁN & SITE HEADER CHUẨN MỰC
+       ========================================================================== -->
+  <div class="project-hub-bar">
+    <div class="container hub-bar-inner">
+      <span class="hub-brand-tag">ĐẠI HỌC LẠC HỒNG • NHÓM 2</span>
+      <div class="hub-nav-links">
+        <a href="index.html" class="hub-link" title="Trang Chủ Hub">🏠 Trang Chủ</a>
+        <a href="Baitap1.html" class="hub-link" title="Bài 1: AI Dashboard">📋 Bài 1</a>
+        <a href="Baitap2.html" class="hub-link" title="Bài 2: Weather & Travel Planner">🧭 Bài 2</a>
+        <a href="Baitap3.html" class="hub-link" title="Bài 3: Đặt Vé Sự Kiện">🎫 Bài 3</a>
+        <a href="Baitap4.html" class="hub-link active" title="Bài 4: Landing Page Thương Hiệu">🎧 Bài 4</a>
+      </div>
+    </div>
+  </div>
 
-    <nav class="primary-nav" id="primaryNav" aria-label="Điều hướng chính" data-i18n-aria-label="navigation">
-      <a href="#collection" data-i18n="navProducts">Sản phẩm</a>
-      <a href="#story" data-i18n="navStory">Câu chuyện</a>
-      <a href="#reviews" data-i18n="navReviews">Đánh giá</a>
-    </nav>
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      
+      <!-- Brand Logo Tối Giản Thực Tế -->
+      <a class="brand-logo" href="#home" aria-label="AURA SOUND - Về đầu trang">
+        <span class="logo-mark">AURA</span>
+        <span class="logo-sub">SOUND</span>
+      </a>
 
-    <div class="header-actions">
-      <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch to English" title="Switch to English">EN</button>
-      <button class="bag-button" id="bagButton" type="button" aria-label="Giỏ hàng, 0 sản phẩm">
-      <span data-i18n="cart">Giỏ hàng</span>
-      <span class="bag-count" id="bagCount">0</span>
-      </button>
+      <!-- Menu Điều Hướng Chính -->
+      <nav class="primary-nav" id="primaryNav" aria-label="Điều hướng trang web">
+        <a href="#showroom" class="nav-item" data-i18n="navShowroom">Showroom Sản Phẩm</a>
+        <a href="#collection" class="nav-item" data-i18n="navCollection">Bộ Sưu Tập</a>
+        <a href="#specs" class="nav-item" data-i18n="navSpecs">Thông Số Kỹ Thuật</a>
+        <a href="#about" class="nav-item" data-i18n="navAbout">Về Thương Hiệu</a>
+        <a href="#reviews" class="nav-item" data-i18n="navReviews">Đánh Giá</a>
+      </nav>
+
+      <!-- Nhóm Thao Tác Header -->
+      <div class="header-actions">
+        <!-- Nút Tra Cứu Đề Bài & Rubric Chấm Điểm -->
+        <button class="btn-action-outline" id="openSpecModalBtn" type="button" title="Xem đặc tả đề bài và Rubric">
+          <span>📋</span>
+          <span class="btn-text" data-i18n="specBtn">Đề Bài & Rubric</span>
+        </button>
+
+        <!-- Nút Chuyển Ngữ Song Ngữ VI / EN -->
+        <button class="btn-lang-switch" id="languageToggle" type="button" aria-label="Switch to English" title="Đổi ngôn ngữ">
+          <span id="langFlag">EN</span>
+        </button>
+
+        <!-- Giỏ Hàng -->
+        <button class="btn-cart" id="bagButton" type="button" aria-label="Giỏ hàng">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-text" data-i18n="cartLabel">Giỏ hàng</span>
+          <span class="cart-badge" id="bagCount">0</span>
+        </button>
+
+        <!-- Menu Mobile Hamburger -->
+        <button class="btn-menu-mobile" id="menuToggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="primaryNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
     </div>
   </header>
 
+  <!-- Backdrop cho Mobile Menu -->
+  <div class="mobile-drawer-backdrop" id="drawerBackdrop"></div>
+
   <main>
-    <section class="hero section-wrap" id="home">
-      <div class="hero-copy reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="heroEyebrow">ÂM THANH CỦA RIÊNG BẠN</span></p>
-        <h1 data-i18n-html="heroTitle">Nghe thế giới<br>theo <em>cách của bạn.</em></h1>
-        <p class="hero-description" data-i18n="heroDescription">Chạm vào từng sắc âm. Tìm thấy khoảng lặng giữa phố thị. Âm thanh được tạo ra để đồng hành cùng nhịp sống của bạn.</p>
-        <div class="hero-actions">
-          <a class="button button-dark" href="#collection"><span data-i18n="heroCta">Khám phá bộ sưu tập</span><span aria-hidden="true">↗</span></a>
-          <span class="hero-note" data-i18n="heroNote">Thiết kế tinh giản. Chất âm có chiều sâu.</span>
-        </div>
-        <div class="hero-proof">
-          <div class="avatar-stack" aria-hidden="true"><span>H</span><span>M</span><span>L</span><span>+</span></div>
-          <p><strong data-i18n="heroProofNumber">2.400+</strong> <span data-i18n="heroProof">người đã tìm thấy chất âm của mình</span></p>
-        </div>
-      </div>
-      <div class="hero-art reveal">
-        <div class="hero-orbit orbit-one"></div>
-        <div class="hero-orbit orbit-two"></div>
-        <div class="hero-label"><span>01 / 03</span><span data-i18n="heroSeries">STUDIO SERIES</span></div>
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" aria-label="Video giới thiệu sản phẩm AURA SOUND" data-i18n-aria-label="videoLabel">
-          <source src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" type="video/mp4">
-        </video>
-        <div class="hero-product-tag">
-          <span class="tag-line"></span>
-          <div><strong>STUDIO ONE</strong><small data-i18n="heroTagline">Âm thanh. Không giới hạn.</small></div>
-          <span class="tag-price" data-price-display="3490000">3.490.000₫</span>
-        </div>
-        <span class="art-index" aria-hidden="true">A.</span>
-      </div>
-      <a class="scroll-cue" href="#collection"><span></span><span data-i18n="scrollCue">CUỘN ĐỂ KHÁM PHÁ</span></a>
-    </section>
-
-    <section class="ticker" aria-label="Điểm nổi bật" data-i18n-aria-label="highlights">
-      <div class="ticker-track">
-        <span data-i18n="tickerSound">ÂM THANH CHÂN THỰC</span><b>✳</b><span data-i18n="tickerDesign">THIẾT KẾ CÓ CHỦ ĐÍCH</span><b>✳</b><span data-i18n="tickerWarranty">BẢO HÀNH 24 THÁNG</span><b>✳</b><span data-i18n="tickerDelivery">GIAO HÀNG MIỄN PHÍ</span><b>✳</b>
-        <span data-i18n="tickerSound">ÂM THANH CHÂN THỰC</span><b>✳</b><span data-i18n="tickerDesign">THIẾT KẾ CÓ CHỦ ĐÍCH</span><b>✳</b><span data-i18n="tickerWarranty">BẢO HÀNH 24 THÁNG</span><b>✳</b><span data-i18n="tickerDelivery">GIAO HÀNG MIỄN PHÍ</span><b>✳</b>
-      </div>
-    </section>
-
-    <section class="collection section-wrap" id="collection">
-      <div class="section-heading reveal">
-        <div>
-          <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="collectionEyebrow">TÌM CHẤT ÂM CỦA BẠN</span></p>
-          <h2 data-i18n-html="collectionTitle">Ít hơn, nhưng <em>đúng hơn.</em></h2>
-        </div>
-        <p data-i18n="collectionDescription">Mỗi sản phẩm là sự cân bằng giữa chất âm giàu cảm xúc, thiết kế vượt thời gian và những chi tiết hữu ích trong đời sống.</p>
-      </div>
-
-      <div class="product-grid">
-        <article class="product-card reveal" data-product="Studio One">
-          <a class="product-image product-image-sand" href="#details" aria-label="Xem chi tiết tai nghe Studio One" data-i18n-aria-label="viewStudio">
-            <span class="product-badge" data-i18n="badgeBestseller">BÁN CHẠY</span>
-            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Tai nghe Studio One chụp tai" data-i18n-alt="altStudio" loading="lazy" decoding="async">
-            <span class="quick-view" aria-hidden="true" data-i18n="quickView">XEM CHI TIẾT ↗</span>
-          </a>
-          <div class="product-info">
-            <div><p class="product-category" data-i18n="categoryHeadphones">TAI NGHE CHỤP TAI</p><h3>Studio One</h3></div>
-            <span class="product-price" data-price-display="3490000">3.490.000₫</span>
+    <!-- ==========================================================================
+         2. HERO SECTION CHUẨN WEB THƯƠNG MẠI (APPLE / SONY STYLE)
+         ========================================================================== -->
+    <section class="hero-section" id="home">
+      <div class="container hero-container">
+        
+        <div class="hero-text-col">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span data-i18n="heroBadge">SẢN PHẨM NỔI BẬT NĂM 2026</span>
           </div>
-          <p class="product-summary" data-i18n="studioSummary">Chống ồn chủ động · 40 giờ pin</p>
-          <button class="add-button" type="button" data-add-product="Studio One" data-price="3490000"><span class="add-label" data-i18n="addToCart">Thêm vào giỏ</span><span aria-hidden="true">＋</span></button>
-        </article>
 
-        <article class="product-card reveal" data-product="Wave Mini">
-          <a class="product-image product-image-blue" href="#details" aria-label="Xem chi tiết tai nghe Wave Mini" data-i18n-aria-label="viewWave">
-            <span class="product-badge product-badge-new" data-i18n="badgeNew">MỚI RA MẮT</span>
-            <img src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Tai nghe không dây Wave Mini" data-i18n-alt="altWave" loading="lazy" decoding="async">
-            <span class="quick-view" aria-hidden="true" data-i18n="quickView">XEM CHI TIẾT ↗</span>
-          </a>
-          <div class="product-info">
-            <div><p class="product-category" data-i18n="categoryWireless">TAI NGHE KHÔNG DÂY</p><h3>Wave Mini</h3></div>
-            <span class="product-price" data-price-display="1890000">1.890.000₫</span>
-          </div>
-          <p class="product-summary" data-i18n="waveSummary">Chống nước IPX5 · 28 giờ pin</p>
-          <button class="add-button" type="button" data-add-product="Wave Mini" data-price="1890000"><span class="add-label" data-i18n="addToCart">Thêm vào giỏ</span><span aria-hidden="true">＋</span></button>
-        </article>
+          <h1 class="hero-title" data-i18n-html="heroHeadline">
+            AURA Studio One.<br>
+            Âm thanh trung thực từng chi tiết.
+          </h1>
 
-        <article class="product-card reveal" data-product="Room Speaker">
-          <a class="product-image product-image-olive" href="#details" aria-label="Xem chi tiết loa Room Speaker" data-i18n-aria-label="viewRoom">
-            <span class="product-badge product-badge-limited">EDITION 01</span>
-            <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Loa bluetooth Room Speaker" data-i18n-alt="altRoom" loading="lazy" decoding="async">
-            <span class="quick-view" aria-hidden="true" data-i18n="quickView">XEM CHI TIẾT ↗</span>
-          </a>
-          <div class="product-info">
-            <div><p class="product-category" data-i18n="categorySpeaker">LOA BLUETOOTH</p><h3>Room Speaker</h3></div>
-            <span class="product-price" data-price-display="2750000">2.750.000₫</span>
+          <p class="hero-description" data-i18n="heroLead">
+            Tai nghe chống ồn chủ động thông minh với màng loa Beryllium 40mm. Thời lượng pin 40 giờ, hoàn thiện bằng khung nhôm siêu nhẹ và đệm tai bọc da êm ái suốt cả ngày.
+          </p>
+
+          <div class="hero-price-tag">
+            <span class="price-label" data-i18n="priceFrom">Giá bán:</span>
+            <strong class="price-val">3.490.000₫</strong>
+            <span class="price-note" data-i18n="vatIncluded">(Bảo hành 24 tháng chính hãng)</span>
           </div>
-          <p class="product-summary" data-i18n="roomSummary">Âm thanh 360° · 18 giờ pin</p>
-          <button class="add-button" type="button" data-add-product="Room Speaker" data-price="2750000"><span class="add-label" data-i18n="addToCart">Thêm vào giỏ</span><span aria-hidden="true">＋</span></button>
-        </article>
+
+          <div class="hero-cta-buttons">
+            <a href="#showroom" class="btn-primary" data-i18n="heroCtaShowroom">
+              Chọn Phiên Bản & Đặt Mua
+            </a>
+            <a href="#collection" class="btn-secondary" data-i18n="heroCtaCatalog">
+              Xem Toàn Bộ Sản Phẩm
+            </a>
+          </div>
+
+          <!-- Cam kết chất lượng thương mại -->
+          <div class="hero-trust-bar">
+            <div class="trust-item">
+              <span class="trust-icon">✓</span>
+              <span data-i18n="trust1">Miễn phí giao hàng</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">✓</span>
+              <span data-i18n="trust2">Đổi trả trong 30 ngày</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">✓</span>
+              <span data-i18n="trust3">Bảo hành 1 đổi 1</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột Phải: Visual Sản Phẩm Sắc Nét & Video Trực Quan -->
+        <div class="hero-media-col">
+          <div class="hero-media-card">
+            <video class="hero-product-video" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85">
+              <source src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" type="video/mp4">
+            </video>
+            <div class="media-card-badge">
+              <strong>Studio One Flagship</strong>
+              <span>Hi-Res Audio Certified</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <section class="feature section-wrap" id="details">
-      <div class="feature-image reveal">
-        <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Chi tiết thiết kế tai nghe AURA Studio One" data-i18n-alt="altStudioDetail" loading="lazy" decoding="async">
-        <span class="image-caption" data-i18n="imageCaption">STUDIO ONE / MATTE BLACK</span>
-      </div>
-      <div class="feature-copy reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="featureEyebrow">TÂM ĐIỂM · STUDIO ONE</span></p>
-        <h2 data-i18n-html="featureTitle">Không chỉ nghe.<br><em>Cảm nhận.</em></h2>
-        <p class="feature-description" data-i18n="featureDescription">Màng loa 40 mm tinh chỉnh riêng, tái hiện âm thanh cân bằng và giàu chi tiết. Chế độ chống ồn thích ứng giúp bạn tập trung vào điều quan trọng.</p>
-        <div class="spec-tabs" role="tablist" aria-label="Thông tin Studio One" data-i18n-aria-label="specsLabel">
-          <button class="spec-tab is-active" id="tab-sound" type="button" role="tab" aria-selected="true" aria-controls="panel-sound" data-tab="sound" data-i18n="tabSound">Chất âm</button>
-          <button class="spec-tab" id="tab-battery" type="button" role="tab" aria-selected="false" aria-controls="panel-battery" data-tab="battery" tabindex="-1" data-i18n="tabBattery">Thời lượng pin</button>
-          <button class="spec-tab" id="tab-build" type="button" role="tab" aria-selected="false" aria-controls="panel-build" data-tab="build" tabindex="-1" data-i18n="tabBuild">Thiết kế</button>
-        </div>
-        <div class="spec-panels">
-          <div class="spec-panel is-active" id="panel-sound" role="tabpanel" aria-labelledby="tab-sound">
-            <strong data-i18n="soundTitle">Âm thanh Hi-Res, cân bằng tự nhiên</strong>
-            <p data-i18n="soundDescription">Màng loa dynamic 40 mm, dải tần 20 Hz–40 kHz và chống ồn chủ động thích ứng đa chế độ.</p>
+    <!-- ==========================================================================
+         3. THANH ĐIỂM NỔI BẬT DỊCH VỤ (SERVICE FEATURES BAR)
+         ========================================================================== -->
+    <section class="features-bar-section">
+      <div class="container">
+        <div class="features-bar-grid">
+          <div class="feature-bar-item">
+            <div class="f-icon">🚚</div>
+            <div class="f-content">
+              <h4 data-i18n="featBar1Title">Giao Hàng Hỏa Tốc</h4>
+              <p data-i18n="featBar1Desc">Nhận hàng trong 2-4 giờ tại nội thành</p>
+            </div>
           </div>
-          <div class="spec-panel" id="panel-battery" role="tabpanel" aria-labelledby="tab-battery" hidden>
-            <strong data-i18n="batteryTitle">40 giờ nghe nhạc liền mạch</strong>
-            <p data-i18n="batteryDescription">Bật chống ồn vẫn sử dụng đến 30 giờ. Sạc nhanh 10 phút cho thêm 5 giờ nghe nhạc.</p>
+
+          <div class="feature-bar-item">
+            <div class="f-icon">🛡️</div>
+            <div class="f-content">
+              <h4 data-i18n="featBar2Title">Bảo Hành 24 Tháng</h4>
+              <p data-i18n="featBar2Desc">Chính sách 1 đổi 1 nếu lỗi nhà sản xuất</p>
+            </div>
           </div>
-          <div class="spec-panel" id="panel-build" role="tabpanel" aria-labelledby="tab-build" hidden>
-            <strong data-i18n="buildTitle">Nhẹ, êm, sẵn sàng đồng hành</strong>
-            <p data-i18n="buildDescription">Khung nhôm siêu nhẹ, đệm tai memory foam thay thế được và kết nối Bluetooth 5.3 đa điểm.</p>
+
+          <div class="feature-bar-item">
+            <div class="f-icon">🔄</div>
+            <div class="f-content">
+              <h4 data-i18n="featBar3Title">30 Ngày Dùng Thử</h4>
+              <p data-i18n="featBar3Desc">Hoàn tiền 100% nếu không hài lòng</p>
+            </div>
           </div>
-        </div>
-        <div class="feature-purchase">
-          <span data-price-display="3490000">3.490.000₫</span>
-          <button class="button button-dark" type="button" data-add-product="Studio One" data-price="3490000"><span data-i18n="chooseStudio">Chọn Studio One</span><span aria-hidden="true">↗</span></button>
+
+          <div class="feature-bar-item">
+            <div class="f-icon">🎧</div>
+            <div class="f-content">
+              <h4 data-i18n="featBar4Title">Hỗ Trợ Kỹ Thuật 24/7</h4>
+              <p data-i18n="featBar4Desc">Chuyên viên âm học tư vấn trực tiếp</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="story" id="story">
-      <div class="story-inner section-wrap reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="storyEyebrow">TRIẾT LÝ CỦA AURA</span></p>
-        <blockquote data-i18n-html="storyQuote">“Công nghệ tốt nhất là công nghệ để bạn <em>quên đi nó đang ở đó.</em>”</blockquote>
-        <p class="story-note" data-i18n="storyNote">Chúng tôi tạo ra những sản phẩm để nghe lâu hơn, dùng bền hơn và sống trọn vẹn hơn.</p>
-        <span class="story-signature">AURA SOUND — SINCE 2021</span>
+    <!-- ==========================================================================
+         4. INTERACTIVE SHOWROOM: BỘ CHỌN PHIÊN BẢN & MÀU SẮC (APPLE STORE STYLE)
+         ========================================================================== -->
+    <section class="section-block" id="showroom">
+      <div class="container">
+        
+        <div class="section-title-wrap">
+          <h2 class="section-main-title" data-i18n="showroomTitle">Trải Nghiệm Studio One</h2>
+          <p class="section-sub-title" data-i18n="showroomSub">Chọn màu sắc phù hợp với cá tính của bạn. Mọi phiên bản đều sử dụng hợp kim nhôm cao cấp.</p>
+        </div>
+
+        <div class="showroom-layout">
+          <!-- Cột hiển thị ảnh sản phẩm lớn -->
+          <div class="showroom-photo-box">
+            <div class="photo-wrapper">
+              <img id="showroomProductImg" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=85" alt="Tai nghe Studio One màu Đen Nhám" class="showroom-active-image">
+            </div>
+            <div class="showroom-color-caption">
+              <span data-i18n="currentEditionLabel">Phiên bản đang xem:</span>
+              <strong id="showroomColorBadge">Đen Nhám (Matte Black)</strong>
+            </div>
+          </div>
+
+          <!-- Cột chi tiết tùy chọn & mua sắm -->
+          <div class="showroom-config-box">
+            <span class="product-sku">MÃ SP: AURA-ST1-2026</span>
+            <h3 class="config-product-name" id="showroomProductName">AURA Studio One Master</h3>
+            
+            <div class="config-price-box">
+              <span class="config-price-val" id="showroomProductPrice">3.490.000₫</span>
+              <span class="config-tax-included">Đã bao gồm VAT</span>
+            </div>
+
+            <p class="config-color-desc" id="showroomColorDesc" data-i18n="descObsidian">
+              Sắc đen nhám sang trọng. Lớp phủ chống bám mồ hôi và dấu vân tay, dễ dàng vệ sinh trong quá trình sử dụng hàng ngày.
+            </p>
+
+            <!-- Bộ chọn nút tròn màu sắc thực tế -->
+            <div class="color-selection-group">
+              <label class="color-select-label" data-i18n="chooseColor">Tùy Chọn Màu Sắc:</label>
+              <div class="color-swatch-list" role="radiogroup" aria-label="Chọn màu sắc sản phẩm">
+                
+                <button class="color-pill-btn active" type="button" data-color-id="obsidian" aria-checked="true">
+                  <span class="color-dot dot-black"></span>
+                  <span class="color-label" data-i18n="swatchObsidian">Đen Nhám</span>
+                </button>
+
+                <button class="color-pill-btn" type="button" data-color-id="gold" aria-checked="false">
+                  <span class="color-dot dot-gold"></span>
+                  <span class="color-label" data-i18n="swatchGold">Vàng Champagne</span>
+                </button>
+
+                <button class="color-pill-btn" type="button" data-color-id="silver" aria-checked="false">
+                  <span class="color-dot dot-silver"></span>
+                  <span class="color-label" data-i18n="swatchSilver">Bạc Ánh Kim</span>
+                </button>
+
+              </div>
+            </div>
+
+            <!-- Tóm tắt cấu hình then chốt -->
+            <div class="config-highlights">
+              <div class="hl-item">
+                <span class="hl-check">✔</span>
+                <span data-i18n="feat1">Màng loa Dynamic 40mm Beryllium chất lượng cao</span>
+              </div>
+              <div class="hl-item">
+                <span class="hl-check">✔</span>
+                <span data-i18n="feat2">Pin 40 giờ liên tục • Sạc nhanh 10 phút dùng 5 giờ</span>
+              </div>
+              <div class="hl-item">
+                <span class="hl-check">✔</span>
+                <span data-i18n="feat3">Chống ồn chủ động thích ứng với 4 chế độ môi trường</span>
+              </div>
+            </div>
+
+            <!-- Nút Thêm Vào Giỏ Hàng -->
+            <div class="config-cta-row">
+              <button class="btn-primary btn-block" id="addShowroomBtn" type="button">
+                <span data-i18n="addShowroomToBag">Thêm Vào Giỏ Hàng</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <section class="reviews section-wrap" id="reviews">
-      <div class="review-heading reveal">
-        <p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="reviewsEyebrow">NGHE TỪ CỘNG ĐỒNG</span></p>
-        <h2 data-i18n-html="reviewsTitle">Chất âm được <em>lắng nghe.</em></h2>
-      </div>
-      <div class="review-grid">
-        <article class="review-card reveal">
-          <div class="review-stars" aria-label="5 trên 5 sao" data-i18n-aria-label="fiveStars">★★★★★</div>
-          <blockquote data-i18n="reviewStudio">“Đeo cả ngày mà quên mất mình đang đeo tai nghe. Chống ồn tốt, nhưng thứ mình thích nhất là chất âm rất tự nhiên.”</blockquote>
-          <div class="review-author"><span class="review-avatar">ML</span><span><strong>Minh Lê</strong><small data-i18n="verifiedStudio">Studio One · Đã xác minh</small></span></div>
-        </article>
-        <article class="review-card reveal">
-          <div class="review-stars" aria-label="5 trên 5 sao" data-i18n-aria-label="fiveStars">★★★★★</div>
-          <blockquote data-i18n="reviewWave">“Wave Mini nhỏ gọn, kết nối nhanh. Mang đi tập hay đi làm đều ổn, hộp sạc cũng đẹp hơn mình nghĩ.”</blockquote>
-          <div class="review-author"><span class="review-avatar avatar-blue">AT</span><span><strong data-i18n="reviewerThu">Anh Thư</strong><small data-i18n="verifiedWave">Wave Mini · Đã xác minh</small></span></div>
-        </article>
-        <article class="review-card reveal">
-          <div class="review-stars" aria-label="5 trên 5 sao" data-i18n-aria-label="fiveStars">★★★★★</div>
-          <blockquote data-i18n="reviewRoom">“Room Speaker lấp đầy căn phòng bằng âm thanh ấm áp. Thiết kế tối giản đặt đâu cũng hợp.”</blockquote>
-          <div class="review-author"><span class="review-avatar avatar-olive">QD</span><span><strong data-i18n="reviewerDat">Quốc Đạt</strong><small data-i18n="verifiedRoom">Room Speaker · Đã xác minh</small></span></div>
-        </article>
+    <!-- ==========================================================================
+         5. TECHNICAL SPECIFICATIONS TABS (BẢNG THÔNG SỐ RÕ RÀNG, CHUẨN ARIA)
+         ========================================================================== -->
+    <section class="section-block section-alt-bg" id="specs">
+      <div class="container">
+        
+        <div class="section-title-wrap">
+          <h2 class="section-main-title" data-i18n="specsTitle">Bảng Thông Số Kỹ Thuật</h2>
+          <p class="section-sub-title" data-i18n="specsSub">Thông số chi tiết được kiểm định chính xác theo tiêu chuẩn quốc tế.</p>
+        </div>
+
+        <div class="specs-card">
+          <!-- Tab Navigation -->
+          <div class="specs-tabs-nav" role="tablist" aria-label="Danh mục thông số">
+            <button class="spec-tab-link active" id="tabAcoustic" role="tab" aria-selected="true" aria-controls="panelAcoustic" data-tab-target="panelAcoustic" data-i18n="tabAcoustics">
+              Âm Thanh & Màng Loa
+            </button>
+            <button class="spec-tab-link" id="tabBattery" role="tab" aria-selected="false" aria-controls="panelBattery" data-tab-target="panelBattery" data-i18n="tabBattery">
+              Pin & Kết Nối
+            </button>
+            <button class="spec-tab-link" id="tabBuild" role="tab" aria-selected="false" aria-controls="panelBuild" data-tab-target="panelBuild" data-i18n="tabBuild">
+              Vật Liệu & Kích Thước
+            </button>
+          </div>
+
+          <!-- Tab Panels dạng Bảng 2 cột chuẩn thương mại -->
+          <div class="specs-panels-content">
+            
+            <!-- Panel 1 -->
+            <div class="spec-panel-body active" id="panelAcoustic" role="tabpanel" aria-labelledby="tabAcoustic">
+              <table class="spec-data-table">
+                <tbody>
+                  <tr>
+                    <th data-i18n="specDriverKey">Kiểu Màng Loa</th>
+                    <td data-i18n="specDriverVal">Dynamic 40mm phủ lớp Beryllium độ phản hồi cao</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specFreqKey">Dải Tần Số Đáp Ứng</th>
+                    <td>10 Hz – 45.000 Hz (Đạt chuẩn Hi-Res Audio Wireless)</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specAncKey">Công Nghệ Chống Ồn</th>
+                    <td data-i18n="specAncNote">Hybrid Active Noise Cancelling với 6 micro khử nhiễu</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specCodecKey">Bộ Giải Mã Hỗ Trợ</th>
+                    <td>LDAC, aptX HD, AAC, SBC (Băng thông lên tới 990 kbps)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Panel 2 -->
+            <div class="spec-panel-body" id="panelBattery" role="tabpanel" aria-labelledby="tabBattery" hidden>
+              <table class="spec-data-table">
+                <tbody>
+                  <tr>
+                    <th data-i18n="specPlaytimeKey">Thời Gian Nghe Nhạc</th>
+                    <td data-i18n="specPlaytimeVal">40 Giờ (Bật chống ồn) / 55 Giờ (Tắt chống ồn)</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specFastChargeKey">Sạc Nhanh</th>
+                    <td data-i18n="specFastChargeVal">Sạc 10 phút sử dụng được 5 giờ nghe liên tục</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specPortKey">Cổng Sạc & Tín Hiệu</th>
+                    <td data-i18n="specPortNote">Cổng USB-C Power Delivery & jack cắm analog 3.5mm</td>
+                  </tr>
+                  <tr>
+                    <th>Chuẩn Bluetooth</th>
+                    <td>Bluetooth 5.3 (Hỗ trợ kết nối cùng lúc 2 thiết bị - Multipoint)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Panel 3 -->
+            <div class="spec-panel-body" id="panelBuild" role="tabpanel" aria-labelledby="tabBuild" hidden>
+              <table class="spec-data-table">
+                <tbody>
+                  <tr>
+                    <th data-i18n="specFrameKey">Khung Thân Tai Nghe</th>
+                    <td data-i18n="specFrameVal">Hợp kim nhôm nguyên khối gia công CNC chính xác</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specCushionKey">Đệm Tai & Vòm Đeo</th>
+                    <td data-i18n="specCushionVal">Bọt biển nhớ (Memory foam) bọc da mềm thoáng khí</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specWeightKey">Trọng Lượng</th>
+                    <td>248 gram (Trọng lượng nhẹ, không gây đau đầu khi đeo lâu)</td>
+                  </tr>
+                  <tr>
+                    <th data-i18n="specWaterKey">Kháng Nước & Mồ Hôi</th>
+                    <td data-i18n="specWaterNote">Chuẩn IP54 (Chống giọt bắn và bụi bẩn thông thường)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <section class="newsletter section-wrap reveal">
-      <div><p class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="newsletterEyebrow">TÍN HIỆU TỐT ĐẸP</span></p><h2 data-i18n-html="newsletterTitle">Một chút âm thanh<br><em>trong hộp thư bạn.</em></h2></div>
-      <form class="newsletter-form" id="newsletterForm">
-        <label class="visually-hidden" for="newsletterEmail" data-i18n="emailLabel">Email của bạn</label>
-        <input id="newsletterEmail" type="email" placeholder="Email của bạn" data-i18n-placeholder="emailPlaceholder" autocomplete="email" required>
-        <button type="submit" aria-label="Đăng ký nhận tin" data-i18n-aria-label="subscribe">↗</button>
-        <p class="newsletter-status" id="newsletterStatus" role="status" aria-live="polite"></p>
-      </form>
+    <!-- ==========================================================================
+         6. BỘ SƯU TẬP SẢN PHẨM: ĐỦ 4 TÍNH NĂNG CHUẨN .SKILL
+         (1. Tìm kiếm - 2. Lọc danh mục - 3. Sắp xếp - 4. Phân trang)
+         ========================================================================== -->
+    <section class="section-block" id="collection">
+      <div class="container">
+        
+        <div class="section-title-wrap">
+          <h2 class="section-main-title" data-i18n="catalogTitle">Bộ Sưu Tập Thiết Bị Âm Thanh</h2>
+          <p class="section-sub-title" data-i18n="catalogSub">Tìm kiếm và chọn lựa sản phẩm phù hợp với nhu cầu giải trí và công việc của bạn.</p>
+        </div>
+
+        <!-- THANH CÔNG CỤ TÌM KIẾM & BỘ LỌC CHUẨN E-COMMERCE -->
+        <div class="catalog-toolbar">
+          
+          <!-- 1. Ô Tìm Kiếm Real-time (Search) -->
+          <div class="toolbar-search-wrap">
+            <span class="search-lens-icon">🔍</span>
+            <input 
+              type="text" 
+              id="productSearchInput" 
+              class="search-input-field" 
+              placeholder="Tìm theo tên sản phẩm..."
+              data-i18n-placeholder="searchPlaceholder"
+              autocomplete="off"
+            >
+            <button type="button" id="clearSearchBtn" class="search-clear-btn" aria-label="Xóa tìm kiếm" hidden>&times;</button>
+          </div>
+
+          <!-- 2. Nút Lọc Danh Mục (Filter Buttons) -->
+          <div class="toolbar-filter-tabs" id="categoryFilters" role="group" aria-label="Lọc theo danh mục">
+            <button class="filter-tab-btn active" data-category="all" data-i18n="catAll">Tất Cả</button>
+            <button class="filter-tab-btn" data-category="overear" data-i18n="catOverEar">Tai Nghe Chụp Tai</button>
+            <button class="filter-tab-btn" data-category="wireless" data-i18n="catWireless">Tai Nghe Không Dây</button>
+            <button class="filter-tab-btn" data-category="speaker" data-i18n="catSpeaker">Loa Bluetooth</button>
+          </div>
+
+          <!-- 3. Sắp Xếp (Sort) & 4. Chọn Số Lượng (Page Size) -->
+          <div class="toolbar-dropdown-controls">
+            <div class="select-field-group">
+              <label for="productSortSelect" class="field-label" data-i18n="sortLabel">Sắp xếp:</label>
+              <select id="productSortSelect" class="form-select">
+                <option value="name-asc" data-i18n="sortNameAsc">Tên sản phẩm (A → Z)</option>
+                <option value="name-desc" data-i18n="sortNameDesc">Tên sản phẩm (Z → A)</option>
+                <option value="price-asc" data-i18n="sortPriceAsc">Giá (Thấp đến Cao)</option>
+                <option value="price-desc" data-i18n="sortPriceDesc">Giá (Cao đến Thấp)</option>
+              </select>
+            </div>
+
+            <div class="select-field-group">
+              <label for="pageSizeSelect" class="field-label" data-i18n="pageSizeLabel">Hiển thị:</label>
+              <select id="pageSizeSelect" class="form-select">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="all" data-i18n="pageSizeAll">Tất cả</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Dòng thông tin số lượng kết quả -->
+        <div class="catalog-result-info">
+          <span id="catalogCountInfo">Đang tải danh sách sản phẩm...</span>
+        </div>
+
+        <!-- LƯỚI SẢN PHẨM RENDER DYNAMIC QUA JS -->
+        <div class="product-grid-container" id="productGrid">
+          <!-- Được tiêm bởi js/baitap4.js -->
+        </div>
+
+        <!-- CỤM PHÂN TRANG (PAGINATION) -->
+        <div class="pagination-bar" id="paginationWrap">
+          <!-- Tạo tự động bởi js/baitap4.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. VỀ THƯƠNG HIỆU & GIÁ TRỊ CỐT LÕI
+         ========================================================================== -->
+    <section class="section-block section-alt-bg" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-content">
+            <span class="badge-sub" data-i18n="aboutBadge">TRIẾT LÝ AURA SOUND</span>
+            <h2 class="about-heading" data-i18n="aboutHeading">Chất Lượng Vượt Trội, Thiết Kế Vượt Thời Gian</h2>
+            <p class="about-text" data-i18n="aboutText1">
+              Tại AURA SOUND, chúng tôi tin rằng một chiếc tai nghe tốt không chỉ có âm thanh hay mà còn phải tạo cảm giác thoải mái khi sử dụng hàng ngày và bền bỉ qua năm tháng.
+            </p>
+            <p class="about-text" data-i18n="aboutText2">
+              Mỗi sản phẩm đều trải qua quy trình kiểm tra âm học nghiêm ngặt với các tiêu chuẩn khắt khe nhất để bảo đảm độ méo tiếng thấp nhất và độ chi tiết cao nhất.
+            </p>
+            <div class="about-stats-row">
+              <div class="stat-col">
+                <strong class="stat-number">24 Tháng</strong>
+                <span class="stat-desc" data-i18n="statWarranty">Bảo hành 1 đổi 1 toàn diện</span>
+              </div>
+              <div class="stat-col">
+                <strong class="stat-number">40+ Giờ</strong>
+                <span class="stat-desc" data-i18n="statBattery">Thời lượng pin liên tục</span>
+              </div>
+              <div class="stat-col">
+                <strong class="stat-number">98%</strong>
+                <span class="stat-desc" data-i18n="statSatisfaction">Khách hàng đánh giá hài lòng</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-image-col">
+            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80" alt="Chế tác tai nghe AURA SOUND" class="about-photo" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         8. ĐÁNH GIÁ CỦA KHÁCH HÀNG (REVIEWS)
+         ========================================================================== -->
+    <section class="section-block" id="reviews">
+      <div class="container">
+        
+        <div class="section-title-wrap">
+          <h2 class="section-main-title" data-i18n="reviewsTitle">Đánh Giá Từ Khách Hàng</h2>
+          <p class="section-sub-title" data-i18n="reviewsSub">Cảm nhận thực tế từ những người đã trải nghiệm sản phẩm AURA SOUND.</p>
+        </div>
+
+        <div class="reviews-grid">
+          <div class="review-box">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-comment" data-i18n="review1Text">
+              “Studio One đeo rất êm tai, tôi làm việc 8 tiếng một ngày không bị cấn hay đau đầu. Khả năng chống ồn của tai nghe giúp tôi tập trung hơn rất nhiều.”
+            </p>
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">ML</div>
+              <div>
+                <strong class="reviewer-name">Minh Lê</strong>
+                <span class="reviewer-title" data-i18n="review1Role">Kỹ Sư Phần Mềm • Đã mua Studio One</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-box">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-comment" data-i18n="review2Text">
+              “Chiếc Wave Mini nhỏ gọn và kết nối rất nhanh với cả laptop và điện thoại. Hộp sạc bằng kim loại cầm rất chắc tay và pin dùng được cả tuần.”
+            </p>
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">AT</div>
+              <div>
+                <strong class="reviewer-name">Anh Thư</strong>
+                <span class="reviewer-title" data-i18n="review2Role">Nhà Thiết Kế • Đã mua Wave Mini</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-box">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-comment" data-i18n="review3Text">
+              “Loa Room Speaker phát âm thanh phòng khách rất ấm và rõ tiếng bass. Thiết kế tối giản đặt trên kệ sách trông rất đẹp mắt và gọn gàng.”
+            </p>
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">QD</div>
+              <div>
+                <strong class="reviewer-name">Quốc Đạt</strong>
+                <span class="reviewer-title" data-i18n="review3Role">Nhiếp Ảnh Gia • Đã mua Room Speaker</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         9. ĐĂNG KÝ BẢN TIN KHUYẾN MÃI (NEWSLETTER)
+         ========================================================================== -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="newsletter-card">
+          <div class="newsletter-text">
+            <h3 data-i18n="newsTitle">Đăng Ký Nhận Thông Tin Ưu Đãi</h3>
+            <p data-i18n="newsDesc">Nhận ngay thông báo về sản phẩm mới và các chương trình giảm giá định kỳ từ AURA SOUND.</p>
+          </div>
+          <form class="newsletter-form" id="newsletterForm">
+            <div class="newsletter-input-group">
+              <input type="email" id="newsletterEmailInput" class="newsletter-input" placeholder="Nhập địa chỉ email của bạn..." data-i18n-placeholder="newsletterPlaceholder" required autocomplete="email">
+              <button type="submit" class="btn-primary" data-i18n="subscribeBtn">Đăng Ký</button>
+            </div>
+            <p class="newsletter-alert-msg" id="newsletterMsg" role="status"></p>
+          </form>
+        </div>
+      </div>
     </section>
   </main>
 
+  <!-- ==========================================================================
+       10. CHÂN TRANG 4 CỘT CHUẨN THƯƠNG MẠI
+       ========================================================================== -->
   <footer class="site-footer">
-    <a class="wordmark footer-wordmark" href="#home"><span class="wordmark-icon" aria-hidden="true">◖</span><span>AURA<span class="wordmark-light">SOUND</span></span></a>
-    <p data-i18n="footerTagline">Âm thanh cho những khoảnh khắc của riêng bạn.</p>
-    <span>© 2026 AURA SOUND. MADE TO BE HEARD.</span>
+    <div class="container">
+      <div class="footer-columns-grid">
+        
+        <!-- Cột 1: Thông tin công ty -->
+        <div class="footer-col">
+          <div class="footer-brand">
+            <span class="logo-mark">AURA</span>
+            <span class="logo-sub">SOUND</span>
+          </div>
+          <p class="footer-desc" data-i18n="footerAbout">
+            Chuyên cung cấp các thiết bị âm thanh cá nhân chất lượng cao, mang đến trải nghiệm nghe nhạc chân thực và sống động.
+          </p>
+          <p class="footer-hotline">Hotline: <strong>1800 6868</strong> (Miễn phí cuộc gọi)</p>
+        </div>
+
+        <!-- Cột 2: Sản phẩm -->
+        <div class="footer-col">
+          <h4 class="footer-heading" data-i18n="footerProducts">SẢN PHẨM</h4>
+          <ul class="footer-links-list">
+            <li><a href="#collection">Tai Nghe Chụp Tai Studio</a></li>
+            <li><a href="#collection">Tai Nghe Không Dây Wave</a></li>
+            <li><a href="#collection">Loa Bluetooth Room Speaker</a></li>
+            <li><a href="#collection">Loa Thanh Horizon Soundbar</a></li>
+            <li><a href="#collection">Phụ Kiện Cáp & Đệm Tai</a></li>
+          </ul>
+        </div>
+
+        <!-- Cột 3: Hỗ trợ khách hàng -->
+        <div class="footer-col">
+          <h4 class="footer-heading" data-i18n="footerServices">CHÍNH SÁCH</h4>
+          <ul class="footer-links-list">
+            <li><a href="#about" data-i18n="footWarranty">Chính Sách Bảo Hành 24 Tháng</a></li>
+            <li><a href="#about" data-i18n="footDelivery">Chính Sách Vận Chuyển</a></li>
+            <li><a href="#about" data-i18n="footCare">Chính Sách Đổi Trả 30 Ngày</a></li>
+            <li><a href="#about" data-i18n="footPrivacy">Bảo Mật Thông Tin Khách Hàng</a></li>
+            <li><a href="#about" data-i18n="footTerms">Điều Khoản Mua Hàng</a></li>
+          </ul>
+        </div>
+
+        <!-- Cột 4: Showroom & Địa chỉ -->
+        <div class="footer-col">
+          <h4 class="footer-heading" data-i18n="footerContact">HỆ THỐNG CỬA HÀNG</h4>
+          <p class="footer-address">📍 <strong>Cửa hàng TP.HCM:</strong> 128 Nguyễn Huệ, Quận 1</p>
+          <p class="footer-address">📍 <strong>Cửa hàng Hà Nội:</strong> 45 Tràng Tiền, Quận Hoàn Kiếm</p>
+          <p class="footer-address">✉️ <strong>Hỗ trợ:</strong> support@aurasound.vn</p>
+          <p class="footer-address">🕒 <strong>Giờ mở cửa:</strong> 08:30 – 21:30 hàng ngày</p>
+        </div>
+
+      </div>
+
+      <div class="footer-copyright-bar">
+        <p>© 2026 AURA SOUND. Đồ án Nhóm 2 — Khoa CNTT — Đại Học Lạc Hồng.</p>
+        <p>Hỗ trợ đầy đủ tiêu chuẩn Web: HTML5 Semantic, CSS Responsive, JavaScript ES6+.</p>
+      </div>
+    </div>
   </footer>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- ==========================================================================
+       11. NÚT LIÊN HỆ ZALO CỐ ĐỊNH (TĨNH, GỌN GÀNG, KHÔNG RUNG GIẬT)
+       ========================================================================== -->
+  <div class="contact-fixed-btn">
+    <a href="https://zalo.me" target="_blank" rel="noopener noreferrer" class="zalo-link-btn" title="Chat Zalo với tư vấn viên" aria-label="Tư vấn nhanh qua Zalo">
+      <span class="zalo-icon-badge">Zalo</span>
+      <span class="zalo-label-text" data-i18n="zaloTooltip">Tư Vấn Nhanh</span>
+    </a>
+  </div>
+
+  <!-- ==========================================================================
+       12. MODAL VOUCHER 10% (GIAO DIỆN TRANG NHÃ, RÕ RÀNG, DỄ ĐÓNG)
+       ========================================================================== -->
+  <div class="modal-overlay" id="voucherModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="voucherModalTitle" hidden>
+    <div class="modal-box voucher-modal-box">
+      <button class="btn-close-modal" id="closeVoucherModalBtn" type="button" aria-label="Đóng">&times;</button>
+      
+      <div class="voucher-modal-header">
+        <div class="voucher-badge-tag" data-i18n="voucherEyebrow">ƯU ĐÃI KHÁCH HÀNG MỚI</div>
+        <h3 id="voucherModalTitle" class="voucher-modal-title" data-i18n="voucherTitle">Tặng Bạn Mã Giảm Giá 10%</h3>
+        <p class="voucher-modal-desc" data-i18n="voucherDesc">
+          Nhập mã giảm giá này khi thanh toán để được giảm ngay 10% cho đơn hàng đầu tiên của bạn tại AURA SOUND.
+        </p>
+      </div>
+
+      <div class="voucher-code-display">
+        <div class="code-info-group">
+          <span class="code-title-label" data-i18n="codeLabel">MÃ KHUYẾN MÃI:</span>
+          <strong class="code-string" id="couponCodeVal">AURA10</strong>
+        </div>
+        <button class="btn-copy-action" id="copyCouponBtn" type="button">
+          <span id="copyBtnText" data-i18n="copyCode">Sao Chép Mã</span>
+        </button>
+      </div>
+
+      <div class="voucher-modal-footer">
+        <button class="btn-primary btn-block" id="applyVoucherNowBtn" type="button">
+          <span data-i18n="exploreWithVoucher">Xem Sản Phẩm Ngay</span>
+        </button>
+        <span class="voucher-validity-text" data-i18n="voucherExpiry">Áp dụng cho tất cả sản phẩm tai nghe và loa</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       13. MODAL TRA CỨU ĐẶC TẢ ĐỀ BÀI & RUBRIC ĐÁNH GIÁ (GIẢNG VIÊN & SINH VIÊN)
+       ========================================================================== -->
+  <div class="modal-overlay" id="specModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="specModalTitle" hidden>
+    <div class="modal-box spec-modal-box">
+      <div class="modal-header-bar">
+        <div>
+          <span class="modal-sub-badge">ĐẠI HỌC LẠC HỒNG • BÀI TẬP 4</span>
+          <h3 id="specModalTitle" class="modal-heading-title">Đặc Tả Đề Bài & Thang Điểm Rubric</h3>
+        </div>
+        <button class="btn-close-modal" id="closeSpecModalBtn" type="button" aria-label="Đóng">&times;</button>
+      </div>
+
+      <div class="modal-body-scroll">
+        <div class="spec-text-block">
+          <h4>1. Mục Tiêu Đề Bài</h4>
+          <p>Thiết kế Landing Page thương mại quảng bá thương hiệu cao cấp với bố cục mạch lạc, chuẩn responsive trên Mobile, kết hợp các tương tác JavaScript thuần chuẩn mực.</p>
+        </div>
+
+        <div class="spec-text-block">
+          <h4>2. Yêu Cầu Kỹ Thuật Cốt Lõi</h4>
+          <ul>
+            <li><strong>Tách File Độc Lập:</strong> Tách biệt 100% mã nguồn thành 3 file: <code>Baitap4.html</code>, <code>css/baitap4.css</code>, <code>js/baitap4.js</code>.</li>
+            <li><strong>Sticky Header:</strong> Menu bám dính trên đỉnh khi cuộn trang, tự động điều chỉnh độ bóng nhẹ để phân tách nội dung.</li>
+            <li><strong>Showroom Đổi Màu:</strong> Chọn màu sắc sản phẩm mượt mà với 3 phiên bản màu thực tế.</li>
+            <li><strong>Tabs Thông Số:</strong> Phân chia tab thông số kỹ thuật rõ ràng với chuẩn ARIA đầy đủ.</li>
+            <li><strong>Quản Lý Danh Sách (Chuẩn 4 tính năng .skill):</strong> Tích hợp đủ Tìm kiếm (Search), Lọc danh mục (Filter), Sắp xếp hai chiều (Sort), và Phân trang (Pagination 10, 20, 50, All).</li>
+          </ul>
+        </div>
+
+        <div class="spec-text-block">
+          <h4>3. Thang Điểm Rubric Chi Tiết (Thang Điểm 10)</h4>
+          <table class="rubric-spec-table">
+            <thead>
+              <tr>
+                <th>Tiêu Chí Đánh Giá</th>
+                <th>Tỷ Trọng</th>
+                <th>Điểm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cấu trúc HTML5 Semantic & Tách file chuẩn</td>
+                <td>15%</td>
+                <td>1.5 điểm</td>
+              </tr>
+              <tr>
+                <td>Thiết kế UI/UX thanh lịch, chuẩn web thông thường, không màu mè</td>
+                <td>20%</td>
+                <td>2.0 điểm</td>
+              </tr>
+              <tr>
+                <td>Responsive Mobile & Sticky Header mượt mà</td>
+                <td>15%</td>
+                <td>1.5 điểm</td>
+              </tr>
+              <tr>
+                <td>Showroom tương tác đổi màu & Tabs thông số ARIA</td>
+                <td>15%</td>
+                <td>1.5 điểm</td>
+              </tr>
+              <tr>
+                <td>4 Tính năng Quản lý danh mục (Search, Filter, Sort, Pagination)</td>
+                <td>15%</td>
+                <td>1.5 điểm</td>
+              </tr>
+              <tr>
+                <td>Tính năng mở rộng Điểm 9-10 (i18n Song ngữ, Video Hero, Modal 10s, Zalo)</td>
+                <td>20%</td>
+                <td>2.0 điểm</td>
+              </tr>
+              <tr class="table-total-row">
+                <td><strong>TỔNG ĐIỂM</strong></td>
+                <td><strong>100%</strong></td>
+                <td><strong>10.0 điểm</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer-bar">
+        <button class="btn-primary" id="closeSpecModalBottomBtn" type="button">Đã Hiểu Yêu Cầu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       14. TOAST THÔNG BÁO TRẠNG THÁI (TOAST NOTIFICATION)
+       ========================================================================== -->
+  <div class="toast-alert" id="toast" role="status" aria-live="polite"></div>
+
 </body>
 </html>
